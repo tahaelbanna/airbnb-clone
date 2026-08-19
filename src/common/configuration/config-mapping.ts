@@ -1,0 +1,19 @@
+import { EnvironmentInterface } from './environment.interface';
+import { defaultEnv } from './Environment-modes/default.env';
+import { productionEnv } from './Environment-modes/production.env';
+import { stagingEnv } from './Environment-modes/staging.env';
+import { developmentEnv } from './Environment-modes/development.env';
+
+const environment: Record<string, () => EnvironmentInterface> = {
+    default: defaultEnv,
+    development: developmentEnv,
+    staging: stagingEnv,
+    production: productionEnv,
+};
+
+export default () => {
+    const nodeEnv = process.env.NODE_ENV || 'development';
+    const getEnvToLoad = environment[nodeEnv] || developmentEnv;
+    console.log(`Loading configuration for environment: ${nodeEnv}`);
+    return getEnvToLoad();
+};
