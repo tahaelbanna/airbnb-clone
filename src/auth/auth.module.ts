@@ -10,8 +10,18 @@ import {
     RefreshTokenSchema,
 } from './Schemas/refresh-token.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { GenerateTokensUsecase } from './use-cases/generate-token.usecase';
+import { RegisterUsecase } from './use-cases/register.usecase';
+import { LoginUsecase } from './use-cases/login.usecase';
+import { RefreshTokenUsecase } from './use-cases/refresh-token.usecase';
 @Module({
-    providers: [AuthService],
+    providers: [
+        AuthService,
+        GenerateTokensUsecase,
+        RegisterUsecase,
+        LoginUsecase,
+        RefreshTokenUsecase,
+    ],
     controllers: [AuthController],
     imports: [
         UsersModule,
