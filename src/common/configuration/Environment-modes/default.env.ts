@@ -7,4 +7,5 @@ export const defaultEnv = (): EnvironmentInterface => ({
     mongoUri: process.env.mongoUri as string,
     jwtSecret: process.env.jwtSecret as string,
     accessTokenExpireIn: process.env.accessTokenExpireIn as string,
+    refreshTokenExpireIn: process.env.refreshTokenExpireIn as string,
 });

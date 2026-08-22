@@ -9,4 +9,5 @@ export const envSchema = Joi.object({
         .default('mongodb://localhost:27017/airbnbcloneDB'),
     jwtSecret: Joi.string().required(),
     accessTokenExpireIn: Joi.string().required().default('7d'),
+    refreshTokenExpireIn: Joi.string().required().default('15d'),
 });

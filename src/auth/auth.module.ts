@@ -5,6 +5,11 @@ import { UsersModule } from 'src/users/users.module';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import { EnvironmentInterface } from 'src/common/configuration/environment.interface';
+import {
+    RefreshToken,
+    RefreshTokenSchema,
+} from './Schemas/refresh-token.schema';
+import { MongooseModule } from '@nestjs/mongoose';
 @Module({
     providers: [AuthService],
     controllers: [AuthController],
@@ -21,6 +26,9 @@ import { EnvironmentInterface } from 'src/common/configuration/environment.inter
             }),
             inject: [ConfigService],
         }),
+        MongooseModule.forFeature([
+            { name: RefreshToken.name, schema: RefreshTokenSchema },
+        ]),
     ],
 })
 export class AuthModule {}
