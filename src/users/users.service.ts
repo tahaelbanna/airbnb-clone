@@ -12,7 +12,7 @@ export class UsersService {
         @InjectModel(User.name) private readonly userModel: Model<User>,
     ) {}
 
-    async createUser(body: createUserDto): Promise<void> {
+    async createUser(body: createUserDto): Promise<User> {
         const existingUser = await this.userModel.findOne({
             email: body.email,
         });
@@ -31,7 +31,7 @@ export class UsersService {
         }
         const hashedPassword = await bcrypt.hash(body.password, 10);
 
-        await this.userModel.create({
+        return await this.userModel.create({
             ...body,
             password: hashedPassword,
         });
