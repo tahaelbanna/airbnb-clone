@@ -9,6 +9,8 @@ import { RefreshToken } from '../Schemas/refresh-token.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { GenerateTokensUsecase } from './generate-token.usecase';
+import { AuthResponseDto } from '../dto/auth-response.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class RefreshTokenUsecase {
@@ -19,7 +21,7 @@ export class RefreshTokenUsecase {
         private readonly refreshTokenModel: Model<RefreshToken>,
         private readonly generateTokensUsecase: GenerateTokensUsecase,
     ) {}
-    async execute(body: refreshTokenDto) {
+    async execute(body: refreshTokenDto): Promise<AuthResponseDto> {
         type RefreshTokenPayload = {
             userId: string;
             type: string;
@@ -56,9 +58,10 @@ export class RefreshTokenUsecase {
                 this.i18nService.translate('auth.INVALID_REFRESH_TOKEN'),
             );
         }
-        const token = await this.generateTokensUsecase.execute(
-            isRefreshTokenExists.userId,
-        );
-        return token;
+        const { accessToken, refreshToken } =
+            await this.generateTokensUsecase.execute(
+                isRefreshTokenExists.userId,
+            );
+        return plainToInstance(AuthResponseDto, { accessToken, refreshToken });
     }
 }

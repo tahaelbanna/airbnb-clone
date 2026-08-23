@@ -5,6 +5,8 @@ import { Model } from 'mongoose';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { createUserDto } from '../dto/create-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UserResponseDto } from '../dto/user-response.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class CreateUserUsecase {
@@ -12,7 +14,7 @@ export class CreateUserUsecase {
         @InjectModel(User.name) private readonly userModel: Model<User>,
     ) {}
 
-    async execute(body: createUserDto): Promise<User> {
+    async execute(body: createUserDto): Promise<UserResponseDto> {
         const existingUser = await this.userModel.findOne({
             email: body.email,
         });
@@ -30,9 +32,11 @@ export class CreateUserUsecase {
             );
         }
         const hashedPassword = await bcrypt.hash(body.password, 10);
-        return await this.userModel.create({
+        const createdUser = await this.userModel.create({
             ...body,
             password: hashedPassword,
         });
+
+        return plainToInstance(UserResponseDto, createdUser.toObject());
     }
 }

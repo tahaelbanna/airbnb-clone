@@ -5,6 +5,8 @@ import { I18nService } from 'nestjs-i18n';
 import * as bcrypt from 'bcrypt';
 import { UsersService } from '../../users/users.service';
 import { GenerateTokensUsecase } from './generate-token.usecase';
+import { AuthResponseDto } from '../dto/auth-response.dto';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class LoginUsecase {
@@ -13,7 +15,7 @@ export class LoginUsecase {
         private readonly i18nService: I18nService,
         private readonly generateTokensUsecase: GenerateTokensUsecase,
     ) {}
-    async execute(body: loginDto) {
+    async execute(body: loginDto): Promise<AuthResponseDto> {
         const user = await this.usersService.findOne({ email: body.email });
         if (!user) {
             throw new BadRequestException(
@@ -29,9 +31,8 @@ export class LoginUsecase {
                 this.i18nService.translate('auth.INVALID_CREDENTIALS'),
             );
         }
-        const token = await this.generateTokensUsecase.execute(
-            user._id.toString(),
-        );
-        return { token };
+        const { accessToken, refreshToken } =
+            await this.generateTokensUsecase.execute(user._id.toString());
+        return plainToInstance(AuthResponseDto, { accessToken, refreshToken });
     }
 }
