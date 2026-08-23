@@ -1,7 +1,16 @@
-import { Expose } from 'class-transformer';
+import { Expose, Type } from 'class-transformer';
+import { UserResponseDto } from '../../users/dto/user-response.dto';
 import { ApiProperty } from '@nestjs/swagger';
 
-export class AuthResponseDto {
+export class RegisterResponseDto {
+    @ApiProperty({
+        description: 'The user object',
+        type: UserResponseDto,
+    })
+    @Expose()
+    @Type(() => UserResponseDto)
+    user: UserResponseDto;
+
     @ApiProperty({
         description: 'The access token',
         example:

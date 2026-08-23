@@ -6,6 +6,7 @@ import { LoginUsecase } from './use-cases/login.usecase';
 import { RefreshTokenUsecase } from './use-cases/refresh-token.usecase';
 import { refreshTokenDto } from './dto/refresh-token.dto';
 import { AuthResponseDto } from './dto/auth-response.dto';
+import { RegisterResponseDto } from './dto/register-response.dto';
 @Injectable()
 export class AuthService {
     constructor(
@@ -14,7 +15,7 @@ export class AuthService {
         private readonly refreshTokenUsecase: RefreshTokenUsecase,
     ) {}
 
-    async register(body: registerDto): Promise<AuthResponseDto> {
+    async register(body: registerDto): Promise<RegisterResponseDto> {
         return this.registerUsecase.execute(body);
     }
 
