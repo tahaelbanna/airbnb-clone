@@ -5,9 +5,14 @@ import { EnvironmentInterface } from './common/configuration/environment.interfa
 import { Logger } from '@nestjs/common';
 import { I18nValidationPipe } from 'nestjs-i18n';
 import { SwaggerSetup } from './common/Swagger';
-
+import { ConsoleLogger } from '@nestjs/common';
+import { INestApplication } from '@nestjs/common';
 async function bootstrap() {
-    const app = await NestFactory.create(AppModule);
+    const app = await NestFactory.create<INestApplication>(AppModule, {
+        logger: new ConsoleLogger({
+            json: process.env.NODE_ENV === 'production',
+        }),
+    });
 
     app.useGlobalPipes(
         new I18nValidationPipe({
