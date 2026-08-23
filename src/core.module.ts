@@ -11,6 +11,9 @@ import {
 import path from 'node:path';
 import { EnvironmentInterface } from './common/configuration/environment.interface';
 import { MongooseModule } from '@nestjs/mongoose';
+import { APP_FILTER } from '@nestjs/core';
+import { CustomExceptionFilter } from './common/error-handling/filters/custom-exception.filter';
+import { LoggerInterceptor } from './common/interceptors';
 
 @Module({
     imports: [
@@ -47,6 +50,10 @@ import { MongooseModule } from '@nestjs/mongoose';
             }),
             inject: [ConfigService],
         }),
+    ],
+    providers: [
+        { provide: APP_FILTER, useClass: CustomExceptionFilter },
+        { provide: 'APP_INTERCEPTOR', useClass: LoggerInterceptor },
     ],
 })
 export class CoreModule {}
