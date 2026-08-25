@@ -1,0 +1,6 @@
+{
+    "CURRENCY_ALREADY_EXISTS": "العملة موجودة بالفعل",
+    "CURRENCY_NOT_FOUND": "العملة غير موجودة",
+    "CURRENCY_NAME_ALREADY_EXISTS": "اسم العملة موجود بالفعل",
+    "CURRENCY_CODE_ALREADY_EXISTS": "رمز العملة موجود بالفعل"
+}
