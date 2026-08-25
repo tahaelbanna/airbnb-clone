@@ -27,5 +27,6 @@ import { CountryRepository } from './repository/country.repository';
             { name: ModelNames.COUNTRIES, schema: CountrySchema },
         ]),
     ],
+    exports: [CountriesService],
 })
 export class CountriesModule {}

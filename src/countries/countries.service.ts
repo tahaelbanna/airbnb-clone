@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { CreateCountryDto } from './dto/create-country.dto';
-import { CountryResponseDto } from './dto/create-country-response.dto';
+import { CountryResponseDto } from './dto/country-response.dto';
 import { CreateCountryUseCase } from './use-cases/create-country.usecase';
 import { GetAllCountriesUseCase } from './use-cases/get-all-countries.usecase';
 import { GetCountryUseCase } from './use-cases/get-country.usecase';

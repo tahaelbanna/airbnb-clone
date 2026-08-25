@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { CountryResponseDto } from '../dto/create-country-response.dto';
+import { CountryResponseDto } from '../dto/country-response.dto';
 import { I18nService } from 'nestjs-i18n';
 import { plainToInstance } from 'class-transformer';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';

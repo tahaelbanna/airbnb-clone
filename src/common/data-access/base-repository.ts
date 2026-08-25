@@ -118,7 +118,7 @@ export class BaseRepository<T> {
         options: QueryOptions = {},
     ) {
         const document = await this.model.findByIdAndUpdate(id, updateQuery, {
-            new: true,
+            returnDocument: 'after',
             ...options,
         });
 
