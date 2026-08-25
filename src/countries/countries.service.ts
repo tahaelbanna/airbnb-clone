@@ -7,7 +7,8 @@ import { GetCountryUseCase } from './use-cases/get-country.usecase';
 import { SoftDeleteOneCountryUseCase } from './use-cases/delete-country.usecase';
 import { UpdateCountryUsecase } from './use-cases/update-country.dto';
 import { UpdateCountryDto } from './dto/update-country.dto';
-
+import { PaginatedResult } from '../common/data-access';
+import { GetAllCountriesDto } from './dto/get-all-countries.dto';
 @Injectable()
 export class CountriesService {
     constructor(
@@ -26,8 +27,10 @@ export class CountriesService {
         return this.getCountryUseCase.execute(id);
     }
 
-    async getAllCountries(): Promise<CountryResponseDto[]> {
-        return this.getAllCountriesUseCase.execute();
+    async getAllCountries(
+        query: GetAllCountriesDto,
+    ): Promise<PaginatedResult<CountryResponseDto>> {
+        return this.getAllCountriesUseCase.execute(query);
     }
 
     async softDeleteCountry(id: string): Promise<void> {

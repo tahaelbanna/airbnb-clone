@@ -4,21 +4,18 @@ import { ForbiddenException } from 'src/common/error-handling/custom-exceptions/
 import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
-import { InjectModel } from '@nestjs/mongoose';
-import { RefreshToken } from '../Schemas/refresh-token.schema';
-import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { GenerateTokensUsecase } from './generate-token.usecase';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { plainToInstance } from 'class-transformer';
+import { RefreshTokenRepository } from '../repository/refresh-token.repository';
 
 @Injectable()
 export class RefreshTokenUsecase {
     constructor(
         private readonly jwtService: JwtService,
         private readonly i18nService: I18nService,
-        @InjectModel('RefreshToken')
-        private readonly refreshTokenModel: Model<RefreshToken>,
+        private readonly refreshTokenRepository: RefreshTokenRepository,
         private readonly generateTokensUsecase: GenerateTokensUsecase,
     ) {}
     async execute(body: refreshTokenDto): Promise<AuthResponseDto> {
@@ -41,7 +38,7 @@ export class RefreshTokenUsecase {
                 this.i18nService.translate('auth.INVALID_REFRESH_TOKEN'),
             );
         }
-        const isRefreshTokenExists = await this.refreshTokenModel.findOne({
+        const isRefreshTokenExists = await this.refreshTokenRepository.findOne({
             userId: decoded.userId,
         });
         if (!isRefreshTokenExists) {

@@ -6,12 +6,13 @@ import {
     Get,
     Delete,
     Patch,
+    Query,
 } from '@nestjs/common';
 import { CountriesService } from './countries.service';
 import { CreateCountryDto } from './dto/create-country.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { UpdateCountryDto } from './dto/update-country.dto';
-
+import { GetAllCountriesDto } from './dto/get-all-countries.dto';
 @Controller('countries')
 export class CountriesController {
     constructor(private readonly countriesService: CountriesService) {}
@@ -32,8 +33,8 @@ export class CountriesController {
     }
 
     @Get()
-    getAllCountries() {
-        return this.countriesService.getAllCountries();
+    getAllCountries(@Query() query: GetAllCountriesDto) {
+        return this.countriesService.getAllCountries(query);
     }
 
     @Patch(':id')

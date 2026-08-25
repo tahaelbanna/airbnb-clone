@@ -3,9 +3,18 @@ import { IsOptional, IsString } from 'class-validator';
 export class GetAllCountriesDto {
     @IsOptional()
     @IsString()
-    name: string;
+    country_name: string;
 
     @IsOptional()
     @IsString()
-    countryCode: string;
+    country_code: string;
+
+    @IsOptional()
+    page?: number;
+
+    @IsOptional()
+    limit?: number;
+
+    @IsOptional()
+    ignoreLimit?: boolean;
 }
