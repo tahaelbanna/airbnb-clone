@@ -8,4 +8,9 @@ export const defaultEnv = (): EnvironmentInterface => ({
     jwtSecret: process.env.jwtSecret as string,
     accessTokenExpireIn: process.env.accessTokenExpireIn as string,
     refreshTokenExpireIn: process.env.refreshTokenExpireIn as string,
+    systemAdmin: {
+        name: process.env.systemAdminName as string,
+        email: process.env.systemAdminEmail as string,
+        password: process.env.systemAdminPassword as string,
+    },
 });

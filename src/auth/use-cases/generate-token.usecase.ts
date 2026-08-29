@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentInterface } from 'src/common/configuration/environment.interface';
 import * as bcrypt from 'bcrypt';
 import { RefreshTokenRepository } from '../repository/refresh-token.repository';
-
+import { JwtPayload } from '../interface/jwt-payload.interface';
 @Injectable()
 export class GenerateTokensUsecase {
     constructor(
@@ -12,10 +12,10 @@ export class GenerateTokensUsecase {
         private readonly configService: ConfigService<EnvironmentInterface>,
         private readonly refreshTokenRepository: RefreshTokenRepository,
     ) {}
-    async execute(userId: string) {
-        const accessToken = await this.jwtService.signAsync({ userId });
+    async execute(payload: JwtPayload) {
+        const accessToken = await this.jwtService.signAsync(payload);
         const refreshToken = await this.jwtService.signAsync(
-            { userId, type: 'refresh' },
+            { payload, type: 'refresh' },
             {
                 expiresIn: this.configService.getOrThrow(
                     'refreshTokenExpireIn',
@@ -24,7 +24,7 @@ export class GenerateTokensUsecase {
         );
         const hashedRefreshToken = await bcrypt.hash(refreshToken, 10);
         await this.refreshTokenRepository.findOneAndUpdate(
-            { userId },
+            { userId: payload.id, role: payload.role },
             { refreshToken: hashedRefreshToken },
             { returnDocument: 'after', upsert: true },
         );
