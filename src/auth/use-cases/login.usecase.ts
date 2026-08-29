@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
 import { loginDto } from '../dto/login.dto';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
@@ -32,7 +35,9 @@ export class LoginUsecase {
             );
         }
         const { accessToken, refreshToken } =
-            await this.generateTokensUsecase.execute(user._id.toString());
+            await this.generateTokensUsecase.execute(
+                (user as any)._id.toString(),
+            );
         return plainToInstance(AuthResponseDto, { accessToken, refreshToken });
     }
 }
