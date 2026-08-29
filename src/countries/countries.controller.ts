@@ -13,30 +13,46 @@ import { CreateCountryDto } from './dto/create-country.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { UpdateCountryDto } from './dto/update-country.dto';
 import { GetAllCountriesDto } from './dto/get-all-countries.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { API_TAGS } from '../common/Swagger';
+import {
+    CreateCountrySwagger,
+    DeleteCountrySwagger,
+    GetAllCountriesSwagger,
+    GetCountryByIdSwagger,
+    UpdateCountrySwagger,
+} from './swagger';
+
+@ApiTags(API_TAGS.COUNTRIES)
 @Controller('countries')
 export class CountriesController {
     constructor(private readonly countriesService: CountriesService) {}
 
+    @CreateCountrySwagger()
     @Post()
     createCountry(@Body() body: CreateCountryDto) {
         return this.countriesService.createCountry(body);
     }
 
+    @GetCountryByIdSwagger()
     @Get(':id')
     getCountryById(@Param('id', new ParseMongoIdPipe()) id: string) {
         return this.countriesService.getCountryById(id);
     }
 
+    @DeleteCountrySwagger()
     @Delete(':id')
     softDeleteCountry(@Param('id', new ParseMongoIdPipe()) id: string) {
         return this.countriesService.softDeleteCountry(id);
     }
 
+    @GetAllCountriesSwagger()
     @Get()
     getAllCountries(@Query() query: GetAllCountriesDto) {
         return this.countriesService.getAllCountries(query);
     }
 
+    @UpdateCountrySwagger()
     @Patch(':id')
     updateCountry(
         @Param('id', new ParseMongoIdPipe()) id: string,

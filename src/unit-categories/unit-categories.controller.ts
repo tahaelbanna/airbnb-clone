@@ -3,8 +3,6 @@ import {
     Controller,
     Delete,
     Get,
-    HttpCode,
-    HttpStatus,
     Param,
     Patch,
     Post,
@@ -17,12 +15,24 @@ import { UpdateUnitCategoryDto } from './dto/update-unit-category.dto';
 import { PaginatedResult } from '../common/data-access';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { getAllUnitCategoriesDto } from './dto/get-all-unit-categories.dto';
+import { ApiTags } from '@nestjs/swagger';
+import { API_TAGS } from '../common/Swagger';
+import {
+    CreateUnitCategorySwagger,
+    DeleteUnitCategorySwagger,
+    GetAllUnitCategoriesSwagger,
+    GetUnitCategoryByIdSwagger,
+    UpdateUnitCategorySwagger,
+} from './swagger';
+
+@ApiTags(API_TAGS.UNIT_CATEGORIES)
 @Controller('unit-categories')
 export class UnitCategoriesController {
     constructor(
         private readonly unitCategoriesService: UnitCategoriesService,
     ) {}
 
+    @CreateUnitCategorySwagger()
     @Post()
     async create(
         @Body() body: CreateUnitCategoryDto,
@@ -30,6 +40,7 @@ export class UnitCategoriesController {
         return this.unitCategoriesService.create(body);
     }
 
+    @GetUnitCategoryByIdSwagger()
     @Get('/:id')
     async getUnitCategoryById(
         @Param('id', new ParseMongoIdPipe()) id: string,
@@ -38,6 +49,7 @@ export class UnitCategoriesController {
     }
 
     @Get()
+    @GetAllUnitCategoriesSwagger()
     async getAll(
         @Query() query: getAllUnitCategoriesDto,
     ): Promise<PaginatedResult<UnitCategoryResponseDto>> {
@@ -45,7 +57,7 @@ export class UnitCategoriesController {
     }
 
     @Delete('/:id')
-    @HttpCode(HttpStatus.NO_CONTENT)
+    @DeleteUnitCategorySwagger()
     async deleteUnitCategoryById(
         @Param('id', new ParseMongoIdPipe()) id: string,
     ): Promise<void> {
@@ -53,6 +65,7 @@ export class UnitCategoriesController {
     }
 
     @Patch('/:id')
+    @UpdateUnitCategorySwagger()
     async update(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateUnitCategoryDto,

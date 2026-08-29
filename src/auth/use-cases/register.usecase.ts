@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { UsersService } from '../../users/users.service';
@@ -7,6 +8,7 @@ import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { UserResponseDto } from 'src/users/dto/user-response.dto';
 import { RegisterResponseDto } from '../dto/register-response.dto';
+import { Roles } from '../../common/constants/roles.constans';
 
 @Injectable()
 export class RegisterUsecase {
@@ -17,10 +19,10 @@ export class RegisterUsecase {
     async execute(body: registerDto): Promise<RegisterResponseDto> {
         const user = await this.usersService.createUser(body);
         const { accessToken, refreshToken } =
-            await this.generateTokensUsecase.execute(
-                // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-                (user as any)._id.toString(),
-            );
+            await this.generateTokensUsecase.execute({
+                id: (user as any)._id.toString(),
+                role: Roles.USER,
+            });
         return plainToInstance(
             RegisterResponseDto,
             {

@@ -13,6 +13,9 @@ import { LoginUsecase } from './use-cases/login.usecase';
 import { RefreshTokenUsecase } from './use-cases/refresh-token.usecase';
 import { ModelNames } from '../common/data-access';
 import { RefreshTokenRepository } from './repository/refresh-token.repository';
+import { LoginAsUserUsecase } from './use-cases/login-as-user.usecase';
+import { LoginAsAdminUsecase } from './use-cases/login-as-admin.usecase';
+import { SystemAdminModule } from 'src/system-admin/system-admin.module';
 @Module({
     providers: [
         AuthService,
@@ -21,10 +24,13 @@ import { RefreshTokenRepository } from './repository/refresh-token.repository';
         LoginUsecase,
         RefreshTokenUsecase,
         RefreshTokenRepository,
+        LoginAsUserUsecase,
+        LoginAsAdminUsecase,
     ],
     controllers: [AuthController],
     imports: [
         UsersModule,
+        SystemAdminModule,
         JwtModule.registerAsync({
             useFactory: (
                 configService: ConfigService<EnvironmentInterface>,

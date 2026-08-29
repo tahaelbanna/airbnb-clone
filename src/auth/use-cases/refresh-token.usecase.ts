@@ -9,7 +9,7 @@ import { GenerateTokensUsecase } from './generate-token.usecase';
 import { AuthResponseDto } from '../dto/auth-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { RefreshTokenRepository } from '../repository/refresh-token.repository';
-
+import { Roles } from '../../common/constants/roles.constans';
 @Injectable()
 export class RefreshTokenUsecase {
     constructor(
@@ -20,7 +20,7 @@ export class RefreshTokenUsecase {
     ) {}
     async execute(body: refreshTokenDto): Promise<AuthResponseDto> {
         type RefreshTokenPayload = {
-            userId: string;
+            payload: { id: string; role: string };
             type: string;
         };
         let decoded: RefreshTokenPayload;
@@ -39,7 +39,8 @@ export class RefreshTokenUsecase {
             );
         }
         const isRefreshTokenExists = await this.refreshTokenRepository.findOne({
-            userId: decoded.userId,
+            userId: decoded.payload.id,
+            role: decoded.payload.role,
         });
         if (!isRefreshTokenExists) {
             throw new ForbiddenException(
@@ -56,9 +57,10 @@ export class RefreshTokenUsecase {
             );
         }
         const { accessToken, refreshToken } =
-            await this.generateTokensUsecase.execute(
-                isRefreshTokenExists.userId,
-            );
+            await this.generateTokensUsecase.execute({
+                id: isRefreshTokenExists.userId,
+                role: decoded.payload.role as Roles,
+            });
         return plainToInstance(AuthResponseDto, { accessToken, refreshToken });
     }
 }

@@ -9,6 +9,12 @@ export class SwaggerSetup {
             .setDescription('The Airbnb Clone API description')
             .setVersion('1.0')
             .addTag(API_TAGS.AUTH)
+            .addTag(API_TAGS.COUNTRIES)
+            .addTag(API_TAGS.CITIES)
+            .addTag(API_TAGS.APP_SETTINGS)
+            .addTag(API_TAGS.CURRENCIES)
+            .addTag(API_TAGS.UNIT_CATEGORIES)
+            .addTag(API_TAGS.SYSTEM_ADMINS)
             .build();
 
         const document = SwaggerModule.createDocument(app, config);
