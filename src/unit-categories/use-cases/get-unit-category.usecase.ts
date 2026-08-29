@@ -24,9 +24,6 @@ export class GetUnitCategoryByIdUsecase {
                 ),
             );
 
-        return plainToInstance(
-            UnitCategoryResponseDto,
-            unitCategory.toObject(),
-        );
+        return plainToInstance(UnitCategoryResponseDto, unitCategory);
     }
 }

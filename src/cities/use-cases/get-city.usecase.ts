@@ -22,6 +22,6 @@ export class GetCityUseCase {
                 this.i18nService.translate('city.City_NOT_FOUND'),
             );
         }
-        return plainToInstance(CityResponseDto, existingCity.toObject());
+        return plainToInstance(CityResponseDto, existingCity);
     }
 }

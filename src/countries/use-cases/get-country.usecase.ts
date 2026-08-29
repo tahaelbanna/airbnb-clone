@@ -22,6 +22,6 @@ export class GetCountryUseCase {
                 this.i18nService.translate('country.COUNTRY_NOT_FOUND'),
             );
         }
-        return plainToInstance(CountryResponseDto, existingCountry.toObject());
+        return plainToInstance(CountryResponseDto, existingCountry);
     }
 }

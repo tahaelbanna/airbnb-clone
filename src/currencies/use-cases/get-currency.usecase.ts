@@ -22,9 +22,6 @@ export class GetCurrencyUseCase {
                 this.i18nService.translate('currency.CURRENCY_NOT_FOUND'),
             );
         }
-        return plainToInstance(
-            CurrencyResponseDto,
-            existingCurrency.toObject(),
-        );
+        return plainToInstance(CurrencyResponseDto, existingCurrency);
     }
 }
