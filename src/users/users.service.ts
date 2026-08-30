@@ -5,6 +5,7 @@ import { createUserDto } from './dto/create-user.dto';
 import { CreateUserUsecase } from './use-cases/create-user.usecase';
 import { UserResponseDto } from './dto/user-response.dto';
 import { UserRepository } from './repository/user.repository';
+import { plainToInstance } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -17,6 +18,7 @@ export class UsersService {
         return this.createUserUsecase.execute(body);
     }
     async findOne(query: QueryFilter<User>) {
-        return await this.userRepository.findOne(query);
+        const user = await this.userRepository.findOne(query);
+        return plainToInstance(UserResponseDto, user);
     }
 }

@@ -30,7 +30,7 @@ export class UserResponseDto {
     @Expose()
     phoneNumber: string;
 
-    @Exclude()
+    @Expose()
     password: string;
 
     @Exclude()
