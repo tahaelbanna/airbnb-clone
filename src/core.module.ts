@@ -14,7 +14,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { APP_FILTER } from '@nestjs/core';
 import { CustomExceptionFilter } from './common/error-handling/filters/custom-exception.filter';
 import { LoggerInterceptor } from './common/interceptors';
-
+import { TransformResponseInterceptor } from './common/interceptors/transform-response.interceptor';
+import { APP_INTERCEPTOR } from '@nestjs/core';
 @Module({
     imports: [
         ConfigModule.forRoot({
@@ -53,7 +54,8 @@ import { LoggerInterceptor } from './common/interceptors';
     ],
     providers: [
         { provide: APP_FILTER, useClass: CustomExceptionFilter },
-        { provide: 'APP_INTERCEPTOR', useClass: LoggerInterceptor },
+        { provide: APP_INTERCEPTOR, useClass: LoggerInterceptor },
+        { provide: APP_INTERCEPTOR, useClass: TransformResponseInterceptor },
     ],
 })
 export class CoreModule {}
