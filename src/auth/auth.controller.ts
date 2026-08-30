@@ -9,9 +9,11 @@ import { API_TAGS } from '../common/Swagger/constants';
 import { LoginSwagger } from './Swagger/login.swagger';
 import { RefreshTokenSwagger } from './Swagger/refresh-token.swagger';
 import { AuthResponseDto } from './dto/auth-response.dto';
+import { Public } from './decorators/public.decorator';
 
 @ApiTags(API_TAGS.AUTH)
 @Controller('auth')
+@Public()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
