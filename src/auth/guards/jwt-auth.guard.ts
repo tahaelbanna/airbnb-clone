@@ -1,4 +1,9 @@
-import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import {
+    CanActivate,
+    ExecutionContext,
+    Injectable,
+    Logger,
+} from '@nestjs/common';
 import { Request } from 'express';
 import { UnauthorizedException } from '../../common/error-handling/custom-exceptions/unauthorized.exception';
 import { JwtService } from '@nestjs/jwt';
@@ -13,12 +18,13 @@ import { Reflector } from '@nestjs/core';
 import { IS_PUBLIC_KEY } from '../decorators/public.decorator';
 import { I18nService } from 'nestjs-i18n';
 
-type RequestWithUser = Request & {
-    user: IPrincipal;
+export type RequestWithUser = Request & {
+    principal: IPrincipal;
 };
 
 @Injectable()
 export class JwtAuthGuard implements CanActivate {
+    private logger = new Logger(JwtAuthGuard.name);
     constructor(
         private readonly jwtService: JwtService,
         private readonly userService: UsersService,
@@ -51,7 +57,7 @@ export class JwtAuthGuard implements CanActivate {
             const currentAccount: IPrincipal =
                 await this.buildCurrentUser(payload);
 
-            request.user = currentAccount;
+            request.principal = currentAccount;
         } catch {
             throw new UnauthorizedException(
                 await this.i18nService.translate('auth.INVALID_TOKEN'),
