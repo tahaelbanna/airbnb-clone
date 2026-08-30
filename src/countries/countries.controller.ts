@@ -22,6 +22,8 @@ import {
     GetCountryByIdSwagger,
     UpdateCountrySwagger,
 } from './swagger';
+import { Roles } from '../common/constants/roles.constans';
+import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.COUNTRIES)
 @Controller('countries')
@@ -30,6 +32,7 @@ export class CountriesController {
 
     @CreateCountrySwagger()
     @Post()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     createCountry(@Body() body: CreateCountryDto) {
         return this.countriesService.createCountry(body);
     }
@@ -42,6 +45,7 @@ export class CountriesController {
 
     @DeleteCountrySwagger()
     @Delete(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     softDeleteCountry(@Param('id', new ParseMongoIdPipe()) id: string) {
         return this.countriesService.softDeleteCountry(id);
     }
@@ -54,6 +58,7 @@ export class CountriesController {
 
     @UpdateCountrySwagger()
     @Patch(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     updateCountry(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateCountryDto,

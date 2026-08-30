@@ -22,6 +22,8 @@ import {
     GetCurrencyByIdSwagger,
     UpdateCurrencySwagger,
 } from './swagger';
+import { Roles } from '../common/constants/roles.constans';
+import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.CURRENCIES)
 @Controller('currencies')
@@ -30,6 +32,7 @@ export class CurrenciesController {
 
     @CreateCurrencySwagger()
     @Post()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     createCurrency(@Body() body: CreateCurrencyDto) {
         return this.currenciesService.createCurrency(body);
     }
@@ -42,6 +45,7 @@ export class CurrenciesController {
 
     @DeleteCurrencySwagger()
     @Delete(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     softDeleteCurrency(@Param('id', new ParseMongoIdPipe()) id: string) {
         return this.currenciesService.softDeleteCurrency(id);
     }
@@ -54,6 +58,7 @@ export class CurrenciesController {
 
     @UpdateCurrencySwagger()
     @Patch(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     updateCurrency(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateCurrencyDto,

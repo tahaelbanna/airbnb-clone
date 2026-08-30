@@ -1,3 +1,4 @@
+import { Roles } from '../../common/constants/roles.constans';
 export interface CurrentUserData {
     _id: string;
     name: string;
@@ -6,5 +7,5 @@ export interface CurrentUserData {
 
 export interface IPrincipal {
     user: CurrentUserData;
-    role: string;
+    role: Roles;
 }
