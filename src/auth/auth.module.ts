@@ -16,7 +16,9 @@ import { RefreshTokenRepository } from './repository/refresh-token.repository';
 import { LoginAsUserUsecase } from './use-cases/login-as-user.usecase';
 import { LoginAsAdminUsecase } from './use-cases/login-as-admin.usecase';
 import { SystemAdminModule } from 'src/system-admin/system-admin.module';
+
 @Module({
+    exports: [JwtModule, UsersModule, SystemAdminModule],
     providers: [
         AuthService,
         GenerateTokensUsecase,

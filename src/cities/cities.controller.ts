@@ -22,13 +22,17 @@ import {
     GetCityByIdSwagger,
     UpdateCitySwagger,
 } from './swagger';
+import { Roles } from '../common/constants/roles.constans';
+import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.CITIES)
 @Controller('cities')
 export class CitiesController {
     constructor(private readonly citiesService: CitiesService) {}
+
     @CreateCitySwagger()
     @Post()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     createCity(@Body() body: CreateCityDto) {
         return this.citiesService.createCity(body);
     }
@@ -41,6 +45,7 @@ export class CitiesController {
 
     @DeleteCitySwagger()
     @Delete(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     softDeleteCity(@Param('id', new ParseMongoIdPipe()) id: string) {
         return this.citiesService.softDeleteCity(id);
     }
@@ -53,6 +58,7 @@ export class CitiesController {
 
     @UpdateCitySwagger()
     @Patch(':id')
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     updateCity(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateCityDto,

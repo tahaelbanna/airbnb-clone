@@ -24,6 +24,8 @@ import {
     GetUnitCategoryByIdSwagger,
     UpdateUnitCategorySwagger,
 } from './swagger';
+import { Roles } from '../common/constants/roles.constans';
+import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.UNIT_CATEGORIES)
 @Controller('unit-categories')
@@ -34,6 +36,7 @@ export class UnitCategoriesController {
 
     @CreateUnitCategorySwagger()
     @Post()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     async create(
         @Body() body: CreateUnitCategoryDto,
     ): Promise<UnitCategoryResponseDto> {
@@ -58,6 +61,7 @@ export class UnitCategoriesController {
 
     @Delete('/:id')
     @DeleteUnitCategorySwagger()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     async deleteUnitCategoryById(
         @Param('id', new ParseMongoIdPipe()) id: string,
     ): Promise<void> {
@@ -66,6 +70,7 @@ export class UnitCategoriesController {
 
     @Patch('/:id')
     @UpdateUnitCategorySwagger()
+    @AllowRoles(Roles.SYSTEM_ADMIN)
     async update(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateUnitCategoryDto,
