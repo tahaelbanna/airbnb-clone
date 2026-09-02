@@ -18,6 +18,9 @@ import { UpdateUnitUseCase } from './use-cases/update-unit.usecase';
 import { GetUnitByIdUseCase } from './use-cases/git-unit-by-id.usecase';
 import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
 import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
+import { SoftDeleteOneUnitUseCase } from './use-cases/delete-unit.usecase';
+import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
+import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 
 @Module({
     providers: [
@@ -31,6 +34,9 @@ import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
         GetUnitByIdUseCase,
         GetAllUnitsUseCase,
         GetAllUnitsByUserUseCase,
+        SoftDeleteOneUnitUseCase,
+        ActivateUnitUseCase,
+        DeActivateUnitUseCase,
     ],
     controllers: [UnitsController],
     imports: [

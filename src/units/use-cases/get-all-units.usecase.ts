@@ -13,7 +13,10 @@ export class GetAllUnitsUseCase {
     async execute(
         query: GetAllUnitsDto,
     ): Promise<PaginatedResult<UnitResponseDto>> {
-        const matchQuery: QueryFilter<Units> = { isDeleted: { $ne: true } };
+        const matchQuery: QueryFilter<Units> = {
+            isDeleted: { $ne: true },
+            isActive: { $ne: false },
+        };
         if (query?.unit_title)
             matchQuery.unit_title = {
                 $regex: query.unit_title,

@@ -4,8 +4,6 @@ import { UnitsRepository } from '../repositories/unit.repository';
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
-import { QueryFilter } from 'mongoose';
-import { Units } from '../schemas/units.schema';
 
 @Injectable()
 export class GetUnitByIdUseCase {
@@ -15,9 +13,11 @@ export class GetUnitByIdUseCase {
     ) {}
 
     async execute(id: string): Promise<UnitResponseDto> {
-        const unit = (await this.unitRepository.findById(id, {
-            lean: true,
-        })) as QueryFilter<Units>;
+        const unit = await this.unitRepository.findOne({
+            _id: id,
+            isDeleted: { $ne: true },
+            isActive: { $ne: false },
+        });
 
         if (!unit)
             throw new NotFoundException(

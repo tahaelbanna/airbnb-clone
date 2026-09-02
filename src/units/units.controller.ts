@@ -6,6 +6,7 @@ import {
     Param,
     Get,
     Query,
+    Delete,
 } from '@nestjs/common';
 import { UnitsService } from './units.service';
 import { CreateUnitDto } from './dtos/create-unit.dto';
@@ -62,5 +63,32 @@ export class UnitsController {
     @Get(':id')
     async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
         return await this.unitsService.GetById(id);
+    }
+
+    @Delete(':id/soft-delete')
+    @AllowRoles(Roles.USER)
+    async SoftDeleteOneUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.SoftDeleteOneUnit(id, principal.user);
+    }
+
+    @Patch(':id/deactivate')
+    @AllowRoles(Roles.USER)
+    async DeActivateUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.DeActivateUnit(id, principal.user);
+    }
+
+    @Patch(':id/activate')
+    @AllowRoles(Roles.USER)
+    async ActivateUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.ActivateUnit(id, principal.user);
     }
 }

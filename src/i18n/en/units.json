@@ -3,5 +3,6 @@
     "COUNTRY_CITY_MISMATCH": "The selected city does not belong to the specified country.",
     "UNIT_NOT_FOUND": "Unit not found.",
     "UNAUTHORIZED_UPDATE": "You are not the owner of this unit.",
-    "UNIT_ALREADY_EXISTS": "Unit already exists."
+    "UNIT_ALREADY_EXISTS": "Unit already exists.",
+    "UNIT_ALREADY_DELETED": "Unit has already been deleted."
 }

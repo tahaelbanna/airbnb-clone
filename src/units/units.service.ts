@@ -10,6 +10,9 @@ import { GetUnitByIdUseCase } from './use-cases/git-unit-by-id.usecase';
 import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
+import { SoftDeleteOneUnitUseCase } from './use-cases/delete-unit.usecase';
+import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
+import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 
 @Injectable()
 export class UnitsService {
@@ -19,6 +22,9 @@ export class UnitsService {
         private readonly GetAllUnitsUseCase: GetAllUnitsUseCase,
         private readonly GetByIdUseCase: GetUnitByIdUseCase,
         private readonly getAllUnitsByUserUseCase: GetAllUnitsByUserUseCase,
+        private readonly softDeleteOneUnitUseCase: SoftDeleteOneUnitUseCase,
+        private readonly deActivateUnitUseCase: DeActivateUnitUseCase,
+        private readonly activateUnitUseCase: ActivateUnitUseCase,
     ) {}
     async create(
         body: CreateUnitDto,
@@ -50,5 +56,26 @@ export class UnitsService {
 
     async GetById(id: string): Promise<UnitResponseDto> {
         return this.GetByIdUseCase.execute(id);
+    }
+
+    async SoftDeleteOneUnit(
+        id: string,
+        currentUser: CurrentUserData,
+    ): Promise<void> {
+        return this.softDeleteOneUnitUseCase.execute(id, currentUser);
+    }
+
+    async DeActivateUnit(
+        id: string,
+        currentUser: CurrentUserData,
+    ): Promise<UnitResponseDto> {
+        return this.deActivateUnitUseCase.execute(id, currentUser);
+    }
+
+    async ActivateUnit(
+        id: string,
+        currentUser: CurrentUserData,
+    ): Promise<UnitResponseDto> {
+        return this.activateUnitUseCase.execute(id, currentUser);
     }
 }
