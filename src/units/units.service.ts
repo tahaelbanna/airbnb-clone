@@ -9,6 +9,8 @@ import { GetAllUnitsDto } from './dtos/get-all.usecase.dto';
 import { GetUnitByIdUseCase } from './use-cases/git-unit-by-id.usecase';
 import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
+import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
+
 @Injectable()
 export class UnitsService {
     constructor(
@@ -16,6 +18,7 @@ export class UnitsService {
         private readonly updateUnitUseCase: UpdateUnitUseCase,
         private readonly GetAllUnitsUseCase: GetAllUnitsUseCase,
         private readonly GetByIdUseCase: GetUnitByIdUseCase,
+        private readonly getAllUnitsByUserUseCase: GetAllUnitsByUserUseCase,
     ) {}
     async create(
         body: CreateUnitDto,
@@ -36,6 +39,13 @@ export class UnitsService {
         query: GetAllUnitsDto,
     ): Promise<PaginatedResult<UnitResponseDto>> {
         return this.GetAllUnitsUseCase.execute(query);
+    }
+
+    async GetAllUnitsByUser(
+        query: GetAllUnitsDto,
+        currentUser: CurrentUserData,
+    ): Promise<PaginatedResult<UnitResponseDto>> {
+        return this.getAllUnitsByUserUseCase.execute(query, currentUser);
     }
 
     async GetById(id: string): Promise<UnitResponseDto> {

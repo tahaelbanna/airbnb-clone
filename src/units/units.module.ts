@@ -17,6 +17,7 @@ import { GetUnitUseCase } from './use-cases/get-unit.usecase';
 import { UpdateUnitUseCase } from './use-cases/update-unit.usecase';
 import { GetUnitByIdUseCase } from './use-cases/git-unit-by-id.usecase';
 import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
+import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
 
 @Module({
     providers: [
@@ -29,6 +30,7 @@ import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
         UpdateUnitUseCase,
         GetUnitByIdUseCase,
         GetAllUnitsUseCase,
+        GetAllUnitsByUserUseCase,
     ],
     controllers: [UnitsController],
     imports: [

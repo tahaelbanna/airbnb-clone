@@ -43,15 +43,24 @@ export class UnitsController {
         return await this.unitsService.update(id, body, principal.user);
     }
 
-    @Public()
-    @Get(':id')
-    async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
-        return await this.unitsService.GetById(id);
-    }
-
     @Get()
     @Public()
     async GetAll(@Query() query: GetAllUnitsDto) {
         return await this.unitsService.GetAll(query);
+    }
+
+    @Get('by-user')
+    @AllowRoles(Roles.USER)
+    async GetAllByUser(
+        @Query() query: GetAllUnitsDto,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.GetAllUnitsByUser(query, principal.user);
+    }
+
+    @Public()
+    @Get(':id')
+    async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
+        return await this.unitsService.GetById(id);
     }
 }
