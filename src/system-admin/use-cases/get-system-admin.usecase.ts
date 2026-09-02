@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { SystemAdminRepository } from '../Repository/system-admin.repository';
+import { SystemAdminRepository } from '../repositories/system-admin.repository';
 import { QueryFilter } from 'mongoose';
-import { SystemAdmin } from '../Schemas/system-admin.schema';
-import { SystemAdminResponseDto } from '../dto/system-admin-response.dto';
+import { SystemAdmin } from '../schemas/system-admin.schema';
+import { SystemAdminResponseDto } from '../dtos/system-admin-response.dto';
 import { plainToInstance } from 'class-transformer';
 @Injectable()
 export class GetSystemAdminUseCase {

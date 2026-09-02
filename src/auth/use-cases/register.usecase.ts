@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { UsersService } from '../../users/users.service';
-import { registerDto } from '../dto/register.dto';
+import { registerDto } from '../dtos/register.dto';
 import { GenerateTokensUsecase } from './generate-token.usecase';
 import { Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
-import { UserResponseDto } from 'src/users/dto/user-response.dto';
-import { RegisterResponseDto } from '../dto/register-response.dto';
+import { UserResponseDto } from 'src/users/dtos/user-response.dto';
+import { RegisterResponseDto } from '../dtos/register-response.dto';
 import { Roles } from '../../common/constants/roles.constans';
 
 @Injectable()

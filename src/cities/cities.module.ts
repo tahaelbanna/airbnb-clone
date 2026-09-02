@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { CitiesService } from './cities.service';
 import { CitiesController } from './cities.controller';
-import { CitySchema } from './Schemas/city.schema';
+import { CitySchema } from './schemas/city.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CreateCityUseCase } from './use-cases/create-city.usecase';
 import { GetCityUseCase } from './use-cases/get-city.usecase';
@@ -9,7 +9,7 @@ import { GetAllCitiesUseCase } from './use-cases/get-all-cities.usecase';
 import { SoftDeleteOneCityUseCase } from './use-cases/delete-city.usecase';
 import { UpdateCityUsecase } from './use-cases/update-city.dto';
 import { ModelNames } from '../common/data-access';
-import { CityRepository } from './repository/city.repository';
+import { CityRepository } from './repositories/city.repository';
 import { CountriesModule } from 'src/countries/countries.module';
 
 @Module({

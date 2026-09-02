@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { RegisterResponseDto } from '../dto/register-response.dto';
+import { RegisterResponseDto } from '../dtos/register-response.dto';
 
 export function SwaggerRegister() {
     return applyDecorators(

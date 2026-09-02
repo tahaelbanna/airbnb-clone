@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCountryDto } from '../dto/create-country.dto';
-import { CountryResponseDto } from '../dto/country-response.dto';
+import { CreateCountryDto } from '../dtos/create-country.dto';
+import { CountryResponseDto } from '../dtos/country-response.dto';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { I18nService } from 'nestjs-i18n';
 import { plainToInstance } from 'class-transformer';
-import { CountryRepository } from '../repository/country.repository';
+import { CountryRepository } from '../repositories/country.repository';
 
 @Injectable()
 export class CreateCountryUseCase {

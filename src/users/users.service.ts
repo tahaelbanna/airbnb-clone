@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { User } from './Schemas/user.schema';
+import { User } from './schemas/user.schema';
 import { QueryFilter } from 'mongoose';
-import { createUserDto } from './dto/create-user.dto';
+import { createUserDto } from './dtos/create-user.dto';
 import { CreateUserUsecase } from './use-cases/create-user.usecase';
-import { UserResponseDto } from './dto/user-response.dto';
-import { UserRepository } from './repository/user.repository';
+import { UserResponseDto } from './dtos/user-response.dto';
+import { UserRepository } from './repositories/user.repository';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

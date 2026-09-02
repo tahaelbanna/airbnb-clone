@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCurrencyDto } from './dto/create-currency.dto';
-import { CurrencyResponseDto } from './dto/currency-response.dto';
-import { GetAllCurrenciesDto } from './dto/get-all-currencies.dto';
-import { UpdateCurrencyDto } from './dto/update-currency.dto';
+import { CreateCurrencyDto } from './dtos/create-currency.dto';
+import { CurrencyResponseDto } from './dtos/currency-response.dto';
+import { GetAllCurrenciesDto } from './dtos/get-all-currencies.dto';
+import { UpdateCurrencyDto } from './dtos/update-currency.dto';
 import { CreateCurrencyUseCase } from './use-cases/create-currency.usecase';
 import { GetAllCurrenciesUseCase } from './use-cases/get-all-currencies.usecase';
 import { GetCurrencyUseCase } from './use-cases/get-currency.usecase';

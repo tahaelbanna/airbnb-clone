@@ -9,12 +9,12 @@ import {
     Query,
 } from '@nestjs/common';
 import { CitiesService } from './cities.service';
-import { CreateCityDto } from './dto/create-city.dto';
+import { CreateCityDto } from './dtos/create-city.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
-import { UpdateCityDto } from './dto/update-city.dto';
-import { GetAllCitiesDto } from './dto/get-all-cities.dto';
+import { UpdateCityDto } from './dtos/update-city.dto';
+import { GetAllCitiesDto } from './dtos/get-all-cities.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { API_TAGS } from '../common/Swagger';
+import { API_TAGS } from '../common/swagger';
 import {
     CreateCitySwagger,
     DeleteCitySwagger,

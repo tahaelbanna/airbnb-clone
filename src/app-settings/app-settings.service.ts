@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { UpsertAppSettingsUseCase } from './use-cases/upsert-app-settings.usecase';
-import { UpsertAppSettingsDto } from './dto/upsert-app-settings.dto';
-import { AppSettingsResponseDto } from './dto/app-settings-response.dto';
+import { UpsertAppSettingsDto } from './dtos/upsert-app-settings.dto';
+import { AppSettingsResponseDto } from './dtos/app-settings-response.dto';
 import { GetAppSettingsUseCase } from './use-cases/get-app-settings.usecase';
 
 @Injectable()

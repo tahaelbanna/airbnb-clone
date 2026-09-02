@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateUnitCategoryDto } from '../dto/update-unit-category.dto';
-import { UnitCategoryResponseDto } from '../dto/unit-category-response.dto';
+import { UpdateUnitCategoryDto } from '../dtos/update-unit-category.dto';
+import { UnitCategoryResponseDto } from '../dtos/unit-category-response.dto';
 import { BadRequestException } from '../../common/error-handling/custom-exceptions/bad-request.exception';
 import { plainToInstance } from 'class-transformer';
-import { UnitCategoriesRepository } from '../repository/unit-category.repository';
+import { UnitCategoriesRepository } from '../repositories/unit-category.repository';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
 
 @Injectable()

@@ -1,8 +1,8 @@
 import { Body, Controller, Put, Get } from '@nestjs/common';
 import { AppSettingsService } from './app-settings.service';
-import { UpsertAppSettingsDto } from './dto/upsert-app-settings.dto';
+import { UpsertAppSettingsDto } from './dtos/upsert-app-settings.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { API_TAGS } from '../common/Swagger';
+import { API_TAGS } from '../common/swagger';
 import { GetAppSettingsSwagger, UpsertAppSettingsSwagger } from './swagger';
 
 @ApiTags(API_TAGS.APP_SETTINGS)

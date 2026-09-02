@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { UnitCategoryResponseDto } from '../dto/unit-category-response.dto';
+import { UnitCategoryResponseDto } from '../dtos/unit-category-response.dto';
 
 export function GetAllUnitCategoriesSwagger() {
     return applyDecorators(

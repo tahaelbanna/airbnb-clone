@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateCountryDto } from '../dto/update-country.dto';
-import { CountryResponseDto } from '../dto/country-response.dto';
+import { UpdateCountryDto } from '../dtos/update-country.dto';
+import { CountryResponseDto } from '../dtos/country-response.dto';
 import { BadRequestException } from '../../common/error-handling/custom-exceptions/bad-request.exception';
 import { plainToInstance } from 'class-transformer';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
-import { CountryRepository } from '../repository/country.repository';
+import { CountryRepository } from '../repositories/country.repository';
 
 @Injectable()
 export class UpdateCountryUsecase {

@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CurrencyResponseDto } from '../dto/currency-response.dto';
+import { CurrencyResponseDto } from '../dtos/currency-response.dto';
 import { QueryFilter } from 'mongoose';
-import { Currency } from '../Schemas/currency.schema';
+import { Currency } from '../schemas/currency.schema';
 import { plainToInstance } from 'class-transformer';
-import { CurrencyRepository } from '../repository/currency.repository';
+import { CurrencyRepository } from '../repositories/currency.repository';
 import { PaginatedResult } from '../../common/data-access';
-import { GetAllCurrenciesDto } from '../dto/get-all-currencies.dto';
+import { GetAllCurrenciesDto } from '../dtos/get-all-currencies.dto';
 
 @Injectable()
 export class GetAllCurrenciesUseCase {

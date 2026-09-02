@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepository, ModelNames } from '../../common/data-access';
+import { Country } from '../schemas/country.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { User } from '../Schemas/user.schema';
 
 @Injectable()
-export class UserRepository extends BaseRepository<User> {
+export class CountryRepository extends BaseRepository<Country> {
     constructor(
-        @InjectModel(ModelNames.USERS)
-        private readonly userModel: Model<User>,
+        @InjectModel(ModelNames.COUNTRIES)
+        private readonly countryModel: Model<Country>,
     ) {
-        super(userModel);
+        super(countryModel);
     }
 }

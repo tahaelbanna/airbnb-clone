@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { UpdateCurrencyDto } from '../dto/update-currency.dto';
-import { CurrencyResponseDto } from '../dto/currency-response.dto';
+import { UpdateCurrencyDto } from '../dtos/update-currency.dto';
+import { CurrencyResponseDto } from '../dtos/currency-response.dto';
 import { BadRequestException } from '../../common/error-handling/custom-exceptions/bad-request.exception';
 import { plainToInstance } from 'class-transformer';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
-import { CurrencyRepository } from '../repository/currency.repository';
+import { CurrencyRepository } from '../repositories/currency.repository';
 
 @Injectable()
 export class UpdateCurrencyUsecase {

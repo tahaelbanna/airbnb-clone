@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
-import { CountryRepository } from '../repository/country.repository';
+import { CountryRepository } from '../repositories/country.repository';
 @Injectable()
 export class SoftDeleteOneCountryUseCase {
     constructor(

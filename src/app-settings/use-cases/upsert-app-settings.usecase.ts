@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { AppSettingsRepository } from '../Repository/app-settings.repository';
-import { UpsertAppSettingsDto } from '../dto/upsert-app-settings.dto';
-import { AppSettingsResponseDto } from '../dto/app-settings-response.dto';
+import { AppSettingsRepository } from '../repositories/app-settings.repository';
+import { UpsertAppSettingsDto } from '../dtos/upsert-app-settings.dto';
+import { AppSettingsResponseDto } from '../dtos/app-settings-response.dto';
 import { plainToInstance } from 'class-transformer';
 
 @Injectable()

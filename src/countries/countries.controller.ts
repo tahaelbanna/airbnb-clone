@@ -9,12 +9,12 @@ import {
     Query,
 } from '@nestjs/common';
 import { CountriesService } from './countries.service';
-import { CreateCountryDto } from './dto/create-country.dto';
+import { CreateCountryDto } from './dtos/create-country.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
-import { UpdateCountryDto } from './dto/update-country.dto';
-import { GetAllCountriesDto } from './dto/get-all-countries.dto';
+import { UpdateCountryDto } from './dtos/update-country.dto';
+import { GetAllCountriesDto } from './dtos/get-all-countries.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { API_TAGS } from '../common/Swagger';
+import { API_TAGS } from '../common/swagger';
 import {
     CreateCountrySwagger,
     DeleteCountrySwagger,

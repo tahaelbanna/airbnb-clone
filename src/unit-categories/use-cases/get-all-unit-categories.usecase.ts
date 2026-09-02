@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
 import { QueryFilter } from 'mongoose';
-import { UnitCategoryResponseDto } from '../dto/unit-category-response.dto';
+import { UnitCategoryResponseDto } from '../dtos/unit-category-response.dto';
 import { plainToInstance } from 'class-transformer';
-import { getAllUnitCategoriesDto } from '../dto/get-all-unit-categories.dto';
-import { UnitCategoriesRepository } from '../repository/unit-category.repository';
+import { getAllUnitCategoriesDto } from '../dtos/get-all-unit-categories.dto';
+import { UnitCategoriesRepository } from '../repositories/unit-category.repository';
 import { PaginatedResult } from '../../common/data-access';
-import { UnitCategories } from '../Schemas/unit-category.schema';
+import { UnitCategories } from '../schemas/unit-category.schema';
 
 @Injectable()
 export class GetAllUnitCategoriesUsecase {

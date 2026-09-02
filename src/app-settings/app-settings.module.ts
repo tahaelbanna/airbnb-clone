@@ -2,9 +2,9 @@ import { Module } from '@nestjs/common';
 import { AppSettingsService } from './app-settings.service';
 import { AppSettingsController } from './app-settings.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { AppSettingsSchema } from './Schemas/app-settings.schema';
+import { AppSettingsSchema } from './schemas/app-settings.schema';
 import { ModelNames } from '../common/data-access';
-import { AppSettingsRepository } from './Repository/app-settings.repository';
+import { AppSettingsRepository } from './repositories/app-settings.repository';
 import { UpsertAppSettingsUseCase } from './use-cases/upsert-app-settings.usecase';
 import { GetAppSettingsUseCase } from './use-cases/get-app-settings.usecase';
 

@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateCityDto } from '../dto/create-city.dto';
-import { CityResponseDto } from '../dto/city-response.dto';
+import { CreateCityDto } from '../dtos/create-city.dto';
+import { CityResponseDto } from '../dtos/city-response.dto';
 
 export function CreateCitySwagger() {
     return applyDecorators(

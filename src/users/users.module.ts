@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { UserSchema } from './Schemas/user.schema';
+import { UserSchema } from './schemas/user.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { CreateUserUsecase } from './use-cases/create-user.usecase';
 import { ModelNames } from '../common/data-access';
-import { UserRepository } from './repository/user.repository';
+import { UserRepository } from './repositories/user.repository';
 
 @Module({
     providers: [UsersService, CreateUserUsecase, UserRepository],

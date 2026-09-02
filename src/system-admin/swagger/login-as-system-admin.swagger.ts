@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AuthResponseDto } from '../../auth/dto/auth-response.dto';
+import { AuthResponseDto } from '../../auth/dtos/auth-response.dto';
 
 export function LoginAsSystemAdminSwagger() {
     return applyDecorators(

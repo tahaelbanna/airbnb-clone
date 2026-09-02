@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { refreshTokenDto } from '../dto/refresh-token.dto';
+import { refreshTokenDto } from '../dtos/refresh-token.dto';
 import { ForbiddenException } from 'src/common/error-handling/custom-exceptions/forbidden.exception';
 import { JwtService } from '@nestjs/jwt';
 import { I18nService } from 'nestjs-i18n';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import * as bcrypt from 'bcrypt';
 import { GenerateTokensUsecase } from './generate-token.usecase';
-import { AuthResponseDto } from '../dto/auth-response.dto';
+import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { plainToInstance } from 'class-transformer';
-import { RefreshTokenRepository } from '../repository/refresh-token.repository';
+import { RefreshTokenRepository } from '../repositories/refresh-token.repository';
 import { Roles } from '../../common/constants/roles.constans';
 @Injectable()
 export class RefreshTokenUsecase {

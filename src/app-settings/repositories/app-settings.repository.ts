@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BaseRepository, ModelNames } from '../../common/data-access';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { AppSettings } from '../Schemas/app-settings.schema';
+import { AppSettings } from '../schemas/app-settings.schema';
 
 @Injectable()
 export class AppSettingsRepository extends BaseRepository<AppSettings> {

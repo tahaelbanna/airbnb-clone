@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCityDto } from '../dto/create-city.dto';
-import { CityResponseDto } from '../dto/city-response.dto';
+import { CreateCityDto } from '../dtos/create-city.dto';
+import { CityResponseDto } from '../dtos/city-response.dto';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { I18nService } from 'nestjs-i18n';
 import { plainToInstance } from 'class-transformer';
-import { CityRepository } from '../repository/city.repository';
+import { CityRepository } from '../repositories/city.repository';
 import { CountriesService } from '../../countries/countries.service';
 
 @Injectable()

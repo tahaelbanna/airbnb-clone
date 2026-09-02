@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCountryDto } from './dto/create-country.dto';
-import { CountryResponseDto } from './dto/country-response.dto';
+import { CreateCountryDto } from './dtos/create-country.dto';
+import { CountryResponseDto } from './dtos/country-response.dto';
 import { CreateCountryUseCase } from './use-cases/create-country.usecase';
 import { GetAllCountriesUseCase } from './use-cases/get-all-countries.usecase';
 import { GetCountryUseCase } from './use-cases/get-country.usecase';
 import { SoftDeleteOneCountryUseCase } from './use-cases/delete-country.usecase';
 import { UpdateCountryUsecase } from './use-cases/update-country.dto';
-import { UpdateCountryDto } from './dto/update-country.dto';
+import { UpdateCountryDto } from './dtos/update-country.dto';
 import { PaginatedResult } from '../common/data-access';
-import { GetAllCountriesDto } from './dto/get-all-countries.dto';
+import { GetAllCountriesDto } from './dtos/get-all-countries.dto';
 @Injectable()
 export class CountriesService {
     constructor(

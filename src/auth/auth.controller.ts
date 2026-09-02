@@ -1,14 +1,14 @@
 import { Controller, Post, Body, Get } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { registerDto } from './dto/register.dto';
-import { loginDto } from './dto/login.dto';
-import { refreshTokenDto } from './dto/refresh-token.dto';
+import { registerDto } from './dtos/register.dto';
+import { loginDto } from './dtos/login.dto';
+import { refreshTokenDto } from './dtos/refresh-token.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { SwaggerRegister } from './Swagger/register.swagger';
-import { API_TAGS } from '../common/Swagger/constants';
-import { LoginSwagger } from './Swagger/login.swagger';
-import { RefreshTokenSwagger } from './Swagger/refresh-token.swagger';
-import { AuthResponseDto } from './dto/auth-response.dto';
+import { SwaggerRegister } from './swagger/register.swagger';
+import { API_TAGS } from '../common/swagger/constants';
+import { LoginSwagger } from './swagger/login.swagger';
+import { RefreshTokenSwagger } from './swagger/refresh-token.swagger';
+import { AuthResponseDto } from './dtos/auth-response.dto';
 import { Public } from './decorators/public.decorator';
 import { CurrentUser, Principal } from './decorators/current-user.decorator';
 

@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCurrencyDto } from '../dto/create-currency.dto';
-import { CurrencyResponseDto } from '../dto/currency-response.dto';
-import { CurrencyRepository } from '../repository/currency.repository';
+import { CreateCurrencyDto } from '../dtos/create-currency.dto';
+import { CurrencyResponseDto } from '../dtos/currency-response.dto';
+import { CurrencyRepository } from '../repositories/currency.repository';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { I18nService } from 'nestjs-i18n';
 import { plainToInstance } from 'class-transformer';

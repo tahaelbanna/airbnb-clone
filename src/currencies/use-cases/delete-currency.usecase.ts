@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { I18nService } from 'nestjs-i18n';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
-import { CurrencyRepository } from '../repository/currency.repository';
+import { CurrencyRepository } from '../repositories/currency.repository';
 @Injectable()
 export class SoftDeleteOneCurrencyUseCase {
     constructor(

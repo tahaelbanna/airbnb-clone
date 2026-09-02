@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { BaseRepository, ModelNames } from '../../common/data-access';
-import { UnitCategories } from '../Schemas/unit-category.schema';
+import { UnitCategories } from '../schemas/unit-category.schema';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 

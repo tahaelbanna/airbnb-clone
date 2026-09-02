@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { loginDto } from '../dto/login.dto';
-import { AuthResponseDto } from '../dto/auth-response.dto';
+import { loginDto } from '../dtos/login.dto';
+import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { LoginAsAdminUsecase } from './login-as-admin.usecase';
 import { LoginAsUserUsecase } from './login-as-user.usecase';
 import { Roles } from '../../common/constants/roles.constans';

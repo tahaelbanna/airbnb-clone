@@ -14,6 +14,7 @@ import { JwtAuthGuard } from './auth/guards/jwt-auth.guard';
 import { RoleGuardG } from './auth/guards/role-guard.guard';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
+import { UnitsModule } from './units/units.module';
 @Module({
     imports: [
         CoreModule,
@@ -25,6 +26,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
         UnitCategoriesModule,
         AppSettingsModule,
         SystemAdminModule,
+        UnitsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

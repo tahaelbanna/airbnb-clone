@@ -1,14 +1,14 @@
 import { Injectable } from '@nestjs/common';
-import { CreateCityDto } from './dto/create-city.dto';
-import { CityResponseDto } from './dto/city-response.dto';
+import { CreateCityDto } from './dtos/create-city.dto';
+import { CityResponseDto } from './dtos/city-response.dto';
 import { CreateCityUseCase } from './use-cases/create-city.usecase';
 import { GetAllCitiesUseCase } from './use-cases/get-all-cities.usecase';
 import { GetCityUseCase } from './use-cases/get-city.usecase';
 import { SoftDeleteOneCityUseCase } from './use-cases/delete-city.usecase';
 import { UpdateCityUsecase } from './use-cases/update-city.dto';
-import { UpdateCityDto } from './dto/update-city.dto';
+import { UpdateCityDto } from './dtos/update-city.dto';
 import { PaginatedResult } from '../common/data-access';
-import { GetAllCitiesDto } from './dto/get-all-cities.dto';
+import { GetAllCitiesDto } from './dtos/get-all-cities.dto';
 @Injectable()
 export class CitiesService {
     constructor(

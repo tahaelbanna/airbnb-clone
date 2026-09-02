@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
-import { CurrencyResponseDto } from '../dto/currency-response.dto';
+import { CurrencyResponseDto } from '../dtos/currency-response.dto';
 
 export function GetCurrencyByIdSwagger() {
     return applyDecorators(

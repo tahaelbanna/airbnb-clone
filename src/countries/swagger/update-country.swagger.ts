@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
-import { UpdateCountryDto } from '../dto/update-country.dto';
-import { CountryResponseDto } from '../dto/country-response.dto';
+import { UpdateCountryDto } from '../dtos/update-country.dto';
+import { CountryResponseDto } from '../dtos/country-response.dto';
 
 export function UpdateCountrySwagger() {
     return applyDecorators(

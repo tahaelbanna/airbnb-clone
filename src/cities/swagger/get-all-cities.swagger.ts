@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiQuery, ApiResponse } from '@nestjs/swagger';
-import { CityResponseDto } from '../dto/city-response.dto';
+import { CityResponseDto } from '../dtos/city-response.dto';
 
 export function GetAllCitiesSwagger() {
     return applyDecorators(

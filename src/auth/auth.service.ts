@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
-import { registerDto } from './dto/register.dto';
-import { loginDto } from './dto/login.dto';
+import { registerDto } from './dtos/register.dto';
+import { loginDto } from './dtos/login.dto';
 import { RegisterUsecase } from './use-cases/register.usecase';
 import { LoginUsecase } from './use-cases/login.usecase';
 import { RefreshTokenUsecase } from './use-cases/refresh-token.usecase';
-import { refreshTokenDto } from './dto/refresh-token.dto';
-import { AuthResponseDto } from './dto/auth-response.dto';
-import { RegisterResponseDto } from './dto/register-response.dto';
+import { refreshTokenDto } from './dtos/refresh-token.dto';
+import { AuthResponseDto } from './dtos/auth-response.dto';
+import { RegisterResponseDto } from './dtos/register-response.dto';
 @Injectable()
 export class AuthService {
     constructor(

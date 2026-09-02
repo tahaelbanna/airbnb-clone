@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { UpsertAppSettingsDto } from '../dto/upsert-app-settings.dto';
-import { AppSettingsResponseDto } from '../dto/app-settings-response.dto';
+import { UpsertAppSettingsDto } from '../dtos/upsert-app-settings.dto';
+import { AppSettingsResponseDto } from '../dtos/app-settings-response.dto';
 
 export function UpsertAppSettingsSwagger() {
     return applyDecorators(

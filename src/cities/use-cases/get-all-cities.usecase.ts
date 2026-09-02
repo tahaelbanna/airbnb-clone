@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CityResponseDto } from '../dto/city-response.dto';
+import { CityResponseDto } from '../dtos/city-response.dto';
 import { QueryFilter } from 'mongoose';
-import { City } from '../Schemas/city.schema';
+import { City } from '../schemas/city.schema';
 import { plainToInstance } from 'class-transformer';
-import { CityRepository } from '../repository/city.repository';
+import { CityRepository } from '../repositories/city.repository';
 import { PaginatedResult } from '../../common/data-access';
-import { GetAllCitiesDto } from '../dto/get-all-cities.dto';
+import { GetAllCitiesDto } from '../dtos/get-all-cities.dto';
 
 @Injectable()
 export class GetAllCitiesUseCase {

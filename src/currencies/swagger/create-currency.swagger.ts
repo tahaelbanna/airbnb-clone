@@ -1,7 +1,7 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateCurrencyDto } from '../dto/create-currency.dto';
-import { CurrencyResponseDto } from '../dto/currency-response.dto';
+import { CreateCurrencyDto } from '../dtos/create-currency.dto';
+import { CurrencyResponseDto } from '../dtos/currency-response.dto';
 
 export function CreateCurrencySwagger() {
     return applyDecorators(

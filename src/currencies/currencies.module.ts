@@ -1,8 +1,8 @@
 import { Module } from '@nestjs/common';
 import { CurrenciesService } from './currencies.service';
 import { CurrenciesController } from './currencies.controller';
-import { CurrencySchema } from './Schemas/currency.schema';
-import { CurrencyRepository } from './repository/currency.repository';
+import { CurrencySchema } from './schemas/currency.schema';
+import { CurrencyRepository } from './repositories/currency.repository';
 import { CreateCurrencyUseCase } from './use-cases/create-currency.usecase';
 import { GetCurrencyUseCase } from './use-cases/get-currency.usecase';
 import { GetAllCurrenciesUseCase } from './use-cases/get-all-currencies.usecase';

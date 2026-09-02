@@ -1,13 +1,13 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUnitCategoryUsecase } from './use-cases/create-unit-category.usecase';
-import { CreateUnitCategoryDto } from './dto/create-unit-category.dto';
-import { UnitCategoryResponseDto } from './dto/unit-category-response.dto';
+import { CreateUnitCategoryDto } from './dtos/create-unit-category.dto';
+import { UnitCategoryResponseDto } from './dtos/unit-category-response.dto';
 import { GetUnitCategoryByIdUsecase } from './use-cases/get-unit-category.usecase';
 import { GetAllUnitCategoriesUsecase } from './use-cases/get-all-unit-categories.usecase';
 import { SoftDeleteUnitCategoryUsecase } from './use-cases/delete-unit-category.usecase';
 import { UpdateUnitCategoryUsecase } from './use-cases/update-unit-category.dto';
-import { UpdateUnitCategoryDto } from './dto/update-unit-category.dto';
-import { getAllUnitCategoriesDto } from './dto/get-all-unit-categories.dto';
+import { UpdateUnitCategoryDto } from './dtos/update-unit-category.dto';
+import { getAllUnitCategoriesDto } from './dtos/get-all-unit-categories.dto';
 import { PaginatedResult } from '../common/data-access';
 
 @Injectable()

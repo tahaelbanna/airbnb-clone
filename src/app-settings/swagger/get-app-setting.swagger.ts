@@ -1,6 +1,6 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { AppSettingsResponseDto } from '../dto/app-settings-response.dto';
+import { AppSettingsResponseDto } from '../dtos/app-settings-response.dto';
 
 export function GetAppSettingsSwagger() {
     return applyDecorators(

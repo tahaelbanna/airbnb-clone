@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { CountryResponseDto } from '../dto/country-response.dto';
+import { CountryResponseDto } from '../dtos/country-response.dto';
 import { I18nService } from 'nestjs-i18n';
 import { plainToInstance } from 'class-transformer';
 import { NotFoundException } from 'src/common/error-handling/custom-exceptions/not-found.exception';
-import { CountryRepository } from '../repository/country.repository';
+import { CountryRepository } from '../repositories/country.repository';
 @Injectable()
 export class GetCountryUseCase {
     constructor(

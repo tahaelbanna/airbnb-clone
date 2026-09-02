@@ -1,11 +1,11 @@
 import { Injectable } from '@nestjs/common';
-import { CountryResponseDto } from '../dto/country-response.dto';
+import { CountryResponseDto } from '../dtos/country-response.dto';
 import { QueryFilter } from 'mongoose';
-import { Country } from '../Schemas/country.schema';
+import { Country } from '../schemas/country.schema';
 import { plainToInstance } from 'class-transformer';
-import { CountryRepository } from '../repository/country.repository';
+import { CountryRepository } from '../repositories/country.repository';
 import { PaginatedResult } from '../../common/data-access';
-import { GetAllCountriesDto } from '../dto/get-all-countries.dto';
+import { GetAllCountriesDto } from '../dtos/get-all-countries.dto';
 @Injectable()
 export class GetAllCountriesUseCase {
     constructor(private readonly countryRepository: CountryRepository) {}

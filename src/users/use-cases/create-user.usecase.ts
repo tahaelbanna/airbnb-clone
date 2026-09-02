@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
-import { createUserDto } from '../dto/create-user.dto';
+import { createUserDto } from '../dtos/create-user.dto';
 import * as bcrypt from 'bcrypt';
-import { UserResponseDto } from '../dto/user-response.dto';
+import { UserResponseDto } from '../dtos/user-response.dto';
 import { plainToInstance } from 'class-transformer';
-import { UserRepository } from '../repository/user.repository';
+import { UserRepository } from '../repositories/user.repository';
 
 @Injectable()
 export class CreateUserUsecase {

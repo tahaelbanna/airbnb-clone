@@ -9,14 +9,14 @@ import {
     Query,
 } from '@nestjs/common';
 import { UnitCategoriesService } from './unit-categories.service';
-import { UnitCategoryResponseDto } from './dto/unit-category-response.dto';
-import { CreateUnitCategoryDto } from './dto/create-unit-category.dto';
-import { UpdateUnitCategoryDto } from './dto/update-unit-category.dto';
+import { UnitCategoryResponseDto } from './dtos/unit-category-response.dto';
+import { CreateUnitCategoryDto } from './dtos/create-unit-category.dto';
+import { UpdateUnitCategoryDto } from './dtos/update-unit-category.dto';
 import { PaginatedResult } from '../common/data-access';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
-import { getAllUnitCategoriesDto } from './dto/get-all-unit-categories.dto';
+import { getAllUnitCategoriesDto } from './dtos/get-all-unit-categories.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { API_TAGS } from '../common/Swagger';
+import { API_TAGS } from '../common/swagger';
 import {
     CreateUnitCategorySwagger,
     DeleteUnitCategorySwagger,

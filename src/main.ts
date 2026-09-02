@@ -4,7 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { EnvironmentInterface } from './common/configuration/environment.interface';
 import { Logger } from '@nestjs/common';
 import { I18nValidationPipe } from 'nestjs-i18n';
-import { SwaggerSetup } from './common/Swagger';
+import { SwaggerSetup } from './common/swagger';
 import { ConsoleLogger } from '@nestjs/common';
 import { INestApplication } from '@nestjs/common';
 async function bootstrap() {

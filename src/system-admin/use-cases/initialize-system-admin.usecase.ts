@@ -1,5 +1,5 @@
 import { Injectable, Logger } from '@nestjs/common';
-import { SystemAdminRepository } from '../Repository/system-admin.repository';
+import { SystemAdminRepository } from '../repositories/system-admin.repository';
 import { ConfigService } from '@nestjs/config';
 import {
     EnvironmentInterface,

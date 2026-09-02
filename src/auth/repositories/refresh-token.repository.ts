@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { BaseRepository, ModelNames } from '../../common/data-access';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { RefreshToken } from '../Schemas/refresh-token.schema';
+import { RefreshToken } from '../schemas/refresh-token.schema';
 
 @Injectable()
 export class RefreshTokenRepository extends BaseRepository<RefreshToken> {

@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { NotFoundException } from '../../common/error-handling/custom-exceptions/not-found.exception';
-import { UnitCategoriesRepository } from '../repository/unit-category.repository';
+import { UnitCategoriesRepository } from '../repositories/unit-category.repository';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
 
 @Injectable()

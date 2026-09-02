@@ -2,12 +2,12 @@
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { Injectable } from '@nestjs/common';
-import { loginDto } from '../dto/login.dto';
+import { loginDto } from '../dtos/login.dto';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { I18nService } from 'nestjs-i18n';
 import * as bcrypt from 'bcrypt';
 import { GenerateTokensUsecase } from './generate-token.usecase';
-import { AuthResponseDto } from '../dto/auth-response.dto';
+import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { SystemAdminService } from '../../system-admin/system-admin.service';
 @Injectable()

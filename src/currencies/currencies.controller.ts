@@ -9,12 +9,12 @@ import {
     Query,
 } from '@nestjs/common';
 import { CurrenciesService } from './currencies.service';
-import { CreateCurrencyDto } from './dto/create-currency.dto';
-import { GetAllCurrenciesDto } from './dto/get-all-currencies.dto';
-import { UpdateCurrencyDto } from './dto/update-currency.dto';
+import { CreateCurrencyDto } from './dtos/create-currency.dto';
+import { GetAllCurrenciesDto } from './dtos/get-all-currencies.dto';
+import { UpdateCurrencyDto } from './dtos/update-currency.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { ApiTags } from '@nestjs/swagger';
-import { API_TAGS } from '../common/Swagger';
+import { API_TAGS } from '../common/swagger';
 import {
     CreateCurrencySwagger,
     DeleteCurrencySwagger,
