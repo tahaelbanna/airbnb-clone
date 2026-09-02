@@ -15,6 +15,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CheckUnitOwnerUseCase } from './use-cases/check-unit-owner.usecase';
 import { GetUnitUseCase } from './use-cases/get-unit.usecase';
 import { UpdateUnitUseCase } from './use-cases/update-unit.usecase';
+import { GetUnitByIdUseCase } from './use-cases/git-unit-by-id.usecase';
+import { GetAllUnitsUseCase } from './use-cases/get-all-units.usecase';
 
 @Module({
     providers: [
@@ -25,6 +27,8 @@ import { UpdateUnitUseCase } from './use-cases/update-unit.usecase';
         CheckUnitOwnerUseCase,
         GetUnitUseCase,
         UpdateUnitUseCase,
+        GetUnitByIdUseCase,
+        GetAllUnitsUseCase,
     ],
     controllers: [UnitsController],
     imports: [

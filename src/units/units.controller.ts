@@ -1,4 +1,12 @@
-import { Controller, Post, Body, Patch, Param } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Get,
+    Query,
+} from '@nestjs/common';
 import { UnitsService } from './units.service';
 import { CreateUnitDto } from './dtos/create-unit.dto';
 import {
@@ -9,6 +17,8 @@ import { AllowRoles } from '../auth/decorators/roles.decorator';
 import { Roles } from 'src/common/constants/roles.constans';
 import { UpdateUnitDto } from './dtos/update-unit.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { GetAllUnitsDto } from './dtos/get-all.usecase.dto';
 
 @Controller('units')
 export class UnitsController {
@@ -31,5 +41,17 @@ export class UnitsController {
         @CurrentUser() principal: Principal,
     ) {
         return await this.unitsService.update(id, body, principal.user);
+    }
+
+    @Public()
+    @Get(':id')
+    async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
+        return await this.unitsService.GetById(id);
+    }
+
+    @Get()
+    @Public()
+    async GetAll(@Query() query: GetAllUnitsDto) {
+        return await this.unitsService.GetAll(query);
     }
 }
