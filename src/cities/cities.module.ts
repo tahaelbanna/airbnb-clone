@@ -29,5 +29,6 @@ import { CountriesModule } from 'src/countries/countries.module';
         ]),
         CountriesModule,
     ],
+    exports: [CitiesService],
 })
 export class CitiesModule {}

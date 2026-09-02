@@ -48,7 +48,7 @@ export class UnitCategoriesController {
     async getUnitCategoryById(
         @Param('id', new ParseMongoIdPipe()) id: string,
     ): Promise<UnitCategoryResponseDto> {
-        return this.unitCategoriesService.getCurrencyById(id);
+        return this.unitCategoriesService.getUnitCategoryById(id);
     }
 
     @Get()

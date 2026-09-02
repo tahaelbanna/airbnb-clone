@@ -26,7 +26,7 @@ export class UnitCategoriesService {
         return this.createUnitCategoryUsecase.execute(body);
     }
 
-    async getCurrencyById(id: string): Promise<UnitCategoryResponseDto> {
+    async getUnitCategoryById(id: string): Promise<UnitCategoryResponseDto> {
         return this.getUnitCategoryByIdUsecase.execute(id);
     }
 

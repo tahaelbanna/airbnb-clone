@@ -7,4 +7,5 @@ export enum ModelNames {
     REFRESH_TOKENS = 'refresh-tokens',
     APP_SETTINGS = 'app-settings',
     SYSTEM_ADMINS = 'system-admins',
+    UNITS = 'units',
 }

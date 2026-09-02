@@ -1,0 +1,4 @@
+{
+    "UNIT_COST_TOO_LOW": "Unit cost per night is below the minimum allowed.",
+    "COUNTRY_CITY_MISMATCH": "The selected city does not belong to the specified country."
+}
