@@ -12,6 +12,9 @@ import { UnitsRepository } from './repositories/unit.repository';
 import { ModelNames } from '../common/data-access/model-names.enum';
 import { UnitSchema } from './schemas/units.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { CheckUnitOwnerUseCase } from './use-cases/check-unit-owner.usecase';
+import { GetUnitUseCase } from './use-cases/get-unit.usecase';
+import { UpdateUnitUseCase } from './use-cases/update-unit.usecase';
 
 @Module({
     providers: [
@@ -19,6 +22,9 @@ import { MongooseModule } from '@nestjs/mongoose';
         UnitValidationUseCase,
         CreateUnitUseCase,
         UnitsRepository,
+        CheckUnitOwnerUseCase,
+        GetUnitUseCase,
+        UpdateUnitUseCase,
     ],
     controllers: [UnitsController],
     imports: [

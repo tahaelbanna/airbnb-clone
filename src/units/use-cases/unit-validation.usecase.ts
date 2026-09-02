@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import { CreateUnitDto } from '../dtos/create-unit.dto';
 import { UnitCategoriesService } from '../../unit-categories/unit-categories.service';
 import { CitiesService } from '../../cities/cities.service';
@@ -6,6 +8,7 @@ import { AppSettingsService } from '../../app-settings/app-settings.service';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { Injectable } from '@nestjs/common';
+import { UpdateUnitDto } from '../dtos/update-unit.dto';
 
 @Injectable()
 export class UnitValidationUseCase {
@@ -17,25 +20,36 @@ export class UnitValidationUseCase {
         private readonly i18nService: I18nService,
     ) {}
 
-    async execute(body: CreateUnitDto): Promise<void> {
+    async execute(body: CreateUnitDto | UpdateUnitDto): Promise<void> {
         const appSettings = await this.appSettingsService.get();
-        if (body.unit_cost_per_night < appSettings.min_price) {
+        if (body?.unit_cost_per_night < appSettings.min_price) {
             throw new BadRequestException(
                 this.i18nService.translate('units.UNIT_COST_TOO_LOW'),
             );
         }
 
-        await this.unitCategoriesService.getUnitCategoryById(
-            body.unit_category_id,
-        );
+        if (body?.unit_category_id) {
+            await this.unitCategoriesService.getUnitCategoryById(
+                body.unit_category_id,
+            );
+        }
+        let city;
+        let country;
 
-        const city = await this.citiesService.getCityById(body.unit_city_id);
+        if (body?.unit_city_id) {
+            city = await this.citiesService.getCityById(body.unit_city_id);
+        }
+        if (body?.unit_country_id) {
+            country = await this.countriesService.getCountryById(
+                body.unit_country_id,
+            );
+        }
 
-        const country = await this.countriesService.getCountryById(
-            body.unit_country_id,
-        );
-
-        if (city.country_id.toString() !== country._id.toString()) {
+        if (
+            city &&
+            country &&
+            city.country_id.toString() !== country._id.toString()
+        ) {
             throw new BadRequestException(
                 this.i18nService.translate('units.COUNTRY_CITY_MISMATCH'),
             );
