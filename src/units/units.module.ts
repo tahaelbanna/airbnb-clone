@@ -23,6 +23,7 @@ import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
 import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 import { FilesUploadModule } from 'src/files-upload/files-upload.module';
 import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase';
+import { UpdateUnitPhotosUsecase } from './use-cases/update-unit-photos.usecase';
 
 @Module({
     providers: [
@@ -40,6 +41,7 @@ import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase'
         ActivateUnitUseCase,
         DeActivateUnitUseCase,
         DeleteUnitPhotosUseCase,
+        UpdateUnitPhotosUsecase,
     ],
     controllers: [UnitsController],
     imports: [

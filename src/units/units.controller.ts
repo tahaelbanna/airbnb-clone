@@ -28,6 +28,7 @@ import { FilesInterceptor } from '@nestjs/platform-express';
 import { createParseFilePipe } from '../common/files/files-validation-factory';
 import { MulterFile } from '../files-upload/types/file-type.types';
 import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
+import { UnitResponseDto } from './dtos/unit-response.dto';
 
 @Controller('units')
 export class UnitsController {
@@ -116,5 +117,17 @@ export class UnitsController {
         @Body() body: DeleteUnitPhotosDto,
     ): Promise<void> {
         return this.unitsService.deleteUnitPhotos(id, principal.user, body);
+    }
+
+    @Patch('/:id/update-photos')
+    @AllowRoles(Roles.USER)
+    @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
+    async updatePhotos(
+        @UploadedFiles(createParseFilePipe('5MB', ['png', 'jpeg', 'jpg']))
+        photos: MulterFile[],
+        @Param('id') id: string,
+        @CurrentUser() principal: Principal,
+    ): Promise<UnitResponseDto> {
+        return this.unitsService.updateUnitPhotos(id, principal.user, photos);
     }
 }

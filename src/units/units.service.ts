@@ -15,6 +15,8 @@ import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
 import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase';
 import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
+import { UpdateUnitPhotosUsecase } from './use-cases/update-unit-photos.usecase';
+import { MulterFile } from 'src/files-upload/types/file-type.types';
 
 @Injectable()
 export class UnitsService {
@@ -28,6 +30,7 @@ export class UnitsService {
         private readonly deActivateUnitUseCase: DeActivateUnitUseCase,
         private readonly activateUnitUseCase: ActivateUnitUseCase,
         private readonly deleteUnitPhotosUseCase: DeleteUnitPhotosUseCase,
+        private readonly updateUnitPhotosUsecase: UpdateUnitPhotosUsecase,
     ) {}
     async create(
         body: CreateUnitDto,
@@ -88,5 +91,13 @@ export class UnitsService {
         body: DeleteUnitPhotosDto,
     ): Promise<void> {
         await this.deleteUnitPhotosUseCase.execute(id, user, body);
+    }
+
+    async updateUnitPhotos(
+        id: string,
+        user: CurrentUserData,
+        photos: MulterFile[],
+    ): Promise<UnitResponseDto> {
+        return this.updateUnitPhotosUsecase.execute(id, user, photos);
     }
 }
