@@ -13,6 +13,8 @@ import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
 import { SoftDeleteOneUnitUseCase } from './use-cases/delete-unit.usecase';
 import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
 import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
+import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase';
+import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
 
 @Injectable()
 export class UnitsService {
@@ -25,6 +27,7 @@ export class UnitsService {
         private readonly softDeleteOneUnitUseCase: SoftDeleteOneUnitUseCase,
         private readonly deActivateUnitUseCase: DeActivateUnitUseCase,
         private readonly activateUnitUseCase: ActivateUnitUseCase,
+        private readonly deleteUnitPhotosUseCase: DeleteUnitPhotosUseCase,
     ) {}
     async create(
         body: CreateUnitDto,
@@ -77,5 +80,13 @@ export class UnitsService {
         currentUser: CurrentUserData,
     ): Promise<UnitResponseDto> {
         return this.activateUnitUseCase.execute(id, currentUser);
+    }
+
+    async deleteUnitPhotos(
+        id: string,
+        user: CurrentUserData,
+        body: DeleteUnitPhotosDto,
+    ): Promise<void> {
+        await this.deleteUnitPhotosUseCase.execute(id, user, body);
     }
 }

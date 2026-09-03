@@ -4,5 +4,6 @@
     "UNIT_NOT_FOUND": "Unit not found.",
     "UNAUTHORIZED_UPDATE": "You are not the owner of this unit.",
     "UNIT_ALREADY_EXISTS": "Unit already exists.",
-    "UNIT_ALREADY_DELETED": "Unit has already been deleted."
+    "UNIT_ALREADY_DELETED": "Unit has already been deleted.",
+    "NO_PHOTOS_TO_DELETE": "No photos provided for deletion."
 }

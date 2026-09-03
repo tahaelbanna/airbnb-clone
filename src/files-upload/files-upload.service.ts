@@ -19,5 +19,7 @@ export class FilesUploadService {
         return this.uploadMultipleFilesUseCase.execute(files);
     }
 
-    deleteFileByUrl() {}
+    async deleteFileByUrl(url: string | string[]): Promise<void> {
+        return this.deleteFileByUrlUseCase.execute(url);
+    }
 }

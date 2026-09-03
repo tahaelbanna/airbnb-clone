@@ -1,3 +1,4 @@
 {
-    "FILE_UPLOAD_FAILED": "Failed to upload file"
+    "FILE_UPLOAD_FAILED": "Failed to upload file",
+    "FILE_DELETE_FAILED": "Failed to delete file"
 }

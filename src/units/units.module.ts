@@ -22,6 +22,7 @@ import { SoftDeleteOneUnitUseCase } from './use-cases/delete-unit.usecase';
 import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
 import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 import { FilesUploadModule } from 'src/files-upload/files-upload.module';
+import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase';
 
 @Module({
     providers: [
@@ -38,6 +39,7 @@ import { FilesUploadModule } from 'src/files-upload/files-upload.module';
         SoftDeleteOneUnitUseCase,
         ActivateUnitUseCase,
         DeActivateUnitUseCase,
+        DeleteUnitPhotosUseCase,
     ],
     controllers: [UnitsController],
     imports: [

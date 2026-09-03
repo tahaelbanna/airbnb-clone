@@ -27,6 +27,7 @@ import { MaxFileCount } from '../common/files/constants/file-count.constants';
 import { FilesInterceptor } from '@nestjs/platform-express';
 import { createParseFilePipe } from '../common/files/files-validation-factory';
 import { MulterFile } from '../files-upload/types/file-type.types';
+import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
 
 @Controller('units')
 export class UnitsController {
@@ -105,5 +106,15 @@ export class UnitsController {
         @CurrentUser() principal: Principal,
     ) {
         return await this.unitsService.ActivateUnit(id, principal.user);
+    }
+
+    @Delete('/:id/delete-photos')
+    @AllowRoles(Roles.USER)
+    async deletePhotos(
+        @Param('id') id: string,
+        @CurrentUser() principal: Principal,
+        @Body() body: DeleteUnitPhotosDto,
+    ): Promise<void> {
+        return this.unitsService.deleteUnitPhotos(id, principal.user, body);
     }
 }
