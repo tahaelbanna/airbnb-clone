@@ -24,5 +24,6 @@ import { GetAppSettingsUseCase } from './use-cases/get-app-settings.usecase';
         GetAppSettingsUseCase,
     ],
     controllers: [AppSettingsController],
+    exports: [AppSettingsService],
 })
 export class AppSettingsModule {}

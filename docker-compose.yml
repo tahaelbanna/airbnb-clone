@@ -1,4 +1,5 @@
 version: '3.8'
+
 services:
     mongo:
         image: mongo:8.3
@@ -7,3 +8,34 @@ services:
             - 27017:27017
         volumes:
             - ./data/mongo:/data/db
+
+    minio:
+        image: minio/minio:RELEASE.2025-09-07T16-13-09Z
+        container_name: minio
+        command: server /data --console-address ":9001"
+        ports:
+            - 5555:9000
+            - 5556:9001
+        environment:
+            MINIO_ROOT_USER: minioadmin
+            MINIO_ROOT_PASSWORD: minioadmin
+        volumes:
+            - ./data/minio:/data
+
+    minio-create-bucket:
+        image: minio/mc:latest
+        container_name: minio-create-bucket
+        depends_on:
+            - minio
+        entrypoint: >
+            /bin/sh -c "
+            until mc alias set local http://minio:9000 minioadmin minioadmin; do
+              sleep 1;
+            done;
+            mc mb --ignore-existing local/airbnb-api-clone;
+            mc anonymous set download local/airbnb-api-clone;
+            "
+
+volumes:
+    mongo_data:
+    minio_data:

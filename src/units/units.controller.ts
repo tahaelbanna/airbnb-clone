@@ -1,4 +1,133 @@
-import { Controller } from '@nestjs/common';
+import {
+    Controller,
+    Post,
+    Body,
+    Patch,
+    Param,
+    Get,
+    Query,
+    Delete,
+    UploadedFiles,
+    UseInterceptors,
+} from '@nestjs/common';
+import { UnitsService } from './units.service';
+import { CreateUnitDto } from './dtos/create-unit.dto';
+import {
+    CurrentUser,
+    Principal,
+} from 'src/auth/decorators/current-user.decorator';
+import { AllowRoles } from '../auth/decorators/roles.decorator';
+import { Roles } from 'src/common/constants/roles.constans';
+import { UpdateUnitDto } from './dtos/update-unit.dto';
+import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { Public } from 'src/auth/decorators/public.decorator';
+import { GetAllUnitsDto } from './dtos/get-all.usecase.dto';
+import { FilesUploadService } from 'src/files-upload/files-upload.service';
+import { MaxFileCount } from '../common/files/constants/file-count.constants';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { createParseFilePipe } from '../common/files/files-validation-factory';
+import { MulterFile } from '../files-upload/types/file-type.types';
+import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
+import { UnitResponseDto } from './dtos/unit-response.dto';
 
 @Controller('units')
-export class UnitsController {}
+export class UnitsController {
+    constructor(
+        private readonly unitsService: UnitsService,
+        private readonly filesUploadService: FilesUploadService,
+    ) {}
+
+    @Post()
+    @AllowRoles(Roles.USER)
+    @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
+    async create(
+        @Body() body: CreateUnitDto,
+        @CurrentUser() principal: Principal,
+        @UploadedFiles(createParseFilePipe('5MB', ['png', 'jpeg', 'jpg']))
+        unit_photos: MulterFile[],
+    ) {
+        body.unit_photos =
+            await this.filesUploadService.uploadMultipleFiles(unit_photos);
+        return await this.unitsService.create(body, principal.user);
+    }
+
+    @Patch(':id')
+    @AllowRoles(Roles.USER)
+    async update(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @Body() body: UpdateUnitDto,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.update(id, body, principal.user);
+    }
+
+    @Get()
+    @Public()
+    async GetAll(@Query() query: GetAllUnitsDto) {
+        return await this.unitsService.GetAll(query);
+    }
+
+    @Get('by-user')
+    @AllowRoles(Roles.USER)
+    async GetAllByUser(
+        @Query() query: GetAllUnitsDto,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.GetAllUnitsByUser(query, principal.user);
+    }
+
+    @Public()
+    @Get(':id')
+    async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
+        return await this.unitsService.GetById(id);
+    }
+
+    @Delete(':id/soft-delete')
+    @AllowRoles(Roles.USER)
+    async SoftDeleteOneUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.SoftDeleteOneUnit(id, principal.user);
+    }
+
+    @Patch(':id/deactivate')
+    @AllowRoles(Roles.USER)
+    async DeActivateUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.DeActivateUnit(id, principal.user);
+    }
+
+    @Patch(':id/activate')
+    @AllowRoles(Roles.USER)
+    async ActivateUnit(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+    ) {
+        return await this.unitsService.ActivateUnit(id, principal.user);
+    }
+
+    @Delete('/:id/delete-photos')
+    @AllowRoles(Roles.USER)
+    async deletePhotos(
+        @Param('id') id: string,
+        @CurrentUser() principal: Principal,
+        @Body() body: DeleteUnitPhotosDto,
+    ): Promise<void> {
+        return this.unitsService.deleteUnitPhotos(id, principal.user, body);
+    }
+
+    @Patch('/:id/update-photos')
+    @AllowRoles(Roles.USER)
+    @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
+    async updatePhotos(
+        @UploadedFiles(createParseFilePipe('5MB', ['png', 'jpeg', 'jpg']))
+        photos: MulterFile[],
+        @Param('id') id: string,
+        @CurrentUser() principal: Principal,
+    ): Promise<UnitResponseDto> {
+        return this.unitsService.updateUnitPhotos(id, principal.user, photos);
+    }
+}

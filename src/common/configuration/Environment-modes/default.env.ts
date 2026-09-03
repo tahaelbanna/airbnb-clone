@@ -13,4 +13,11 @@ export const defaultEnv = (): EnvironmentInterface => ({
         email: process.env.systemAdminEmail as string,
         password: process.env.systemAdminPassword as string,
     },
+    awsS3: {
+        awsS3Region: process.env.awsS3Region as string,
+        awsS3AccessKeyId: process.env.awsS3AccessKeyId as string,
+        awsS3SecretAccessKey: process.env.awsS3SecretAccessKey as string,
+        awsS3BucketName: process.env.awsS3BucketName as string,
+        minioEndpoint: process.env.minioEndpoint as string,
+    },
 });

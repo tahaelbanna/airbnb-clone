@@ -1,1 +1,4 @@
-{ "EMAIL_NOT_FORMATTED": "Email is not formatted correctly" }
+{
+    "EMAIL_NOT_FORMATTED": "Email is not formatted correctly",
+    "FILE_TOO_BIG": "The uploaded file is too large. The maximum allowed size is {{maxSize}}, but your file size is {{actualSize}}."
+}

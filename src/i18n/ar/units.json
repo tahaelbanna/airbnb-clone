@@ -1,0 +1,9 @@
+{
+    "UNIT_COST_TOO_LOW": "السعر الوحدة منخفض جدًا. يجب أن يكون على الأقل 1.",
+    "COUNTRY_CITY_MISMATCH": "المدينة المحددة لا تنتمي إلى الدولة المحددة.",
+    "UNIT_NOT_FOUND": "الوحدة غير موجودة.",
+    "UNAUTHORIZED_UPDATE": "أنت لست مالك هذه الوحدة.",
+    "UNIT_ALREADY_EXISTS": "الوحدة موجودة بالفعل.",
+    "UNIT_ALREADY_DELETED": "الوحدة محذوفة بالفعل.",
+    "NO_PHOTOS_TO_DELETE": "لا توجد صور لحذفها."
+}
