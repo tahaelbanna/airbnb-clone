@@ -21,6 +21,7 @@ import { GetAllUnitsByUserUseCase } from './use-cases/get-all-by-user.usecase';
 import { SoftDeleteOneUnitUseCase } from './use-cases/delete-unit.usecase';
 import { DeActivateUnitUseCase } from './use-cases/de-activate.usecase';
 import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
+import { FilesUploadModule } from 'src/files-upload/files-upload.module';
 
 @Module({
     providers: [
@@ -48,6 +49,7 @@ import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
         CountriesModule,
         UnitCategoriesModule,
         AppSettingsModule,
+        FilesUploadModule,
     ],
 })
 export class UnitsModule {}

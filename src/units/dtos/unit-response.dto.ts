@@ -48,10 +48,10 @@ export class UnitResponseDto {
 
     @Expose()
     has_private_garage: boolean;
-    
+
     @Expose()
-    
     isDeleted: boolean;
+
     @Expose()
     isActive: boolean;
 

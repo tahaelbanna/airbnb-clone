@@ -7,6 +7,8 @@ import {
     Get,
     Query,
     Delete,
+    UploadedFiles,
+    UseInterceptors,
 } from '@nestjs/common';
 import { UnitsService } from './units.service';
 import { CreateUnitDto } from './dtos/create-unit.dto';
@@ -20,17 +22,29 @@ import { UpdateUnitDto } from './dtos/update-unit.dto';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { Public } from 'src/auth/decorators/public.decorator';
 import { GetAllUnitsDto } from './dtos/get-all.usecase.dto';
+import { FilesUploadService } from 'src/files-upload/files-upload.service';
+import { MaxFileCount } from '../common/files/constants/file-count.constants';
+import { FilesInterceptor } from '@nestjs/platform-express';
+import { createParseFilePipe } from '../common/files/files-validation-factory';
+import { MulterFile } from '../files-upload/types/file-type.types';
 
 @Controller('units')
 export class UnitsController {
-    constructor(private readonly unitsService: UnitsService) {}
+    constructor(
+        private readonly unitsService: UnitsService,
+        private readonly filesUploadService: FilesUploadService,
+    ) {}
 
     @Post()
     @AllowRoles(Roles.USER)
+    @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
     async create(
         @Body() body: CreateUnitDto,
         @CurrentUser() principal: Principal,
+        @UploadedFiles(createParseFilePipe('2MB', ['png', 'jpeg', 'jpg']))
+        unit_photos: MulterFile[],
     ) {
+        body.unit_photos = unit_photos.map((image) => image.originalname);
         return await this.unitsService.create(body, principal.user);
     }
 

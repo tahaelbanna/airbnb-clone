@@ -15,6 +15,8 @@ import { RoleGuardG } from './auth/guards/role-guard.guard';
 import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { UnitsModule } from './units/units.module';
+import { FilesUploadModule } from './files-upload/files-upload.module';
+
 @Module({
     imports: [
         CoreModule,
@@ -27,6 +29,7 @@ import { UnitsModule } from './units/units.module';
         AppSettingsModule,
         SystemAdminModule,
         UnitsModule,
+        FilesUploadModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },
