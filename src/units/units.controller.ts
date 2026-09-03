@@ -41,10 +41,11 @@ export class UnitsController {
     async create(
         @Body() body: CreateUnitDto,
         @CurrentUser() principal: Principal,
-        @UploadedFiles(createParseFilePipe('2MB', ['png', 'jpeg', 'jpg']))
+        @UploadedFiles(createParseFilePipe('5MB', ['png', 'jpeg', 'jpg']))
         unit_photos: MulterFile[],
     ) {
-        body.unit_photos = unit_photos.map((image) => image.originalname);
+        body.unit_photos =
+            await this.filesUploadService.uploadMultipleFiles(unit_photos);
         return await this.unitsService.create(body, principal.user);
     }
 

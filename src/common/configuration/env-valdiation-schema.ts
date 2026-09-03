@@ -13,4 +13,9 @@ export const envSchema = Joi.object({
     systemAdminName: Joi.string().required().default('Admin'),
     systemAdminEmail: Joi.string().required().email(),
     systemAdminPassword: Joi.string().required().min(8).max(20),
+    awsS3Region: Joi.string().required(),
+    awsS3AccessKeyId: Joi.string().required(),
+    awsS3SecretAccessKey: Joi.string().required(),
+    awsS3BucketName: Joi.string().required(),
+    minioEndpoint: Joi.string().optional().default(''),
 });

@@ -1,9 +1,9 @@
 import {
-    IsArray,
     IsBoolean,
     IsMongoId,
     IsNotEmpty,
     IsNumber,
+    IsOptional,
     IsString,
     MaxLength,
     MinLength,
@@ -28,8 +28,7 @@ export class CreateUnitDto {
     @MaxLength(1000)
     unit_address: string;
 
-    @IsNotEmpty()
-    @IsArray()
+    @IsOptional()
     unit_photos: string[];
 
     @IsNotEmpty()

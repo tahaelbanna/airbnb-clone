@@ -11,7 +11,6 @@ import { FileSizeType, FileType } from './types/file.types';
 import { createFileTypeRegex } from './utils/file.util';
 import { NonEmptyArray } from '../utils/array.util';
 import { UnprocessableEntityException } from '../error-handling/custom-exceptions/un-proccessable-entity.exception';
-import { I18nContext } from 'nestjs-i18n';
 
 const createFileValidators = (
     maxSize: FileSizeType,
@@ -22,13 +21,6 @@ const createFileValidators = (
         new MaxFileSizeValidator({
             maxSize: bytes(maxSize) || 5 * 1024 * 1024,
             errorMessage: (ctx) => {
-                const i18n = I18nContext.current();
-                const actualSize = bytes(ctx.file?.size);
-                if (i18n) {
-                    return i18n.translate('validation.FILE_TOO_BIG', {
-                        args: { maxSize: bytes(maxSize), actualSize },
-                    });
-                }
                 return `File is too big. Max file size is ${maxSize}, but the actual size is ${bytes(ctx.file?.size)}`;
             },
         }),
