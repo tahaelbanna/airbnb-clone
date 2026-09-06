@@ -14,6 +14,8 @@ import { BookingRequestUseCase } from './use-cases/booking-request.usecase';
 import { GetAllQueryBuilder } from './query-builders/get-all-query-builder';
 import { GetMyBookingsUseCase } from './use-cases/get-my-bookings.usecase';
 import { GetAllBookingsUseCase } from './use-cases/get-all-bookings.usecase';
+import { CheckCurrentUserUseCase } from './use-cases/check-current-user.usecase';
+import { GetBookingByIdUseCase } from './use-cases/get-booking-by-id.usecase';
 
 @Module({
     providers: [
@@ -26,6 +28,8 @@ import { GetAllBookingsUseCase } from './use-cases/get-all-bookings.usecase';
         GetAllQueryBuilder,
         GetMyBookingsUseCase,
         GetAllBookingsUseCase,
+        CheckCurrentUserUseCase,
+        GetBookingByIdUseCase,
     ],
     controllers: [BookingsController],
     imports: [

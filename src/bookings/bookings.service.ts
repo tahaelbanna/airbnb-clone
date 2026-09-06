@@ -10,6 +10,8 @@ import { GetMyBookingsUseCase } from './use-cases/get-my-bookings.usecase';
 import { GetAllBookingsUseCase } from './use-cases/get-all-bookings.usecase';
 import { PaginatedResult } from '../common/data-access';
 import { GetAllBookingsDto } from './dtos/get-all-bookings.dto';
+import { GetBookingByIdUseCase } from './use-cases/get-booking-by-id.usecase';
+import { Principal } from 'src/auth/decorators/current-user.decorator';
 
 @Injectable()
 export class BookingsService {
@@ -18,6 +20,7 @@ export class BookingsService {
         private readonly requestBookingUseCase: BookingRequestUseCase,
         private readonly getMyBookingsUseCase: GetMyBookingsUseCase,
         private readonly getAllBookingsUseCase: GetAllBookingsUseCase,
+        private readonly getBookingByIdUseCase: GetBookingByIdUseCase,
     ) {}
 
     async checkAvailability(
@@ -44,5 +47,12 @@ export class BookingsService {
         query: GetAllBookingsDto,
     ): Promise<PaginatedResult<BookingResponseDto>> {
         return this.getAllBookingsUseCase.execute(query);
+    }
+
+    async getBookingById(
+        id: string,
+        principal: Principal,
+    ): Promise<BookingResponseDto> {
+        return this.getBookingByIdUseCase.execute(id, principal);
     }
 }

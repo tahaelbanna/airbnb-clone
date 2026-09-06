@@ -3,5 +3,7 @@
     "KIDS_COUNT_EXCEEDS_UNIT_CAPACITY": "The number of kids exceeds the unit's capacity.",
     "ADULTS_COUNT_EXCEEDS_UNIT_CAPACITY": "The number of adults exceeds the unit's capacity.",
     "UNIT_ALREADY_BOOKED": "The unit is already booked for the selected dates.",
-    "CANNOT_BOOK_OWN_UNIT": "You cannot book your own unit."
+    "CANNOT_BOOK_OWN_UNIT": "You cannot book your own unit.",
+    "BOOKING_NOT_FOUND": "Booking not found.",
+    "BOOKING_FORBIDDEN": "You are not authorized to access this booking."
 }
