@@ -55,5 +55,6 @@ import { UpdateUnitPhotosUsecase } from './use-cases/update-unit-photos.usecase'
         AppSettingsModule,
         FilesUploadModule,
     ],
+    exports: [UnitsService],
 })
 export class UnitsModule {}

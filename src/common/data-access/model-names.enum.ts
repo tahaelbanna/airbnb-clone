@@ -8,4 +8,5 @@ export enum ModelNames {
     APP_SETTINGS = 'app-settings',
     SYSTEM_ADMINS = 'system-admins',
     UNITS = 'units',
+    BOOKINGS = 'bookings',
 }

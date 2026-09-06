@@ -16,6 +16,7 @@ import { MiddlewareConsumer, NestModule } from '@nestjs/common';
 import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { UnitsModule } from './units/units.module';
 import { FilesUploadModule } from './files-upload/files-upload.module';
+import { BookingsModule } from './bookings/bookings.module';
 
 @Module({
     imports: [
@@ -30,6 +31,7 @@ import { FilesUploadModule } from './files-upload/files-upload.module';
         SystemAdminModule,
         UnitsModule,
         FilesUploadModule,
+        BookingsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },
