@@ -11,6 +11,8 @@ import {
     CurrentUser,
     Principal,
 } from '../auth/decorators/current-user.decorator';
+import { GetAllBookingsDto } from './dtos/get-all-bookings.dto';
+import { PaginatedResult } from 'src/common/data-access/base-repository';
 
 @Controller('bookings')
 export class BookingsController {
@@ -31,5 +33,22 @@ export class BookingsController {
         @CurrentUser() principal: Principal,
     ): Promise<BookingResponseDto> {
         return this.bookingsService.requestBooking(body, principal.user);
+    }
+
+    @AllowRoles(Roles.USER)
+    @Get('/my-bookings')
+    async getMyBookings(
+        @Query() query: GetAllBookingsDto,
+        @CurrentUser() principal: Principal,
+    ): Promise<PaginatedResult<BookingResponseDto>> {
+        return this.bookingsService.getMyBookings(query, principal.user);
+    }
+
+    @AllowRoles(Roles.SYSTEM_ADMIN)
+    @Get()
+    async getAllBookings(
+        @Query() query: GetAllBookingsDto,
+    ): Promise<PaginatedResult<BookingResponseDto>> {
+        return this.bookingsService.getAllBookings(query);
     }
 }

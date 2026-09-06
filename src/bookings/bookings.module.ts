@@ -11,6 +11,9 @@ import { ModelNames } from 'src/common/data-access/model-names.enum';
 import { CheckAvailabilityUseCase } from './use-cases/check-availability.usecase';
 import { BookingRepository } from './repositories/booking.repository';
 import { BookingRequestUseCase } from './use-cases/booking-request.usecase';
+import { GetAllQueryBuilder } from './query-builders/get-all-query-builder';
+import { GetMyBookingsUseCase } from './use-cases/get-my-bookings.usecase';
+import { GetAllBookingsUseCase } from './use-cases/get-all-bookings.usecase';
 
 @Module({
     providers: [
@@ -20,6 +23,9 @@ import { BookingRequestUseCase } from './use-cases/booking-request.usecase';
         CheckAvailabilityUseCase,
         BookingRepository,
         BookingRequestUseCase,
+        GetAllQueryBuilder,
+        GetMyBookingsUseCase,
+        GetAllBookingsUseCase,
     ],
     controllers: [BookingsController],
     imports: [
