@@ -29,6 +29,9 @@ export class Booking {
     booking_amount: number;
 
     @Prop({ required: true })
+    vat: number;
+
+    @Prop({ required: true })
     vat_amount: number;
 
     @Prop({ required: true })

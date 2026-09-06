@@ -2,5 +2,6 @@
     "CHECK_IN_AFTER_CHECK_OUT": "يجب أن يكون تاريخ تسجيل الوصول بعد تاريخ تسجيل المغادرة.",
     "KIDS_COUNT_EXCEEDS_UNIT_CAPACITY": "عدد الأطفال يتجاوز سعة الوحدة.",
     "ADULTS_COUNT_EXCEEDS_UNIT_CAPACITY": "عدد البالغين يتجاوز سعة الوحدة.",
-    "UNIT_ALREADY_BOOKED": "الوحدة محجوزة بالفعل للفترات المحددة."
+    "UNIT_ALREADY_BOOKED": "الوحدة محجوزة بالفعل للفترات المحددة.",
+    "CANNOT_BOOK_OWN_UNIT": "لا يمكنك حجز وحدتك الخاصة."
 }

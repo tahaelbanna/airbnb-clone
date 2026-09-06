@@ -2,5 +2,6 @@
     "CHECK_IN_AFTER_CHECK_OUT": "Check-in date must be after check-out date.",
     "KIDS_COUNT_EXCEEDS_UNIT_CAPACITY": "The number of kids exceeds the unit's capacity.",
     "ADULTS_COUNT_EXCEEDS_UNIT_CAPACITY": "The number of adults exceeds the unit's capacity.",
-    "UNIT_ALREADY_BOOKED": "The unit is already booked for the selected dates."
+    "UNIT_ALREADY_BOOKED": "The unit is already booked for the selected dates.",
+    "CANNOT_BOOK_OWN_UNIT": "You cannot book your own unit."
 }

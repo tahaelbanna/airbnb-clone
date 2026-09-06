@@ -3,6 +3,7 @@ import { BookingValidationUseCase } from './booking-validation.usecase';
 import { BookingCalculationUseCase } from './booking-calculation.usecase';
 import { CheckAvailabilityDto } from '../dtos/check-availability.dto';
 import { AvailabilityResponseDto } from '../dtos/availability-response.dto';
+import { BookingRequestDto } from '../dtos/booking-request.dto';
 
 @Injectable()
 export class CheckAvailabilityUseCase {
@@ -11,7 +12,7 @@ export class CheckAvailabilityUseCase {
         private readonly bookingCalculationUseCase: BookingCalculationUseCase,
     ) {}
     async execute(
-        body: CheckAvailabilityDto,
+        body: CheckAvailabilityDto | BookingRequestDto,
     ): Promise<AvailabilityResponseDto> {
         await this.bookingValidationUseCase.execute(body);
         const bookingCalculation = await this.bookingCalculationUseCase.execute(

@@ -10,6 +10,7 @@ import { BookingCalculationUseCase } from './use-cases/booking-calculation.useca
 import { ModelNames } from 'src/common/data-access/model-names.enum';
 import { CheckAvailabilityUseCase } from './use-cases/check-availability.usecase';
 import { BookingRepository } from './repositories/booking.repository';
+import { BookingRequestUseCase } from './use-cases/booking-request.usecase';
 
 @Module({
     providers: [
@@ -18,6 +19,7 @@ import { BookingRepository } from './repositories/booking.repository';
         BookingValidationUseCase,
         CheckAvailabilityUseCase,
         BookingRepository,
+        BookingRequestUseCase,
     ],
     controllers: [BookingsController],
     imports: [
