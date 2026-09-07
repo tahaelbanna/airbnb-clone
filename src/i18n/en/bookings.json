@@ -9,5 +9,7 @@
     "FORBIDDEN_UPDATE_BOOKING": "You are not authorized to update this booking.",
     "CHECK_IN_DATE_REQUIRED": "Check-in date is required.",
     "CHECK_OUT_DATE_REQUIRED": "Check-out date is required.",
-    "BOOKING_CANNOT_BE_CANCELLED": "This booking cannot be cancelled."
+    "BOOKING_CANNOT_BE_CANCELLED": "This booking cannot be cancelled.",
+    "BOOKING_ALREADY_CONFIRMED": "Booking is already confirmed.",
+    "BOOKING_ALREADY_CANCELLED": "Booking is already cancelled."
 }

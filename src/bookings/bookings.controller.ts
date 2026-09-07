@@ -24,6 +24,7 @@ import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { UpdateBookingRequestDto } from './dtos/update-booking.dto';
 import { CancelBookingByGuestDto } from './dtos/booking-cancelation.dto';
+import { ChangeBookingStatusDto } from './dtos/change-booking-status.dto';
 
 @Controller('bookings')
 export class BookingsController {
@@ -97,6 +98,20 @@ export class BookingsController {
             id,
             principal.user,
             body,
+        );
+    }
+
+    @AllowRoles(Roles.USER)
+    @Patch('/:id/status')
+    async changeBookingStatusByHost(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @Body() body: ChangeBookingStatusDto,
+        @CurrentUser() principal: Principal,
+    ): Promise<BookingResponseDto> {
+        return this.bookingsService.changeBookingStatusByHost(
+            id,
+            body,
+            principal.user,
         );
     }
 }

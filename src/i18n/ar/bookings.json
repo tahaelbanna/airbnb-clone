@@ -9,5 +9,7 @@
     "FORBIDDEN_UPDATE_BOOKING": "أنت لست مخوَّلاً لتحديث هذا الحجز.",
     "CHECK_IN_DATE_REQUIRED": "تاريخ تسجيل الوصول مطلوب.",
     "CHECK_OUT_DATE_REQUIRED": "تاريخ تسجيل المغادرة مطلوب.",
-    "BOOKING_CANNOT_BE_CANCELLED": "لا يمكن إلغاء هذا الحجز."
+    "BOOKING_CANNOT_BE_CANCELLED": "لا يمكن إلغاء هذا الحجز.",
+    "BOOKING_ALREADY_CONFIRMED": "الحجز مؤكد بالفعل.",
+    "BOOKING_ALREADY_CANCELLED": "الحجز ملغى بالفعل."
 }
