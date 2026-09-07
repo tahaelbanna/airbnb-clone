@@ -9,4 +9,5 @@ export enum ModelNames {
     SYSTEM_ADMINS = 'system-admins',
     UNITS = 'units',
     BOOKINGS = 'bookings',
+    UNIT_REVIEWS = 'unit-reviews',
 }
