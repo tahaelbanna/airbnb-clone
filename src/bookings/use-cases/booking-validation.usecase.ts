@@ -16,29 +16,41 @@ export class BookingValidationUseCase {
     ) {}
 
     async execute(body: CheckAvailabilityDto): Promise<void> {
-        this.validateDates(body);
-        await this.validateUnitExists(body);
-        await this.validateBookingAvailability(body);
+        this.validateDates(body.check_in, body.check_out);
+        await this.validateUnitExists(
+            body?.adults_count,
+            body?.kids_count,
+            body.unit_id,
+        );
+        await this.validateBookingAvailability(
+            body.unit_id,
+            body.check_in,
+            body.check_out,
+        );
     }
 
-    private validateDates(body: CheckAvailabilityDto) {
-        if (dayjs(body.check_in).isAfter(body.check_out)) {
+    validateDates(check_in: number | Date, check_out: number | Date) {
+        if (dayjs(check_in).isAfter(check_out)) {
             throw new BadRequestException(
                 this.i18nService.translate('bookings.CHECK_IN_AFTER_CHECK_OUT'),
             );
         }
     }
 
-    private async validateUnitExists(body: CheckAvailabilityDto) {
-        const unit = await this.unitsService.GetById(body.unit_id);
-        if (body.kids_count && unit.unit_kids_count < body.kids_count) {
+    async validateUnitExists(
+        adults_count: number | undefined,
+        kids_count: number | undefined,
+        unit_id: string,
+    ) {
+        const unit = await this.unitsService.GetById(unit_id);
+        if (kids_count && unit.unit_kids_count < kids_count) {
             throw new BadRequestException(
                 this.i18nService.translate(
                     'bookings.KIDS_COUNT_EXCEEDS_UNIT_CAPACITY',
                 ),
             );
         }
-        if (body.adults_count && unit.unit_adults_count < body.adults_count) {
+        if (adults_count && unit.unit_adults_count < adults_count) {
             throw new BadRequestException(
                 this.i18nService.translate(
                     'bookings.ADULTS_COUNT_EXCEEDS_UNIT_CAPACITY',
@@ -47,12 +59,18 @@ export class BookingValidationUseCase {
         }
     }
 
-    private async validateBookingAvailability(body: CheckAvailabilityDto) {
+    async validateBookingAvailability(
+        unit_id: string,
+        check_in: number | Date,
+        check_out: number | Date,
+        bookingId?: string,
+    ) {
         const overlappingBookings = await this.bookingRepository.find({
-            unit_id: body.unit_id,
+            unit_id: unit_id,
             status: { $in: [BookingStatus.PENDING, BookingStatus.CONFIRMED] },
-            check_in: { $lte: body.check_out },
-            check_out: { $gte: body.check_in },
+            check_in: { $lte: check_out },
+            check_out: { $gte: check_in },
+            _id: { $ne: bookingId },
         });
 
         if (overlappingBookings.length > 0) {

@@ -5,5 +5,8 @@
     "UNIT_ALREADY_BOOKED": "The unit is already booked for the selected dates.",
     "CANNOT_BOOK_OWN_UNIT": "You cannot book your own unit.",
     "BOOKING_NOT_FOUND": "Booking not found.",
-    "BOOKING_FORBIDDEN": "You are not authorized to access this booking."
+    "BOOKING_FORBIDDEN": "You are not authorized to access this booking.",
+    "FORBIDDEN_UPDATE_BOOKING": "You are not authorized to update this booking.",
+    "CHECK_IN_DATE_REQUIRED": "Check-in date is required.",
+    "CHECK_OUT_DATE_REQUIRED": "Check-out date is required."
 }

@@ -1,4 +1,12 @@
-import { Body, Controller, Get, Query, Post, Param } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Get,
+    Query,
+    Post,
+    Param,
+    Patch,
+} from '@nestjs/common';
 import { BookingsService } from './bookings.service';
 import { CheckAvailabilityDto } from './dtos/check-availability.dto';
 import { AvailabilityResponseDto } from './dtos/availability-response.dto';
@@ -14,6 +22,7 @@ import {
 import { GetAllBookingsDto } from './dtos/get-all-bookings.dto';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
+import { UpdateBookingRequestDto } from './dtos/update-booking.dto';
 
 @Controller('bookings')
 export class BookingsController {
@@ -60,5 +69,19 @@ export class BookingsController {
         @CurrentUser() principal: Principal,
     ): Promise<BookingResponseDto> {
         return this.bookingsService.getBookingById(id, principal);
+    }
+
+    @AllowRoles(Roles.USER)
+    @Patch('/:id')
+    async updateBookingByGuest(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @Body() body: UpdateBookingRequestDto,
+        @CurrentUser() principal: Principal,
+    ): Promise<BookingResponseDto> {
+        return this.bookingsService.updateBookingByGuest(
+            id,
+            body,
+            principal.user,
+        );
     }
 }
