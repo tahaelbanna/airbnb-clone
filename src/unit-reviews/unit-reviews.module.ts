@@ -6,6 +6,7 @@ import { UnitReviewsSchema } from './schemas/unit-reviews.schema';
 import { UnitReviewsRepository } from './repositories/unit-reviews.repository';
 import { CreateUnitReviewUseCase } from './use-cases/create-unit-review.usecase';
 import { CalculateRatingAvgUseCase } from './use-cases/calculate-rating-avg.usecase';
+import { GetUnitReviewsUseCase } from './use-cases/get-unit-reviews.usecase';
 
 @Module({
     imports: [
@@ -18,6 +19,7 @@ import { CalculateRatingAvgUseCase } from './use-cases/calculate-rating-avg.usec
         UnitReviewsRepository,
         CreateUnitReviewUseCase,
         CalculateRatingAvgUseCase,
+        GetUnitReviewsUseCase,
     ],
     exports: [UnitReviewsService],
 })

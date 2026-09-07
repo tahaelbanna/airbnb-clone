@@ -20,6 +20,9 @@ import { MulterFile } from 'src/files-upload/types/file-type.types';
 import { UpdateUnitAvgRateAndCountUsecase } from './use-cases/update-unit-avg-rate-and-count.usecase';
 import { UpdateUnitAvgRateAndCountDto } from './dtos/update-unit-avg-rate-and-count.dto';
 import { ClientSession } from 'mongoose';
+import { GetUnitReviewsUsecase } from './use-cases/get-unit-reviews.usecase';
+import { GetUnitReviewResponseDto } from './dtos/get-unit-reviews-response.dto';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Injectable()
 export class UnitsService {
@@ -35,6 +38,7 @@ export class UnitsService {
         private readonly deleteUnitPhotosUseCase: DeleteUnitPhotosUseCase,
         private readonly updateUnitPhotosUsecase: UpdateUnitPhotosUsecase,
         private readonly updateUnitAvgRateAndCountUsecase: UpdateUnitAvgRateAndCountUsecase,
+        private readonly getUnitReviewsUsecase: GetUnitReviewsUsecase,
     ) {}
     async create(
         body: CreateUnitDto,
@@ -110,5 +114,12 @@ export class UnitsService {
         session?: ClientSession,
     ): Promise<void> {
         await this.updateUnitAvgRateAndCountUsecase.execute(body, session);
+    }
+
+    async getUnitReviews(
+        unitId: string,
+        query: PaginationDto,
+    ): Promise<PaginatedResult<GetUnitReviewResponseDto>> {
+        return this.getUnitReviewsUsecase.execute(unitId, query);
     }
 }

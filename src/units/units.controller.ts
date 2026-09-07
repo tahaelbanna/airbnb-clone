@@ -29,6 +29,9 @@ import { createParseFilePipe } from '../common/files/files-validation-factory';
 import { MulterFile } from '../files-upload/types/file-type.types';
 import { DeleteUnitPhotosDto } from './dtos/delete-unit-photos.dto';
 import { UnitResponseDto } from './dtos/unit-response.dto';
+import { GetUnitReviewResponseDto } from './dtos/get-unit-reviews-response.dto';
+import { PaginatedResult } from 'src/common/data-access/base-repository';
+import { PaginationDto } from 'src/common/dtos/pagination.dto';
 
 @Controller('units')
 export class UnitsController {
@@ -129,5 +132,14 @@ export class UnitsController {
         @CurrentUser() principal: Principal,
     ): Promise<UnitResponseDto> {
         return this.unitsService.updateUnitPhotos(id, principal.user, photos);
+    }
+
+    @Get('/:id/reviews')
+    @Public()
+    async getUnitReviews(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @Query() query: PaginationDto,
+    ): Promise<PaginatedResult<GetUnitReviewResponseDto>> {
+        return await this.unitsService.getUnitReviews(id, query);
     }
 }
