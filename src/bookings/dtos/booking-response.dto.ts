@@ -1,5 +1,5 @@
 import { Expose, Exclude } from 'class-transformer';
-
+import { GuestReview } from '../schemas/subdocument/guest-review.schema';
 export class BookingResponseDto {
     @Expose()
     _id: string;
@@ -14,7 +14,7 @@ export class BookingResponseDto {
     guest_id: string;
 
     @Expose()
-    cancellationReason?: string;
+    cancellation_reason?: string;
 
     @Expose()
     check_in: Date;
@@ -51,6 +51,9 @@ export class BookingResponseDto {
 
     @Expose()
     notes?: string;
+
+    @Expose()
+    guest_review?: GuestReview;
 
     @Exclude()
     _v: number;

@@ -17,6 +17,7 @@ import { LoggerMiddleware } from './common/middlewares/logger.middleware';
 import { UnitsModule } from './units/units.module';
 import { FilesUploadModule } from './files-upload/files-upload.module';
 import { BookingsModule } from './bookings/bookings.module';
+import { UnitReviewsModule } from './unit-reviews/unit-reviews.module';
 
 @Module({
     imports: [
@@ -32,6 +33,7 @@ import { BookingsModule } from './bookings/bookings.module';
         UnitsModule,
         FilesUploadModule,
         BookingsModule,
+        UnitReviewsModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

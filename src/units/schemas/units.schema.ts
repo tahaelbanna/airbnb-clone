@@ -58,6 +58,12 @@ export class Units {
     isDeleted: boolean;
 
     @Prop()
+    unit_avg_rate?: number;
+
+    @Prop()
+    unit_reviews_count?: number;
+
+    @Prop()
     deletedAt: Date;
 }
 

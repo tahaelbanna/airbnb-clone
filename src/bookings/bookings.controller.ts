@@ -25,6 +25,7 @@ import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { UpdateBookingRequestDto } from './dtos/update-booking.dto';
 import { CancelBookingByGuestDto } from './dtos/booking-cancelation.dto';
 import { ChangeBookingStatusDto } from './dtos/change-booking-status.dto';
+import { GuestReviewDto } from './dtos/guest-review.dto';
 
 @Controller('bookings')
 export class BookingsController {
@@ -113,5 +114,15 @@ export class BookingsController {
             body,
             principal.user,
         );
+    }
+
+    @AllowRoles(Roles.USER)
+    @Patch('/:id/submit-review')
+    async reviewBooking(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @Body() body: GuestReviewDto,
+        @CurrentUser() principal: Principal,
+    ): Promise<BookingResponseDto> {
+        return this.bookingsService.reviewBooking(id, body, principal.user);
     }
 }

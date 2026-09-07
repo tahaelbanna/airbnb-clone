@@ -24,6 +24,7 @@ import { ActivateUnitUseCase } from './use-cases/activate-unit.usecase';
 import { FilesUploadModule } from 'src/files-upload/files-upload.module';
 import { DeleteUnitPhotosUseCase } from './use-cases/delete-unit-photos.usecase';
 import { UpdateUnitPhotosUsecase } from './use-cases/update-unit-photos.usecase';
+import { UpdateUnitAvgRateAndCountUsecase } from './use-cases/update-unit-avg-rate-and-count.usecase';
 
 @Module({
     providers: [
@@ -42,6 +43,7 @@ import { UpdateUnitPhotosUsecase } from './use-cases/update-unit-photos.usecase'
         DeActivateUnitUseCase,
         DeleteUnitPhotosUseCase,
         UpdateUnitPhotosUsecase,
+        UpdateUnitAvgRateAndCountUsecase,
     ],
     controllers: [UnitsController],
     imports: [
