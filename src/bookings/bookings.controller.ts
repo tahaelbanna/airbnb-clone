@@ -23,6 +23,7 @@ import { GetAllBookingsDto } from './dtos/get-all-bookings.dto';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { ParseMongoIdPipe } from 'src/common/pipes/parse-mongo-id.pipe';
 import { UpdateBookingRequestDto } from './dtos/update-booking.dto';
+import { CancelBookingByGuestDto } from './dtos/booking-cancelation.dto';
 
 @Controller('bookings')
 export class BookingsController {
@@ -82,6 +83,20 @@ export class BookingsController {
             id,
             body,
             principal.user,
+        );
+    }
+
+    @AllowRoles(Roles.USER)
+    @Patch('/:id/cancel')
+    async cancelBookingByGuest(
+        @Param('id', new ParseMongoIdPipe()) id: string,
+        @CurrentUser() principal: Principal,
+        @Body() body: CancelBookingByGuestDto,
+    ): Promise<BookingResponseDto> {
+        return this.bookingsService.cancelBookingByGuest(
+            id,
+            principal.user,
+            body,
         );
     }
 }

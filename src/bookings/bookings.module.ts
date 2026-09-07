@@ -17,6 +17,8 @@ import { GetAllBookingsUseCase } from './use-cases/get-all-bookings.usecase';
 import { CheckCurrentUserUseCase } from './use-cases/check-current-user.usecase';
 import { GetBookingByIdUseCase } from './use-cases/get-booking-by-id.usecase';
 import { UpdateBookingByGuestUsecase } from './use-cases/update-booking-by-guest.usecase';
+import { CancelBookingByGuestUseCase } from './use-cases/cancel-booking-by-guest.usecase';
+import { DetermineUserTypeUseCase } from './use-cases/determine-user-type.usecase';
 
 @Module({
     providers: [
@@ -32,6 +34,8 @@ import { UpdateBookingByGuestUsecase } from './use-cases/update-booking-by-guest
         CheckCurrentUserUseCase,
         GetBookingByIdUseCase,
         UpdateBookingByGuestUsecase,
+        CancelBookingByGuestUseCase,
+        DetermineUserTypeUseCase,
     ],
     controllers: [BookingsController],
     imports: [
