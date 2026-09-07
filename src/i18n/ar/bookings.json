@@ -1,0 +1,15 @@
+{
+    "CHECK_IN_AFTER_CHECK_OUT": "يجب أن يكون تاريخ تسجيل الوصول بعد تاريخ تسجيل المغادرة.",
+    "KIDS_COUNT_EXCEEDS_UNIT_CAPACITY": "عدد الأطفال يتجاوز سعة الوحدة.",
+    "ADULTS_COUNT_EXCEEDS_UNIT_CAPACITY": "عدد البالغين يتجاوز سعة الوحدة.",
+    "UNIT_ALREADY_BOOKED": "الوحدة محجوزة بالفعل للفترات المحددة.",
+    "CANNOT_BOOK_OWN_UNIT": "لا يمكنك حجز وحدتك الخاصة.",
+    "BOOKING_NOT_FOUND": "الحجز غير موجود.",
+    "BOOKING_FORBIDDEN": "أنت لست مخوَّلاً للوصول إلى هذا الحجز.",
+    "FORBIDDEN_UPDATE_BOOKING": "أنت لست مخوَّلاً لتحديث هذا الحجز.",
+    "CHECK_IN_DATE_REQUIRED": "تاريخ تسجيل الوصول مطلوب.",
+    "CHECK_OUT_DATE_REQUIRED": "تاريخ تسجيل المغادرة مطلوب.",
+    "BOOKING_CANNOT_BE_CANCELLED": "لا يمكن إلغاء هذا الحجز.",
+    "BOOKING_ALREADY_CONFIRMED": "الحجز مؤكد بالفعل.",
+    "BOOKING_ALREADY_CANCELLED": "الحجز ملغى بالفعل."
+}
