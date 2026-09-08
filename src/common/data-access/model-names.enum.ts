@@ -10,4 +10,5 @@ export enum ModelNames {
     UNITS = 'units',
     BOOKINGS = 'bookings',
     UNIT_REVIEWS = 'unit-reviews',
+    UNIT_FAVOURITES = 'unit-favourites',
 }
