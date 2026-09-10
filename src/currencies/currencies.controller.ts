@@ -13,7 +13,7 @@ import { CreateCurrencyDto } from './dtos/create-currency.dto';
 import { GetAllCurrenciesDto } from './dtos/get-all-currencies.dto';
 import { UpdateCurrencyDto } from './dtos/update-currency.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import {
     CreateCurrencySwagger,
@@ -26,7 +26,6 @@ import { Roles } from '../common/constants/roles.constans';
 import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.CURRENCIES)
-@ApiBearerAuth()
 @Controller('currencies')
 export class CurrenciesController {
     constructor(private readonly currenciesService: CurrenciesService) {}

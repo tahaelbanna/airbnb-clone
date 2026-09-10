@@ -13,7 +13,7 @@ import { CreateCountryDto } from './dtos/create-country.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { UpdateCountryDto } from './dtos/update-country.dto';
 import { GetAllCountriesDto } from './dtos/get-all-countries.dto';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import {
     CreateCountrySwagger,
@@ -26,7 +26,6 @@ import { Roles } from '../common/constants/roles.constans';
 import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.COUNTRIES)
-@ApiBearerAuth()
 @Controller('countries')
 export class CountriesController {
     constructor(private readonly countriesService: CountriesService) {}
