@@ -32,7 +32,17 @@ import { UnitResponseDto } from './dtos/unit-response.dto';
 import { GetUnitReviewResponseDto } from './dtos/get-unit-reviews-response.dto';
 import { PaginatedResult } from 'src/common/data-access/base-repository';
 import { PaginationDto } from 'src/common/dtos/pagination.dto';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { API_TAGS } from '../common/swagger';
+import {
+    CreateUnitSwagger, UpdateUnitSwagger, GetAllUnitsSwagger,
+    GetAllByUserSwagger, GetUnitByIdSwagger, SoftDeleteUnitSwagger,
+    DeactivateUnitSwagger, ActivateUnitSwagger, DeleteUnitPhotosSwagger,
+    UpdateUnitPhotosSwagger, GetUnitReviewsSwagger,
+} from './swagger';
 
+@ApiTags(API_TAGS.UNITS)
+@ApiBearerAuth()
 @Controller('units')
 export class UnitsController {
     constructor(
@@ -41,6 +51,7 @@ export class UnitsController {
     ) {}
 
     @Post()
+    @CreateUnitSwagger()
     @AllowRoles(Roles.USER)
     @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
     async create(
@@ -55,6 +66,7 @@ export class UnitsController {
     }
 
     @Patch(':id')
+    @UpdateUnitSwagger()
     @AllowRoles(Roles.USER)
     async update(
         @Param('id', new ParseMongoIdPipe()) id: string,
@@ -65,12 +77,14 @@ export class UnitsController {
     }
 
     @Get()
+    @GetAllUnitsSwagger()
     @Public()
     async GetAll(@Query() query: GetAllUnitsDto) {
         return await this.unitsService.GetAll(query);
     }
 
     @Get('by-user')
+    @GetAllByUserSwagger()
     @AllowRoles(Roles.USER)
     async GetAllByUser(
         @Query() query: GetAllUnitsDto,
@@ -81,11 +95,13 @@ export class UnitsController {
 
     @Public()
     @Get(':id')
+    @GetUnitByIdSwagger()
     async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
         return await this.unitsService.GetById(id);
     }
 
     @Delete(':id/soft-delete')
+    @SoftDeleteUnitSwagger()
     @AllowRoles(Roles.USER)
     async SoftDeleteOneUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
@@ -95,6 +111,7 @@ export class UnitsController {
     }
 
     @Patch(':id/deactivate')
+    @DeactivateUnitSwagger()
     @AllowRoles(Roles.USER)
     async DeActivateUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
@@ -104,6 +121,7 @@ export class UnitsController {
     }
 
     @Patch(':id/activate')
+    @ActivateUnitSwagger()
     @AllowRoles(Roles.USER)
     async ActivateUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
@@ -113,6 +131,7 @@ export class UnitsController {
     }
 
     @Delete('/:id/delete-photos')
+    @DeleteUnitPhotosSwagger()
     @AllowRoles(Roles.USER)
     async deletePhotos(
         @Param('id') id: string,
@@ -123,6 +142,7 @@ export class UnitsController {
     }
 
     @Patch('/:id/update-photos')
+    @UpdateUnitPhotosSwagger()
     @AllowRoles(Roles.USER)
     @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
     async updatePhotos(
@@ -135,6 +155,7 @@ export class UnitsController {
     }
 
     @Get('/:id/reviews')
+    @GetUnitReviewsSwagger()
     @Public()
     async getUnitReviews(
         @Param('id', new ParseMongoIdPipe()) id: string,

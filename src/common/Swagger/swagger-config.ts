@@ -15,6 +15,12 @@ export class SwaggerSetup {
             .addTag(API_TAGS.CURRENCIES)
             .addTag(API_TAGS.UNIT_CATEGORIES)
             .addTag(API_TAGS.SYSTEM_ADMINS)
+            .addTag(API_TAGS.BOOKINGS)
+            .addTag(API_TAGS.OTP)
+            .addTag(API_TAGS.EMAIL_SERVICE)
+            .addTag(API_TAGS.FORGET_PASSWORD)
+            .addTag(API_TAGS.UNIT_FAVOURITES)
+            .addTag(API_TAGS.UNITS)
             .build();
 
         const document = SwaggerModule.createDocument(app, config);

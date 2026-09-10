@@ -15,7 +15,7 @@ import { UpdateUnitCategoryDto } from './dtos/update-unit-category.dto';
 import { PaginatedResult } from '../common/data-access';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { getAllUnitCategoriesDto } from './dtos/get-all-unit-categories.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import {
     CreateUnitCategorySwagger,
@@ -28,6 +28,7 @@ import { Roles } from '../common/constants/roles.constans';
 import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.UNIT_CATEGORIES)
+@ApiBearerAuth()
 @Controller('unit-categories')
 export class UnitCategoriesController {
     constructor(
