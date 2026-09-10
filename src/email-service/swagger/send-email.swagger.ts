@@ -1,15 +1,15 @@
 import { applyDecorators } from '@nestjs/common';
 import { ApiBody, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { SendOtpDto } from '../dtos/send-otp.dto';
+import { SendEmailDto } from '../dtos/send-email.dto';
 
-export function SendOtpSwagger() {
+export function SendEmailSwagger() {
     return applyDecorators(
         ApiOperation({
-            summary: 'Send OTP',
-            description: 'Send an OTP code to the provided email address.',
+            summary: 'Send email',
+            description: 'Send an email using the configured mail adapter.',
         }),
-        ApiBody({ type: SendOtpDto }),
-        ApiResponse({ status: 204, description: 'OTP sent successfully' }),
+        ApiBody({ type: SendEmailDto }),
+        ApiResponse({ status: 201, description: 'Email sent successfully' }),
         ApiResponse({
             status: 400,
             description: 'Bad Request - Validation or sending errors',

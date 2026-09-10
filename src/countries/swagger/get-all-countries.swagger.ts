@@ -10,7 +10,9 @@ export function GetAllCountriesSwagger() {
         }),
         ApiQuery({ name: 'page', required: false, type: Number }),
         ApiQuery({ name: 'limit', required: false, type: Number }),
-        ApiQuery({ name: 'search', required: false, type: String }),
+        ApiQuery({ name: 'ignoreLimit', required: false, type: Boolean }),
+        ApiQuery({ name: 'name', required: false, type: String }),
+        ApiQuery({ name: 'countryCode', required: false, type: String }),
         ApiResponse({ status: 200, type: [CountryResponseDto] }),
         ApiResponse({
             status: 500,

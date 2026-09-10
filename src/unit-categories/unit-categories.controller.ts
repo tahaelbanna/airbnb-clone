@@ -28,8 +28,8 @@ import { Roles } from '../common/constants/roles.constans';
 import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.UNIT_CATEGORIES)
-@ApiBearerAuth()
 @Controller('unit-categories')
+@ApiBearerAuth()
 export class UnitCategoriesController {
     constructor(
         private readonly unitCategoriesService: UnitCategoriesService,

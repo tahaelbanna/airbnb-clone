@@ -6,7 +6,11 @@ import { ResetPasswordDto } from './dtos/reset-password.dto';
 import { ForgetPasswordService } from './forget-password.service';
 import { ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
-import { SendForgetPasswordOtpSwagger, VerifyForgetPasswordOtpSwagger, ResetPasswordSwagger } from './swagger';
+import {
+    ResetPasswordSwagger,
+    SendForgetPasswordOtpSwagger,
+    VerifyForgetPasswordOtpSwagger,
+} from './swagger';
 
 @ApiTags(API_TAGS.FORGET_PASSWORD)
 @Controller('forget-password')
@@ -16,24 +20,24 @@ export class ForgetPasswordController {
         private readonly forgetPasswordService: ForgetPasswordService,
     ) {}
 
-    @Post('/send')
     @SendForgetPasswordOtpSwagger()
+    @Post('/send')
     async sendForgetPasswordOtp(
         @Body() body: SendForgetPasswordOtpDto,
     ): Promise<void> {
         await this.forgetPasswordService.sendForgetPasswordOtp(body.email);
     }
 
-    @Post('/verify')
     @VerifyForgetPasswordOtpSwagger()
+    @Post('/verify')
     async verifyForgetPasswordOtp(
         @Body() dto: VerifyForgetPasswordOtpDto,
     ): Promise<void> {
         await this.forgetPasswordService.verifyForgetPasswordOtp(dto);
     }
 
-    @Post('/reset')
     @ResetPasswordSwagger()
+    @Post('/reset')
     async resetPassword(@Body() dto: ResetPasswordDto): Promise<void> {
         await this.forgetPasswordService.resetPassword(dto);
     }

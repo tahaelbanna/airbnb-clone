@@ -28,10 +28,19 @@ import { ChangeBookingStatusDto } from './dtos/change-booking-status.dto';
 import { GuestReviewDto } from './dtos/guest-review.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
-import { CheckAvailabilitySwagger, RequestBookingSwagger, GetMyBookingsSwagger, GetAllBookingsSwagger, GetBookingByIdSwagger, UpdateBookingSwagger, CancelBookingSwagger, ChangeBookingStatusSwagger, ReviewBookingSwagger } from './swagger';
+import {
+    CancelBookingByGuestSwagger,
+    ChangeBookingStatusByHostSwagger,
+    CheckAvailabilitySwagger,
+    CreateBookingSwagger,
+    GetAllBookingsSwagger,
+    GetBookingByIdSwagger,
+    GetMyBookingsSwagger,
+    ReviewBookingSwagger,
+    UpdateBookingByGuestSwagger,
+} from './swagger';
 
 @ApiTags(API_TAGS.BOOKINGS)
-@ApiBearerAuth()
 @Controller('bookings')
 export class BookingsController {
     constructor(private readonly bookingsService: BookingsService) {}
@@ -46,8 +55,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @RequestBookingSwagger()
     @Post()
+    @CreateBookingSwagger()
+    @ApiBearerAuth()
     async requestBooking(
         @Body() body: BookingRequestDto,
         @CurrentUser() principal: Principal,
@@ -56,8 +66,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @GetMyBookingsSwagger()
     @Get('/my-bookings')
+    @GetMyBookingsSwagger()
+    @ApiBearerAuth()
     async getMyBookings(
         @Query() query: GetAllBookingsDto,
         @CurrentUser() principal: Principal,
@@ -66,8 +77,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.SYSTEM_ADMIN)
-    @GetAllBookingsSwagger()
     @Get()
+    @GetAllBookingsSwagger()
+    @ApiBearerAuth()
     async getAllBookings(
         @Query() query: GetAllBookingsDto,
     ): Promise<PaginatedResult<BookingResponseDto>> {
@@ -75,8 +87,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER, Roles.SYSTEM_ADMIN)
-    @GetBookingByIdSwagger()
     @Get('/:id')
+    @GetBookingByIdSwagger()
+    @ApiBearerAuth()
     async getBookingById(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @CurrentUser() principal: Principal,
@@ -85,8 +98,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @UpdateBookingSwagger()
     @Patch('/:id')
+    @UpdateBookingByGuestSwagger()
+    @ApiBearerAuth()
     async updateBookingByGuest(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateBookingRequestDto,
@@ -100,8 +114,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @CancelBookingSwagger()
     @Patch('/:id/cancel')
+    @CancelBookingByGuestSwagger()
+    @ApiBearerAuth()
     async cancelBookingByGuest(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @CurrentUser() principal: Principal,
@@ -115,8 +130,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @ChangeBookingStatusSwagger()
     @Patch('/:id/status')
+    @ChangeBookingStatusByHostSwagger()
+    @ApiBearerAuth()
     async changeBookingStatusByHost(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: ChangeBookingStatusDto,
@@ -130,8 +146,9 @@ export class BookingsController {
     }
 
     @AllowRoles(Roles.USER)
-    @ReviewBookingSwagger()
     @Patch('/:id/submit-review')
+    @ReviewBookingSwagger()
+    @ApiBearerAuth()
     async reviewBooking(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: GuestReviewDto,

@@ -1,1 +1,1 @@
-export * from './email-service.swagger';
+export * from './send-email.swagger';

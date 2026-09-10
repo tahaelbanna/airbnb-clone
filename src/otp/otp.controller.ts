@@ -5,11 +5,10 @@ import { SendOtpDto } from './dtos/send-otp.dto';
 import { VerifyOtpDto } from './dtos/verify-otp.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
-import { SendOtpSwagger, ResendOtpSwagger, VerifyOtpSwagger } from './swagger';
-
-@ApiTags(API_TAGS.OTP)
+import { SendOtpSwagger, VerifyOtpSwagger, ResendOtpSwagger } from './swagger';
 @Controller('otp')
 @Public()
+@ApiTags(API_TAGS.OTP)
 export class OtpController {
     constructor(private readonly otpService: OtpService) {}
 

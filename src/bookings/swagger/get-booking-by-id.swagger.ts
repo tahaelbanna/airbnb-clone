@@ -1,21 +1,15 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { BookingResponseDto } from '../dtos/booking-response.dto';
-import { GuestReviewDto } from '../dtos/guest-review.dto';
 
-export function ReviewBookingSwagger() {
+export function GetBookingByIdSwagger() {
   return applyDecorators(
     ApiOperation({
-      summary: 'Submit booking review',
-      description: 'Submit a guest review for a completed booking.',
+      summary: 'Get booking by ID',
+      description: 'Retrieve a booking by its ID.',
     }),
     ApiParam({ name: 'id', type: String }),
-    ApiBody({ type: GuestReviewDto }),
     ApiResponse({ status: 200, type: BookingResponseDto }),
-    ApiResponse({
-      status: 400,
-      description: 'Bad Request - Invalid review or booking state',
-    }),
     ApiResponse({ status: 403, description: 'Forbidden' }),
     ApiResponse({ status: 404, description: 'Booking not found' }),
     ApiResponse({ status: 500, description: 'Internal server error' }),

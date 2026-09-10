@@ -6,7 +6,7 @@ import { ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import { SendEmailSwagger } from './swagger';
 
-@ApiTags(API_TAGS.EMAIL_SERVICE)
+@ApiTags(API_TAGS.MAIL)
 @Controller('email-service')
 export class EmailServiceController {
     constructor(private readonly emailService: EmailService) {}

@@ -35,14 +35,20 @@ import { PaginationDto } from 'src/common/dtos/pagination.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import {
-    CreateUnitSwagger, UpdateUnitSwagger, GetAllUnitsSwagger,
-    GetAllByUserSwagger, GetUnitByIdSwagger, SoftDeleteUnitSwagger,
-    DeactivateUnitSwagger, ActivateUnitSwagger, DeleteUnitPhotosSwagger,
-    UpdateUnitPhotosSwagger, GetUnitReviewsSwagger,
+    ActivateUnitSwagger,
+    CreateUnitSwagger,
+    DeactivateUnitSwagger,
+    DeleteUnitPhotosSwagger,
+    DeleteUnitSwagger,
+    FindAllUnitsByUserSwagger,
+    FindAllUnitsSwagger,
+    FindUnitByIdSwagger,
+    FindUnitReviewsSwagger,
+    UpdateUnitPhotosSwagger,
+    UpdateUnitSwagger,
 } from './swagger';
 
 @ApiTags(API_TAGS.UNITS)
-@ApiBearerAuth()
 @Controller('units')
 export class UnitsController {
     constructor(
@@ -51,9 +57,10 @@ export class UnitsController {
     ) {}
 
     @Post()
-    @CreateUnitSwagger()
     @AllowRoles(Roles.USER)
     @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
+    @ApiBearerAuth()
+    @CreateUnitSwagger()
     async create(
         @Body() body: CreateUnitDto,
         @CurrentUser() principal: Principal,
@@ -66,8 +73,9 @@ export class UnitsController {
     }
 
     @Patch(':id')
-    @UpdateUnitSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @UpdateUnitSwagger()
     async update(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Body() body: UpdateUnitDto,
@@ -77,15 +85,16 @@ export class UnitsController {
     }
 
     @Get()
-    @GetAllUnitsSwagger()
     @Public()
+    @FindAllUnitsSwagger()
     async GetAll(@Query() query: GetAllUnitsDto) {
         return await this.unitsService.GetAll(query);
     }
 
     @Get('by-user')
-    @GetAllByUserSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @FindAllUnitsByUserSwagger()
     async GetAllByUser(
         @Query() query: GetAllUnitsDto,
         @CurrentUser() principal: Principal,
@@ -95,14 +104,15 @@ export class UnitsController {
 
     @Public()
     @Get(':id')
-    @GetUnitByIdSwagger()
+    @FindUnitByIdSwagger()
     async GetById(@Param('id', new ParseMongoIdPipe()) id: string) {
         return await this.unitsService.GetById(id);
     }
 
     @Delete(':id/soft-delete')
-    @SoftDeleteUnitSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @DeleteUnitSwagger()
     async SoftDeleteOneUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @CurrentUser() principal: Principal,
@@ -111,8 +121,9 @@ export class UnitsController {
     }
 
     @Patch(':id/deactivate')
-    @DeactivateUnitSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @DeactivateUnitSwagger()
     async DeActivateUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @CurrentUser() principal: Principal,
@@ -121,8 +132,9 @@ export class UnitsController {
     }
 
     @Patch(':id/activate')
-    @ActivateUnitSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @ActivateUnitSwagger()
     async ActivateUnit(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @CurrentUser() principal: Principal,
@@ -131,8 +143,9 @@ export class UnitsController {
     }
 
     @Delete('/:id/delete-photos')
-    @DeleteUnitPhotosSwagger()
     @AllowRoles(Roles.USER)
+    @ApiBearerAuth()
+    @DeleteUnitPhotosSwagger()
     async deletePhotos(
         @Param('id') id: string,
         @CurrentUser() principal: Principal,
@@ -142,9 +155,10 @@ export class UnitsController {
     }
 
     @Patch('/:id/update-photos')
-    @UpdateUnitPhotosSwagger()
     @AllowRoles(Roles.USER)
     @UseInterceptors(FilesInterceptor('unit_photos', MaxFileCount.UNIT_PHOTOS))
+    @ApiBearerAuth()
+    @UpdateUnitPhotosSwagger()
     async updatePhotos(
         @UploadedFiles(createParseFilePipe('5MB', ['png', 'jpeg', 'jpg']))
         photos: MulterFile[],
@@ -155,8 +169,8 @@ export class UnitsController {
     }
 
     @Get('/:id/reviews')
-    @GetUnitReviewsSwagger()
     @Public()
+    @FindUnitReviewsSwagger()
     async getUnitReviews(
         @Param('id', new ParseMongoIdPipe()) id: string,
         @Query() query: PaginationDto,

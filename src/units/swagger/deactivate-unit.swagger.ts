@@ -1,21 +1,15 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiBody, ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
+import { ApiOperation, ApiParam, ApiResponse } from '@nestjs/swagger';
 import { UnitResponseDto } from '../dtos/unit-response.dto';
-import { UpdateUnitDto } from '../dtos/update-unit.dto';
 
-export function UpdateUnitSwagger() {
+export function DeactivateUnitSwagger() {
   return applyDecorators(
     ApiOperation({
-      summary: 'Update unit',
-      description: 'Update an existing unit owned by the authenticated user.',
+      summary: 'Deactivate unit',
+      description: 'Deactivate a unit owned by the authenticated user.',
     }),
     ApiParam({ name: 'id', type: String }),
-    ApiBody({ type: UpdateUnitDto }),
     ApiResponse({ status: 200, type: UnitResponseDto }),
-    ApiResponse({
-      status: 400,
-      description: 'Bad Request - Validation errors',
-    }),
     ApiResponse({ status: 403, description: 'Forbidden' }),
     ApiResponse({ status: 404, description: 'Unit not found' }),
     ApiResponse({ status: 500, description: 'Internal server error' }),

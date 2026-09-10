@@ -11,9 +11,13 @@ import { PaginatedResult } from '../common/data-access';
 import { UnitFavouritesResponseDto } from './dtos/unit-favourites-response.dto';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
-import { AddFavoriteSwagger, RemoveFavoriteSwagger, GetFavoritesSwagger } from './swagger';
+import {
+    AddUnitFavoriteSwagger,
+    FindUnitFavoritesSwagger,
+    RemoveUnitFavoriteSwagger,
+} from './swagger';
 
-@ApiTags(API_TAGS.UNIT_FAVOURITES)
+@ApiTags(API_TAGS.UNIT_FAVORITES)
 @ApiBearerAuth()
 @Controller('unit-favourites')
 @AllowRoles(Roles.USER)
@@ -23,7 +27,7 @@ export class UnitFavouritesController {
     ) {}
 
     @Post('/:unitId')
-    @AddFavoriteSwagger()
+    @AddUnitFavoriteSwagger()
     async addFavorite(
         @Param('unitId') unitId: string,
         @CurrentUser() principal: Principal,
@@ -35,7 +39,7 @@ export class UnitFavouritesController {
     }
 
     @Delete('/:unitId')
-    @RemoveFavoriteSwagger()
+    @RemoveUnitFavoriteSwagger()
     async removeFavorite(
         @Param('unitId') unitId: string,
         @CurrentUser() principal: Principal,
@@ -47,7 +51,7 @@ export class UnitFavouritesController {
     }
 
     @Get()
-    @GetFavoritesSwagger()
+    @FindUnitFavoritesSwagger()
     async getFavorites(
         @Query() query: GetUnitFavouritesDto,
         @CurrentUser() principal: Principal,
