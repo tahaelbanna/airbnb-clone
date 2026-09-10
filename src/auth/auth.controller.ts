@@ -11,8 +11,9 @@ import { RefreshTokenSwagger } from './swagger/refresh-token.swagger';
 import { AuthResponseDto } from './dtos/auth-response.dto';
 import { Public } from './decorators/public.decorator';
 import { CurrentUser, Principal } from './decorators/current-user.decorator';
-
+import { ApiBearerAuth } from '@nestjs/swagger';
 @ApiTags(API_TAGS.AUTH)
+@ApiBearerAuth()
 @Controller('auth')
 export class AuthController {
     constructor(private readonly authService: AuthService) {}

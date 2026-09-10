@@ -1,11 +1,12 @@
 import { Body, Controller, Put, Get } from '@nestjs/common';
 import { AppSettingsService } from './app-settings.service';
 import { UpsertAppSettingsDto } from './dtos/upsert-app-settings.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import { GetAppSettingsSwagger, UpsertAppSettingsSwagger } from './swagger';
 
 @ApiTags(API_TAGS.APP_SETTINGS)
+@ApiBearerAuth()
 @Controller('app-settings')
 export class AppSettingsController {
     constructor(private readonly appSettingsService: AppSettingsService) {}
