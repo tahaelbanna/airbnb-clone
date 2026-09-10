@@ -26,7 +26,7 @@ export class NodemailerEmailAdapter implements EmailAdapterInterface {
 
     async sendEmail(dto: SendEmailDto): Promise<void> {
         await this.transporter.sendMail({
-            from: dto.from,
+            from: '"Airbnb Support" <support@airbnb.com>',
             to: dto.to,
             subject: dto.subject,
             text: dto.text,

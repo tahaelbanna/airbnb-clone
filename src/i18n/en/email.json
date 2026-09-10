@@ -1,3 +1,9 @@
 {
-    "EMAIL_NOT_SENT": "email not sent. Please try again."
+    "EMAIL_NOT_SENT": "email not sent. Please try again.",
+    "OTP_NOT_FOUND_FOR_EMAIL": "OTP not found for the provided email.",
+    "INVALID_OTP": "Invalid OTP. Please check the OTP and try again.",
+    "OTP_EXPIRED": "The OTP has expired. Please request a new one.",
+    "OTP_ALREADY_VERIFIED": "The OTP has already been verified. Please request a new one.",
+    "OTP_COOLDOWN": "You have requested an OTP recently. Please wait before requesting a new one.",
+    "EMAIL_NOT_VERIFIED": "Email not verified, please verify your email first."
 }

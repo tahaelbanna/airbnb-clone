@@ -16,6 +16,7 @@ import { RefreshTokenRepository } from './repositories/refresh-token.repository'
 import { LoginAsUserUsecase } from './use-cases/login-as-user.usecase';
 import { LoginAsAdminUsecase } from './use-cases/login-as-admin.usecase';
 import { SystemAdminModule } from 'src/system-admin/system-admin.module';
+import { OtpModule } from 'src/otp/otp.module';
 
 @Module({
     exports: [JwtModule, UsersModule, SystemAdminModule],
@@ -33,6 +34,7 @@ import { SystemAdminModule } from 'src/system-admin/system-admin.module';
     imports: [
         UsersModule,
         SystemAdminModule,
+        OtpModule,
         JwtModule.registerAsync({
             useFactory: (
                 configService: ConfigService<EnvironmentInterface>,

@@ -13,5 +13,6 @@ import { EMAIL_ADAPTER } from './constants/mail.constant';
             useClass: NodemailerEmailAdapter,
         },
     ],
+    exports: [EmailService],
 })
 export class EmailServiceModule {}
