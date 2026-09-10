@@ -21,6 +21,7 @@ import { UnitReviewsModule } from './unit-reviews/unit-reviews.module';
 import { UnitFavouritesModule } from './unit-favourites/unit-favourites.module';
 import { EmailServiceModule } from './email-service/email-service.module';
 import { OtpModule } from './otp/otp.module';
+import { ForgetPasswordModule } from './forget-password/forget-password.module';
 
 @Module({
     imports: [
@@ -40,6 +41,7 @@ import { OtpModule } from './otp/otp.module';
         UnitFavouritesModule,
         EmailServiceModule,
         OtpModule,
+        ForgetPasswordModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

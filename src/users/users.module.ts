@@ -5,9 +5,15 @@ import { MongooseModule } from '@nestjs/mongoose';
 import { CreateUserUsecase } from './use-cases/create-user.usecase';
 import { ModelNames } from '../common/data-access';
 import { UserRepository } from './repositories/user.repository';
+import { UpdateUserRawUsecase } from './use-cases/update-user-raw.usecase';
 
 @Module({
-    providers: [UsersService, CreateUserUsecase, UserRepository],
+    providers: [
+        UsersService,
+        CreateUserUsecase,
+        UserRepository,
+        UpdateUserRawUsecase,
+    ],
     exports: [UsersService],
     imports: [
         MongooseModule.forFeature([
