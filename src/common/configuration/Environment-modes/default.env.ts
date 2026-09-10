@@ -20,4 +20,18 @@ export const defaultEnv = (): EnvironmentInterface => ({
         awsS3BucketName: process.env.awsS3BucketName as string,
         minioEndpoint: process.env.minioEndpoint as string,
     },
+    smtp: {
+        smtpHost: process.env.smtpHost as string,
+        smtpPort: Number(process.env.smtpPort),
+        smtpSecure: process.env.smtpSecure === 'true',
+        auth:
+            process.env.smtpFromEmail &&
+            process.env.smtpPassword &&
+            process.env.smtpUser
+                ? {
+                      user: process.env.smtpFromEmail,
+                      pass: process.env.smtpPassword,
+                  }
+                : undefined,
+    },
 });

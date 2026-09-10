@@ -7,6 +7,7 @@ export interface EnvironmentInterface {
     refreshTokenExpireIn: string;
     systemAdmin: ISystemAdmin;
     awsS3: IAWSConfig;
+    smtp: ISMTPConfig;
 }
 
 export interface ISystemAdmin {
@@ -21,4 +22,14 @@ export interface IAWSConfig {
     awsS3SecretAccessKey: string;
     awsS3BucketName: string;
     minioEndpoint: string;
+}
+
+export interface ISMTPConfig {
+    smtpHost: string;
+    smtpPort: number;
+    smtpSecure: boolean;
+    auth: {
+        user: string;
+        pass: string;
+    };
 }

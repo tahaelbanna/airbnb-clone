@@ -18,4 +18,10 @@ export const envSchema = Joi.object({
     awsS3SecretAccessKey: Joi.string().required(),
     awsS3BucketName: Joi.string().required(),
     minioEndpoint: Joi.string().optional().default(''),
+    smtpHost: Joi.string().required(),
+    smtpPort: Joi.number().required(),
+    smtpSecure: Joi.boolean().required(),
+    smtpUser: Joi.string().optional().allow('').default(''),
+    smtpPassword: Joi.string().optional().allow('').default(''),
+    smtpFromEmail: Joi.string().optional().allow('').default(''),
 });

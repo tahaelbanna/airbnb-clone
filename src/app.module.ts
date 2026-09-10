@@ -19,6 +19,7 @@ import { FilesUploadModule } from './files-upload/files-upload.module';
 import { BookingsModule } from './bookings/bookings.module';
 import { UnitReviewsModule } from './unit-reviews/unit-reviews.module';
 import { UnitFavouritesModule } from './unit-favourites/unit-favourites.module';
+import { EmailServiceModule } from './email-service/email-service.module';
 
 @Module({
     imports: [
@@ -36,6 +37,7 @@ import { UnitFavouritesModule } from './unit-favourites/unit-favourites.module';
         BookingsModule,
         UnitReviewsModule,
         UnitFavouritesModule,
+        EmailServiceModule,
     ],
     providers: [
         { provide: APP_GUARD, useClass: JwtAuthGuard },

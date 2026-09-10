@@ -36,6 +36,12 @@ services:
             mc mb --ignore-existing local/airbnb-api-clone;
             mc anonymous set download local/airbnb-api-clone;
             "
+    mailpit:
+        image: axllent/mailpit:v1.30
+        container_name: mailpit
+        ports:
+          - 1025:1025
+          - 8025:8025
 
 volumes:
     mongo_data:
