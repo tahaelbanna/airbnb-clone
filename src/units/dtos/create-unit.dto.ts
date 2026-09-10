@@ -8,6 +8,7 @@ import {
     MaxLength,
     MinLength,
 } from 'class-validator';
+import { Transform, Type } from 'class-transformer';
 
 export class CreateUnitDto {
     @IsNotEmpty()
@@ -33,6 +34,7 @@ export class CreateUnitDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     unit_cost_per_night: number;
 
     @IsNotEmpty()
@@ -52,25 +54,31 @@ export class CreateUnitDto {
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     unit_rooms_count: number;
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     unit_adults_count: number;
 
     @IsNotEmpty()
     @IsNumber()
+    @Type(() => Number)
     unit_kids_count: number;
 
     @IsNotEmpty()
     @IsBoolean()
+    @Transform(({ value }) => value === 'true' || value === true)
     has_internet_service: boolean;
 
     @IsNotEmpty()
     @IsBoolean()
+    @Transform(({ value }) => value === 'true' || value === true)
     has_kitchen: boolean;
 
     @IsNotEmpty()
     @IsBoolean()
+    @Transform(({ value }) => value === 'true' || value === true)
     has_private_garage: boolean;
 }

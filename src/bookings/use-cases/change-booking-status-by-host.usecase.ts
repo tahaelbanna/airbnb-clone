@@ -71,7 +71,7 @@ export class ChangeBookingStatusByHostUseCase {
                 status: BookingStatus.CANCELLED,
                 cancellation_reason: body?.cancellation_reason,
                 cancellation_date: new Date(),
-                cancellation_by: BookingCancelledBy.HOST,
+                cancelled_by: BookingCancelledBy.HOST,
             },
             { returnDocument: 'after', lean: true },
         );

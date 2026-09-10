@@ -1,17 +1,30 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import mongoose from 'mongoose';
 import { ModelNames } from '../../common/data-access';
 import { BookingStatus } from '../enums/booking-status.enum';
 import { BookingCancelledBy } from '../enums/booking-cancelled-by.enum';
 import { GuestReview } from './subdocument/guest-review.schema';
 @Schema({ timestamps: true })
 export class Booking {
-    @Prop({ required: true, ref: ModelNames.UNITS })
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: ModelNames.UNITS,
+    })
     unit_id: string;
 
-    @Prop({ required: true, ref: ModelNames.USERS })
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: ModelNames.USERS,
+    })
     guest_id: string;
 
-    @Prop({ required: true, ref: ModelNames.USERS })
+    @Prop({
+        type: mongoose.Schema.Types.ObjectId,
+        required: true,
+        ref: ModelNames.USERS,
+    })
     host_id: string;
 
     @Prop({ required: true, type: Date })

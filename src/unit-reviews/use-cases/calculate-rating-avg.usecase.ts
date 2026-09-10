@@ -18,7 +18,12 @@ export class CalculateRatingAvgUseCase {
         }>(
             [
                 {
-                    $match: { unit_id: new Types.ObjectId(unitId) },
+                    $match: {
+                        $or: [
+                            { unit_id: unitId },
+                            { unit_id: new Types.ObjectId(unitId) },
+                        ],
+                    },
                 },
                 {
                     $group: {

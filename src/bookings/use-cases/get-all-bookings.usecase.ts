@@ -24,9 +24,12 @@ export class GetAllBookingsUseCase {
             sort: sortQuery,
             lean: true,
             populate: [
-                { path: 'unit_id', select: 'unit_title' },
-                { path: 'host_id', select: 'user_name user_email user_phone' },
-                { path: 'guest_id', select: 'user_name user_email user_phone' },
+                {
+                    path: 'unit_id',
+                    select: 'unit_title unit_photos unit_address',
+                },
+                { path: 'host_id', select: 'name email phone' },
+                { path: 'guest_id', select: 'name email phone' },
             ],
         });
         return plainToInstance(PaginatedResult<BookingResponseDto>, result);

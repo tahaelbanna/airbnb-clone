@@ -32,10 +32,10 @@ export class UnitResponseDto {
     unit_owner_id: string;
 
     @Expose()
-    unit_avg_rate: string;
+    unit_avg_rate: number;
 
     @Expose()
-    unit_reviews_count: string;
+    unit_reviews_count: number;
 
     @Expose()
     unit_rooms_count: number;
