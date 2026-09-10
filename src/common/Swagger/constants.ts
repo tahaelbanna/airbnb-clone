@@ -6,4 +6,10 @@ export enum API_TAGS {
     CURRENCIES = 'Currencies',
     UNIT_CATEGORIES = 'Unit Categories',
     SYSTEM_ADMINS = 'System Admins',
+    BOOKINGS = 'Bookings',
+    OTP = 'OTP',
+    EMAIL_SERVICE = 'Email Service',
+    FORGET_PASSWORD = 'Forget Password',
+    UNIT_FAVOURITES = 'Unit Favourites',
+    UNITS = 'Units',
 }
