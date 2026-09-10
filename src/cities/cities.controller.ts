@@ -13,7 +13,7 @@ import { CreateCityDto } from './dtos/create-city.dto';
 import { ParseMongoIdPipe } from '../common/pipes/parse-mongo-id.pipe';
 import { UpdateCityDto } from './dtos/update-city.dto';
 import { GetAllCitiesDto } from './dtos/get-all-cities.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { API_TAGS } from '../common/swagger';
 import {
     CreateCitySwagger,
@@ -26,6 +26,7 @@ import { Roles } from '../common/constants/roles.constans';
 import { AllowRoles } from '../auth/decorators/roles.decorator';
 
 @ApiTags(API_TAGS.CITIES)
+@ApiBearerAuth()
 @Controller('cities')
 export class CitiesController {
     constructor(private readonly citiesService: CitiesService) {}
