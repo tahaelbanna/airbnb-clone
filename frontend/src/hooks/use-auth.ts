@@ -4,7 +4,7 @@ import { useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore, selectIsAuthenticated, selectIsAdmin, selectIsUser } from "@/store/auth-store";
-import { login as loginApi, register as registerApi, getMe } from "@/features/auth/api";
+import { login as loginApi, adminLogin as adminLoginApi, register as registerApi, getMe } from "@/features/auth/api";
 import { setTokens, clearTokens } from "@/lib/api/token-storage";
 import type { LoginRequest, RegisterRequest } from "@/types/auth";
 
@@ -31,6 +31,18 @@ export function useAuth() {
   const login = useCallback(
     async (body: LoginRequest) => {
       const tokens = await loginApi(body);
+      setTokens(tokens.accessToken, tokens.refreshToken);
+
+      // Fetch the full user profile + role from /auth/me
+      const { user: currentUser, role: currentRole } = await getMe();
+      setAuth(currentUser, currentRole);
+    },
+    [setAuth],
+  );
+
+  const adminLogin = useCallback(
+    async (body: LoginRequest) => {
+      const tokens = await adminLoginApi(body);
       setTokens(tokens.accessToken, tokens.refreshToken);
 
       // Fetch the full user profile + role from /auth/me
@@ -68,6 +80,7 @@ export function useAuth() {
     isAdmin,
     isUser,
     login,
+    adminLogin,
     register,
     logout,
   };

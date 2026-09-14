@@ -11,11 +11,18 @@ import { registerSchema, type RegisterFormData } from "@/lib/schemas/auth";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { sendOtp, verifyOtp } from "@/features/auth/api";
 
 export default function RegisterPage() {
   const { register: authRegister } = useAuth();
   const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
+  
+  // OTP Flow State
+  const [otpMode, setOtpMode] = useState(false);
+  const [registerData, setRegisterData] = useState<RegisterFormData | null>(null);
+  const [otpCode, setOtpCode] = useState("");
+  const [isVerifying, setIsVerifying] = useState(false);
   
   const {
     register,
@@ -25,21 +32,119 @@ export default function RegisterPage() {
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = async (data: RegisterFormData) => {
+  const onSubmitForm = async (data: RegisterFormData) => {
     try {
       setServerError(null);
-      await authRegister(data);
-      // GuestRoute will redirect to / immediately after login state updates.
+      await sendOtp({ email: data.email });
+      setRegisterData(data);
+      setOtpMode(true);
     } catch (error) {
       if (error instanceof AxiosError) {
-        // Backend returns error message in response.data.message
         const message = error.response?.data?.message;
-        setServerError(Array.isArray(message) ? message[0] : message || "Registration failed. Please try again.");
+        setServerError(Array.isArray(message) ? message[0] : message || "Failed to send verification code. Please try again.");
       } else {
         setServerError("An unexpected error occurred.");
       }
     }
   };
+
+  const onVerifyOtp = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!registerData) return;
+    
+    try {
+      setIsVerifying(true);
+      setServerError(null);
+      // Verify OTP
+      await verifyOtp({ email: registerData.email, code: otpCode });
+      
+      // Proceed with actual registration
+      await authRegister(registerData);
+      // GuestRoute will redirect to / immediately after login state updates.
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = error.response?.data?.message;
+        setServerError(Array.isArray(message) ? message[0] : message || "Verification or registration failed. Please try again.");
+      } else {
+        setServerError("An unexpected error occurred.");
+      }
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const onResendOtp = async () => {
+    if (!registerData) return;
+    try {
+      setServerError(null);
+      await sendOtp({ email: registerData.email });
+      alert("Verification code resent.");
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = error.response?.data?.message;
+        setServerError(Array.isArray(message) ? message[0] : message || "Failed to resend code.");
+      }
+    }
+  };
+
+  if (otpMode) {
+    return (
+      <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+            Verify your email
+          </h1>
+          <p className="mt-2 text-sm text-muted">
+            We sent a verification code to <span className="font-semibold text-foreground">{registerData?.email}</span>.
+          </p>
+        </div>
+
+        <form onSubmit={onVerifyOtp} className="mt-8 space-y-6">
+          {serverError && (
+            <div className="rounded-xl bg-error/10 p-4 text-sm text-error">
+              {serverError}
+            </div>
+          )}
+
+          <div className="space-y-2">
+            <Label htmlFor="otp">Verification Code</Label>
+            <Input
+              id="otp"
+              type="text"
+              placeholder="Enter code"
+              value={otpCode}
+              onChange={(e) => setOtpCode(e.target.value)}
+              required
+            />
+          </div>
+
+          <Button type="submit" className="w-full" isLoading={isVerifying}>
+            Verify and complete registration
+          </Button>
+        </form>
+
+        <div className="mt-6 flex flex-col items-center gap-2 text-sm">
+          <button
+            type="button"
+            onClick={onResendOtp}
+            className="font-semibold text-primary hover:text-primary-hover"
+          >
+            Resend code
+          </button>
+          <button
+            type="button"
+            onClick={() => {
+              setOtpMode(false);
+              setServerError(null);
+            }}
+            className="text-muted hover:text-foreground"
+          >
+            Back to registration
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
@@ -52,7 +157,7 @@ export default function RegisterPage() {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="mt-8 space-y-6">
+      <form onSubmit={handleSubmit(onSubmitForm)} className="mt-8 space-y-6">
         {serverError && (
           <div className="rounded-xl bg-error/10 p-4 text-sm text-error">
             {serverError}

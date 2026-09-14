@@ -1,0 +1,6135 @@
+{
+  "openapi": "3.0.0",
+  "paths": {
+    "/auth/register": {
+      "post": {
+        "description": "This endpoint allows a new user to register by providing their email, password, and other required information. Upon successful registration, the user will receive an access token and a refresh token.",
+        "operationId": "AuthController_register",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/registerDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RegisterResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation or business logic errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "EmailExists": {
+                    "summary": "Email already exists",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Email already exists"
+                        }
+                      ]
+                    }
+                  },
+                  "PhoneExists": {
+                    "summary": "Phone number already exists",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Phone number already exists"
+                        }
+                      ]
+                    }
+                  },
+                  "ValidationError": {
+                    "summary": "Invalid input data",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "name should not be empty"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Register a new user",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/login": {
+      "post": {
+        "description": "Authenticate user and receive access and refresh tokens",
+        "operationId": "AuthController_login",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/loginDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid credentials or validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "InvalidCredentials": {
+                    "summary": "Invalid credentials",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Invalid credentials"
+                        }
+                      ]
+                    }
+                  },
+                  "EmailRequired": {
+                    "summary": "Email is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "email should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "PasswordRequired": {
+                    "summary": "Password is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "password should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "InvalidEmail": {
+                    "summary": "Invalid email format",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "email must be an email"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "User login",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/refresh-token": {
+      "post": {
+        "description": "Generate new access and refresh tokens using a valid refresh token",
+        "operationId": "AuthController_refreshToken",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/refreshTokenDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AuthResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid token type or validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "InvalidTokenType": {
+                    "summary": "Invalid token type",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Invalid refresh token"
+                        }
+                      ]
+                    }
+                  },
+                  "TokenRequired": {
+                    "summary": "Refresh token is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "refreshToken should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "TokenMustBeString": {
+                    "summary": "Refresh token must be a string",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "refreshToken must be a string"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden - Invalid or expired refresh token",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "InvalidToken": {
+                    "summary": "Invalid refresh token",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Invalid refresh token"
+                        }
+                      ]
+                    }
+                  },
+                  "ExpiredToken": {
+                    "summary": "Expired refresh token",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Invalid refresh token"
+                        }
+                      ]
+                    }
+                  },
+                  "TokenNotFound": {
+                    "summary": "Token not found in database",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Invalid refresh token"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "summary": "Refresh access token",
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/auth/me": {
+      "get": {
+        "operationId": "AuthController_getCurrentUser",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": ""
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "tags": [
+          "Auth"
+        ]
+      }
+    },
+    "/otp/send": {
+      "post": {
+        "description": "Send an OTP code to the provided email address.",
+        "operationId": "OtpController_sendOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "OTP sent successfully"
+          },
+          "400": {
+            "description": "Bad Request - Validation or sending errors"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Send OTP",
+        "tags": [
+          "OTP"
+        ]
+      }
+    },
+    "/otp/resend": {
+      "post": {
+        "description": "Resend a new OTP code to the specified email address.",
+        "operationId": "OtpController_reSendOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OTP resent successfully"
+          },
+          "400": {
+            "description": "Bad Request - OTP not found, already verified, cooldown active, or validation error"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Resend OTP",
+        "tags": [
+          "OTP"
+        ]
+      }
+    },
+    "/otp/verify": {
+      "post": {
+        "description": "Verify an OTP code for an email address.",
+        "operationId": "OtpController_verifyOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "OTP verified successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid OTP"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Verify OTP",
+        "tags": [
+          "OTP"
+        ]
+      }
+    },
+    "/email-service/send": {
+      "post": {
+        "description": "Send an email using the configured mail adapter.",
+        "operationId": "EmailServiceController_sendEmail",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendEmailDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Email sent successfully"
+          },
+          "400": {
+            "description": "Bad Request - Validation or sending errors"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Send email",
+        "tags": [
+          "Mail"
+        ]
+      }
+    },
+    "/countries": {
+      "post": {
+        "description": "Create a new country",
+        "operationId": "CountriesController_createCountry",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCountryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NameRequired": {
+                    "summary": "Name is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "name should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "CountryCodeRequired": {
+                    "summary": "Country code is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "countryCode should not be empty"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a country",
+        "tags": [
+          "Countries"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of countries",
+        "operationId": "CountriesController_getAllCountries",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "country_name",
+            "required": false,
+            "in": "query",
+            "description": "Filter by country name",
+            "schema": {
+              "example": "Egypt",
+              "type": "string"
+            }
+          },
+          {
+            "name": "country_code",
+            "required": false,
+            "in": "query",
+            "description": "Filter by country code",
+            "schema": {
+              "example": "EG",
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "countryCode",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CountryResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all countries",
+        "tags": [
+          "Countries"
+        ]
+      }
+    },
+    "/countries/{id}": {
+      "get": {
+        "description": "Retrieve a single country by its ID",
+        "operationId": "CountriesController_getCountryById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Country not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Country not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get country by ID",
+        "tags": [
+          "Countries"
+        ]
+      },
+      "delete": {
+        "description": "Delete an existing country by its ID",
+        "operationId": "CountriesController_softDeleteCountry",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Country deleted successfully"
+          },
+          "404": {
+            "description": "Country not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Country not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Country not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete country by ID",
+        "tags": [
+          "Countries"
+        ]
+      },
+      "patch": {
+        "description": "Update an existing country by its ID",
+        "operationId": "CountriesController_updateCountry",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCountryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CountryResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Country not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Country not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Country not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update country by ID",
+        "tags": [
+          "Countries"
+        ]
+      }
+    },
+    "/cities": {
+      "post": {
+        "description": "Create a new city",
+        "operationId": "CitiesController_createCity",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NameRequired": {
+                    "summary": "Name is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "name should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "CountryRequired": {
+                    "summary": "Country is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "country should not be empty"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a city",
+        "tags": [
+          "Cities"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of cities",
+        "operationId": "CitiesController_getAllCities",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "city_name",
+            "required": false,
+            "in": "query",
+            "description": "Filter by city name",
+            "schema": {
+              "example": "Cairo",
+              "type": "string"
+            }
+          },
+          {
+            "name": "country_id",
+            "required": false,
+            "in": "query",
+            "description": "Filter by country ID",
+            "schema": {
+              "example": "60d21b4967d0d8992e610c85",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "countryId",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CityResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all cities",
+        "tags": [
+          "Cities"
+        ]
+      }
+    },
+    "/cities/{id}": {
+      "get": {
+        "description": "Retrieve a single city by its ID",
+        "operationId": "CitiesController_getCityById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "City not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "City not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "City not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get city by ID",
+        "tags": [
+          "Cities"
+        ]
+      },
+      "delete": {
+        "description": "Delete an existing city by its ID",
+        "operationId": "CitiesController_softDeleteCity",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "City deleted successfully"
+          },
+          "404": {
+            "description": "City not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "City not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "City not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete city by ID",
+        "tags": [
+          "Cities"
+        ]
+      },
+      "patch": {
+        "description": "Update an existing city by its ID",
+        "operationId": "CitiesController_updateCity",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCityDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CityResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "City not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "City not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "City not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update city by ID",
+        "tags": [
+          "Cities"
+        ]
+      }
+    },
+    "/currencies": {
+      "post": {
+        "description": "Create a new currency",
+        "operationId": "CurrenciesController_createCurrency",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateCurrencyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NameRequired": {
+                    "summary": "Name is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "name should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "CurrencyCodeRequired": {
+                    "summary": "Currency code is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "currencyCode should not be empty"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a currency",
+        "tags": [
+          "Currencies"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of currencies",
+        "operationId": "CurrenciesController_getAllCurrencies",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "currency_name",
+            "required": false,
+            "in": "query",
+            "description": "Filter by currency name",
+            "schema": {
+              "example": "Egyptian Pound",
+              "type": "string"
+            }
+          },
+          {
+            "name": "currency_code",
+            "required": false,
+            "in": "query",
+            "description": "Filter by currency code",
+            "schema": {
+              "example": "EGP",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CurrencyResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all currencies",
+        "tags": [
+          "Currencies"
+        ]
+      }
+    },
+    "/currencies/{id}": {
+      "get": {
+        "description": "Retrieve a single currency by its ID",
+        "operationId": "CurrenciesController_getCurrencyById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Currency not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Currency not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Currency not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get currency by ID",
+        "tags": [
+          "Currencies"
+        ]
+      },
+      "delete": {
+        "description": "Delete an existing currency by its ID",
+        "operationId": "CurrenciesController_softDeleteCurrency",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Currency deleted successfully"
+          },
+          "404": {
+            "description": "Currency not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Currency not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Currency not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete currency by ID",
+        "tags": [
+          "Currencies"
+        ]
+      },
+      "patch": {
+        "description": "Update an existing currency by its ID",
+        "operationId": "CurrenciesController_updateCurrency",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateCurrencyDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CurrencyResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Currency not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Currency not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Currency not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update currency by ID",
+        "tags": [
+          "Currencies"
+        ]
+      }
+    },
+    "/unit-categories": {
+      "post": {
+        "description": "Create a new unit category",
+        "operationId": "UnitCategoriesController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateUnitCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitCategoryResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NameRequired": {
+                    "summary": "Name is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "name should not be empty"
+                        }
+                      ]
+                    }
+                  },
+                  "IconRequired": {
+                    "summary": "Icon is required",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "icon should not be empty"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a unit category",
+        "tags": [
+          "Unit Categories"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of unit categories",
+        "operationId": "UnitCategoriesController_getAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "unit_categories_name",
+            "required": false,
+            "in": "query",
+            "description": "Filter by unit category name",
+            "schema": {
+              "example": "Apartment",
+              "type": "string"
+            }
+          },
+          {
+            "name": "icon",
+            "required": false,
+            "in": "query",
+            "description": "Filter by icon",
+            "schema": {
+              "example": "fa-building",
+              "type": "string"
+            }
+          },
+          {
+            "name": "search",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UnitCategoryResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all unit categories",
+        "tags": [
+          "Unit Categories"
+        ]
+      }
+    },
+    "/unit-categories/{id}": {
+      "get": {
+        "description": "Retrieve a single unit category by its ID",
+        "operationId": "UnitCategoriesController_getUnitCategoryById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitCategoryResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unit category not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Unit category not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Unit category not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get unit category by ID",
+        "tags": [
+          "Unit Categories"
+        ]
+      },
+      "delete": {
+        "description": "Delete an existing unit category by its ID",
+        "operationId": "UnitCategoriesController_deleteUnitCategoryById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Unit category deleted successfully"
+          },
+          "404": {
+            "description": "Unit category not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Unit category not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Unit category not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete unit category by ID",
+        "tags": [
+          "Unit Categories"
+        ]
+      },
+      "patch": {
+        "description": "Update an existing unit category by its ID",
+        "operationId": "UnitCategoriesController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUnitCategoryDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitCategoryResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unit category not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "NotFound": {
+                    "summary": "Unit category not found",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "Unit category not found"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update unit category by ID",
+        "tags": [
+          "Unit Categories"
+        ]
+      }
+    },
+    "/app-settings": {
+      "put": {
+        "description": "Create or update the application settings",
+        "operationId": "AppSettingsController_upsertAppSettings",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpsertAppSettingsDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppSettingsResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                },
+                "examples": {
+                  "VatRateMax": {
+                    "summary": "VAT rate exceeds maximum",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "vatRate must not be greater than 25"
+                        }
+                      ]
+                    }
+                  },
+                  "MinPriceMin": {
+                    "summary": "Min price below minimum",
+                    "value": {
+                      "errors": [
+                        {
+                          "message": "minPrice must not be less than 0"
+                        }
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Upsert app settings",
+        "tags": [
+          "App Settings"
+        ]
+      },
+      "get": {
+        "description": "Retrieve the current application settings",
+        "operationId": "AppSettingsController_getAppSettings",
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AppSettingsResponseDto"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errors": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "message": {
+                            "type": "string",
+                            "example": "Internal server error"
+                          }
+                        },
+                        "required": [
+                          "message"
+                        ]
+                      }
+                    }
+                  },
+                  "required": [
+                    "errors"
+                  ]
+                }
+              }
+            }
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get app settings",
+        "tags": [
+          "App Settings"
+        ]
+      }
+    },
+    "/units": {
+      "post": {
+        "description": "Create a new unit for the authenticated user with uploaded photos.",
+        "operationId": "UnitsController_create",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "photos",
+                  "title",
+                  "description",
+                  "address",
+                  "costPerDay",
+                  "country",
+                  "city",
+                  "unitCategory",
+                  "roomsCount",
+                  "adultsCount",
+                  "kidsCount",
+                  "hasInternetService",
+                  "hasKitchen"
+                ],
+                "properties": {
+                  "photos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  },
+                  "title": {
+                    "type": "string",
+                    "example": "Modern apartment in Cairo"
+                  },
+                  "description": {
+                    "type": "string",
+                    "example": "Comfortable apartment near downtown Cairo."
+                  },
+                  "address": {
+                    "type": "string",
+                    "example": "12 Nile Street, Cairo"
+                  },
+                  "costPerDay": {
+                    "type": "number",
+                    "example": 1200
+                  },
+                  "country": {
+                    "type": "string",
+                    "example": "60d21b4967d0d8992e610c85"
+                  },
+                  "city": {
+                    "type": "string",
+                    "example": "60d21b4967d0d8992e610c85"
+                  },
+                  "unitCategory": {
+                    "type": "string",
+                    "example": "60d21b4967d0d8992e610c85"
+                  },
+                  "roomsCount": {
+                    "type": "number",
+                    "example": 2
+                  },
+                  "adultsCount": {
+                    "type": "number",
+                    "example": 2
+                  },
+                  "kidsCount": {
+                    "type": "number",
+                    "example": 1
+                  },
+                  "hasInternetService": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "hasKitchen": {
+                    "type": "boolean",
+                    "example": true
+                  },
+                  "hasPrivateGarage": {
+                    "type": "boolean",
+                    "example": false
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors"
+          },
+          "415": {
+            "description": "Unsupported Media Type - Invalid file upload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a unit",
+        "tags": [
+          "Units"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of active units.",
+        "operationId": "UnitsController_GetAll",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "unit_title",
+            "required": true,
+            "in": "query",
+            "description": "Unit title",
+            "schema": {
+              "example": "Cozy apartment in downtown",
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_country_id",
+            "required": true,
+            "in": "query",
+            "description": "Country ID",
+            "schema": {
+              "example": "65a1b2c3d4e5f67890123456",
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_city_id",
+            "required": true,
+            "in": "query",
+            "description": "City ID",
+            "schema": {
+              "example": "65a1b2c3d4e5f67890123456",
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UnitResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get all active units",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}": {
+      "patch": {
+        "description": "Update an existing unit owned by the authenticated user.",
+        "operationId": "UnitsController_update",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateUnitDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update unit",
+        "tags": [
+          "Units"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a single active unit by its ID.",
+        "operationId": "UnitsController_GetById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get unit by ID",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/by-user": {
+      "get": {
+        "description": "Retrieve a paginated list of units owned by the authenticated user.",
+        "operationId": "UnitsController_GetAllByUser",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "unit_title",
+            "required": true,
+            "in": "query",
+            "description": "Unit title",
+            "schema": {
+              "example": "Cozy apartment in downtown",
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_country_id",
+            "required": true,
+            "in": "query",
+            "description": "Country ID",
+            "schema": {
+              "example": "65a1b2c3d4e5f67890123456",
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_city_id",
+            "required": true,
+            "in": "query",
+            "description": "City ID",
+            "schema": {
+              "example": "65a1b2c3d4e5f67890123456",
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "country",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "city",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UnitResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get my units",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/soft-delete": {
+      "delete": {
+        "description": "Soft delete a unit owned by the authenticated user.",
+        "operationId": "UnitsController_SoftDeleteOneUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Unit deleted successfully"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete unit",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/deactivate": {
+      "patch": {
+        "description": "Deactivate a unit owned by the authenticated user.",
+        "operationId": "UnitsController_DeActivateUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Deactivate unit",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/activate": {
+      "patch": {
+        "description": "Activate a unit owned by the authenticated user.",
+        "operationId": "UnitsController_ActivateUnit",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Activate unit",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/delete-photos": {
+      "delete": {
+        "description": "Delete one or more photos from a unit.",
+        "operationId": "UnitsController_deletePhotos",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DeleteUnitPhotosDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Unit photos deleted successfully"
+          },
+          "400": {
+            "description": "Bad Request - Validation errors"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Delete unit photos",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/update-photos": {
+      "patch": {
+        "description": "Upload replacement photos for a unit.",
+        "operationId": "UnitsController_updatePhotos",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "photos"
+                ],
+                "properties": {
+                  "photos": {
+                    "type": "array",
+                    "items": {
+                      "type": "string",
+                      "format": "binary"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UnitResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "415": {
+            "description": "Unsupported Media Type - Invalid file upload"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update unit photos",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/units/{id}/reviews": {
+      "get": {
+        "description": "Retrieve a paginated list of reviews for a unit.",
+        "operationId": "UnitsController_getUnitReviews",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/GetUnitReviewResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Get unit reviews",
+        "tags": [
+          "Units"
+        ]
+      }
+    },
+    "/bookings/check-availability": {
+      "get": {
+        "description": "Check whether a unit is available for the requested dates and return pricing details.",
+        "operationId": "BookingsController_checkAvailability",
+        "parameters": [
+          {
+            "name": "unit_id",
+            "required": true,
+            "in": "query",
+            "description": "The ID of the unit to check availability for",
+            "schema": {
+              "example": "5f9b8c9d0e1f2a3b4c5d6e7f",
+              "type": "string"
+            }
+          },
+          {
+            "name": "check_in",
+            "required": true,
+            "in": "query",
+            "description": "The check-in date",
+            "schema": {
+              "example": 1638364800,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "check_out",
+            "required": true,
+            "in": "query",
+            "description": "The check-out date",
+            "schema": {
+              "example": 1638451200,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "adults_count",
+            "required": false,
+            "in": "query",
+            "description": "The number of adults",
+            "schema": {
+              "example": 2,
+              "type": "number"
+            }
+          },
+          {
+            "name": "kids_count",
+            "required": false,
+            "in": "query",
+            "description": "The number of children",
+            "schema": {
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "unit",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkIn",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkOut",
+            "required": true,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "adultsCount",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "kidsCount",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AvailabilityResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation errors"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Check unit availability",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings": {
+      "post": {
+        "description": "Create a booking request for the authenticated user.",
+        "operationId": "BookingsController_requestBooking",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookingRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation or booking rule errors"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Create a booking",
+        "tags": [
+          "Bookings"
+        ]
+      },
+      "get": {
+        "description": "Retrieve a paginated list of all bookings.",
+        "operationId": "BookingsController_getAllBookings",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "The status of the booking",
+            "schema": {
+              "enum": [
+                "pending",
+                "confirmed",
+                "cancelled",
+                "declined",
+                "completed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_id",
+            "required": false,
+            "in": "query",
+            "description": "The ID of the unit",
+            "schema": {
+              "example": "507f1f77bcf86cd00892931b",
+              "type": "string"
+            }
+          },
+          {
+            "name": "host_id",
+            "required": false,
+            "in": "query",
+            "description": "The ID of the host",
+            "schema": {
+              "example": "507f1f77bcf86cd00892931b",
+              "type": "string"
+            }
+          },
+          {
+            "name": "check_out",
+            "required": false,
+            "in": "query",
+            "description": "The check-out date",
+            "schema": {
+              "example": 1638451200,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "check_in",
+            "required": false,
+            "in": "query",
+            "description": "The check-in date",
+            "schema": {
+              "example": 1638451200,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "sort_by_created_at",
+            "required": false,
+            "in": "query",
+            "description": "The type of sort for created at",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "sort_by_total_amount",
+            "required": false,
+            "in": "query",
+            "description": "The type of sort for total amount",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "user_type",
+            "required": false,
+            "in": "query",
+            "description": "The type of user",
+            "schema": {
+              "example": "guest",
+              "type": "string",
+              "enum": [
+                "guest",
+                "host"
+              ]
+            }
+          },
+          {
+            "name": "unit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkIn",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkOut",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortByCreatedAt",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortByTotalAmount",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "userType",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "guest",
+                "host"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get all bookings",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings/my-bookings": {
+      "get": {
+        "description": "Retrieve a paginated list of bookings for the authenticated user.",
+        "operationId": "BookingsController_getMyBookings",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          },
+          {
+            "name": "status",
+            "required": false,
+            "in": "query",
+            "description": "The status of the booking",
+            "schema": {
+              "enum": [
+                "pending",
+                "confirmed",
+                "cancelled",
+                "declined",
+                "completed"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "unit_id",
+            "required": false,
+            "in": "query",
+            "description": "The ID of the unit",
+            "schema": {
+              "example": "507f1f77bcf86cd00892931b",
+              "type": "string"
+            }
+          },
+          {
+            "name": "host_id",
+            "required": false,
+            "in": "query",
+            "description": "The ID of the host",
+            "schema": {
+              "example": "507f1f77bcf86cd00892931b",
+              "type": "string"
+            }
+          },
+          {
+            "name": "check_out",
+            "required": false,
+            "in": "query",
+            "description": "The check-out date",
+            "schema": {
+              "example": 1638451200,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "check_in",
+            "required": false,
+            "in": "query",
+            "description": "The check-in date",
+            "schema": {
+              "example": 1638451200,
+              "allOf": [
+                {
+                  "$ref": "#/components/schemas/Object"
+                }
+              ]
+            }
+          },
+          {
+            "name": "sort_by_created_at",
+            "required": false,
+            "in": "query",
+            "description": "The type of sort for created at",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "sort_by_total_amount",
+            "required": false,
+            "in": "query",
+            "description": "The type of sort for total amount",
+            "schema": {
+              "example": "asc",
+              "type": "string",
+              "enum": [
+                "asc",
+                "desc"
+              ]
+            }
+          },
+          {
+            "name": "user_type",
+            "required": false,
+            "in": "query",
+            "description": "The type of user",
+            "schema": {
+              "example": "guest",
+              "type": "string",
+              "enum": [
+                "guest",
+                "host"
+              ]
+            }
+          },
+          {
+            "name": "unit",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkIn",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "checkOut",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortByCreatedAt",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "sortByTotalAmount",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "asc",
+                "desc"
+              ],
+              "type": "string"
+            }
+          },
+          {
+            "name": "userType",
+            "required": false,
+            "in": "query",
+            "schema": {
+              "enum": [
+                "guest",
+                "host"
+              ],
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BookingResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get my bookings",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings/{id}": {
+      "get": {
+        "description": "Retrieve a booking by its ID.",
+        "operationId": "BookingsController_getBookingById",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get booking by ID",
+        "tags": [
+          "Bookings"
+        ]
+      },
+      "patch": {
+        "description": "Update an existing booking request by its guest.",
+        "operationId": "BookingsController_updateBookingByGuest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateBookingRequestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Validation or booking rule errors"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Update booking by guest",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings/{id}/cancel": {
+      "patch": {
+        "description": "Cancel a booking as the authenticated guest.",
+        "operationId": "BookingsController_cancelBookingByGuest",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CancelBookingByGuestDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid booking"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Cancel booking by guest",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings/{id}/status": {
+      "patch": {
+        "description": "Change a booking status as the host of the booked unit.",
+        "operationId": "BookingsController_changeBookingStatusByHost",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ChangeBookingStatusDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid status"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Change booking status by host",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/bookings/{id}/submit-review": {
+      "patch": {
+        "description": "Submit a guest review for a completed booking.",
+        "operationId": "BookingsController_reviewBooking",
+        "parameters": [
+          {
+            "name": "id",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/GuestReviewDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BookingResponseDto"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid review or booking state"
+          },
+          "403": {
+            "description": "Forbidden"
+          },
+          "404": {
+            "description": "Booking not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Submit booking review",
+        "tags": [
+          "Bookings"
+        ]
+      }
+    },
+    "/unit-favourites/{unitId}": {
+      "post": {
+        "description": "Add a unit to the authenticated user favorites.",
+        "operationId": "UnitFavouritesController_addFavorite",
+        "parameters": [
+          {
+            "name": "unitId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Favorite added successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid unit"
+          },
+          "404": {
+            "description": "Unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Add unit favorite",
+        "tags": [
+          "Unit Favorites"
+        ]
+      },
+      "delete": {
+        "description": "Remove a unit from the authenticated user favorites.",
+        "operationId": "UnitFavouritesController_removeFavorite",
+        "parameters": [
+          {
+            "name": "unitId",
+            "required": true,
+            "in": "path",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Favorite removed successfully"
+          },
+          "404": {
+            "description": "Favorite or unit not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Remove unit favorite",
+        "tags": [
+          "Unit Favorites"
+        ]
+      }
+    },
+    "/unit-favourites": {
+      "get": {
+        "description": "Retrieve a paginated list of favorite units for the authenticated user.",
+        "operationId": "UnitFavouritesController_getFavorites",
+        "parameters": [
+          {
+            "name": "page",
+            "required": false,
+            "in": "query",
+            "description": "Page number",
+            "schema": {
+              "minimum": 1,
+              "example": 1,
+              "type": "number"
+            }
+          },
+          {
+            "name": "limit",
+            "required": false,
+            "in": "query",
+            "description": "Number of items per page",
+            "schema": {
+              "minimum": 1,
+              "example": 10,
+              "type": "number"
+            }
+          },
+          {
+            "name": "ignoreLimit",
+            "required": false,
+            "in": "query",
+            "description": "Ignore pagination limit and return all results",
+            "schema": {
+              "example": false,
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/UnitFavouritesResponseDto"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "security": [
+          {
+            "bearer": []
+          }
+        ],
+        "summary": "Get my unit favorites",
+        "tags": [
+          "Unit Favorites"
+        ]
+      }
+    },
+    "/forget-password/send": {
+      "post": {
+        "description": "Send a forget-password OTP code to the provided email address.",
+        "operationId": "ForgetPasswordController_sendForgetPasswordOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendForgetPasswordOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Forget-password OTP sent successfully"
+          },
+          "400": {
+            "description": "Bad Request - Validation or sending errors"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Send forget-password OTP",
+        "tags": [
+          "Forget Password"
+        ]
+      }
+    },
+    "/forget-password/verify": {
+      "post": {
+        "description": "Verify a forget-password OTP code for an email address.",
+        "operationId": "ForgetPasswordController_verifyForgetPasswordOtp",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/VerifyForgetPasswordOtpDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Forget-password OTP verified successfully"
+          },
+          "400": {
+            "description": "Bad Request - Invalid OTP"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Verify forget-password OTP",
+        "tags": [
+          "Forget Password"
+        ]
+      }
+    },
+    "/forget-password/reset": {
+      "post": {
+        "description": "Reset a user password after OTP verification.",
+        "operationId": "ForgetPasswordController_resetPassword",
+        "parameters": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "204": {
+            "description": "Password reset successfully"
+          },
+          "400": {
+            "description": "Bad Request - Validation or reset errors"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        },
+        "summary": "Reset password",
+        "tags": [
+          "Forget Password"
+        ]
+      }
+    }
+  },
+  "info": {
+    "title": "Airbnb Clone API",
+    "description": "The Airbnb Clone API description",
+    "version": "1.0",
+    "contact": {}
+  },
+  "tags": [],
+  "servers": [],
+  "components": {
+    "schemas": {
+      "registerDto": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "description": "Name of the user",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "Email of the user",
+            "example": "john.doe@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password of the user",
+            "example": "SecurePass123"
+          },
+          "phone": {
+            "type": "string",
+            "description": "Phone number of the user",
+            "example": "+1234567890"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password",
+          "phone"
+        ]
+      },
+      "UserResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The unique identifier of the user",
+            "example": "64b8f9e2c3a4f5d6e7f8g9h0"
+          },
+          "name": {
+            "type": "string",
+            "description": "The name of the user",
+            "example": "John Doe"
+          },
+          "email": {
+            "type": "string",
+            "description": "The email address of the user",
+            "example": "john.doe@example.com"
+          },
+          "phoneNumber": {
+            "type": "string",
+            "description": "The phone number of the user",
+            "example": "+1 (555) 123-4567"
+          }
+        },
+        "required": [
+          "_id",
+          "name",
+          "email",
+          "phoneNumber"
+        ]
+      },
+      "RegisterResponseDto": {
+        "type": "object",
+        "properties": {
+          "user": {
+            "description": "The user object",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/UserResponseDto"
+              }
+            ]
+          },
+          "accessToken": {
+            "type": "string",
+            "description": "The access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjE3MzQ1NjAwLCJleHAiOjE2MTczNDkxMDAsInN1YiI6IjEifQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjE3MzQ1NjAwLCJleHAiOjE2MTczNDkxMDAsInN1YiI6IjEifQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        },
+        "required": [
+          "user",
+          "accessToken",
+          "refreshToken"
+        ]
+      },
+      "loginDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "Email address of the user",
+            "example": "user@example.com"
+          },
+          "password": {
+            "type": "string",
+            "description": "Password of the user",
+            "example": "password123"
+          },
+          "role": {
+            "type": "string",
+            "enum": [
+              "admin",
+              "user"
+            ],
+            "description": "actor role",
+            "example": "user"
+          }
+        },
+        "required": [
+          "email",
+          "password",
+          "role"
+        ]
+      },
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "accessToken": {
+            "type": "string",
+            "description": "The access token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjE3MzQ1NjAwLCJleHAiOjE2MTczNDkxMDAsInN1YiI6IjEifQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          },
+          "refreshToken": {
+            "type": "string",
+            "description": "The refresh token",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJlbWFpbCI6ImpvaG4uZG9lQGV4YW1wbGUuY29tIiwiaWF0IjoxNjE3MzQ1NjAwLCJleHAiOjE2MTczNDkxMDAsInN1YiI6IjEifQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c"
+          }
+        },
+        "required": [
+          "accessToken",
+          "refreshToken"
+        ]
+      },
+      "refreshTokenDto": {
+        "type": "object",
+        "properties": {
+          "refreshToken": {
+            "type": "string",
+            "description": "Refresh token used to generate new access and refresh tokens",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiaWF0IjoxNjg4NzQyMDAwLCJleHAiOjE2ODg3NDY4MDB9.abc123def456ghi789jkl012mno345pqr678stu901vwx234yz567890"
+          }
+        },
+        "required": [
+          "refreshToken"
+        ]
+      },
+      "SendOtpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address to send the OTP to",
+            "example": "user@example.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "VerifyOtpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email address associated with the OTP",
+            "example": "user@example.com"
+          },
+          "code": {
+            "type": "string",
+            "description": "The OTP code to verify",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email",
+          "code"
+        ]
+      },
+      "SendEmailDto": {
+        "type": "object",
+        "properties": {
+          "to": {
+            "type": "string",
+            "description": "The email address of the recipient",
+            "example": "user@example.com"
+          },
+          "subject": {
+            "type": "string",
+            "description": "The subject of the email",
+            "example": "Welcome to our service"
+          },
+          "text": {
+            "type": "string",
+            "description": "The text content of the email",
+            "example": "Thank you for joining our community!"
+          }
+        },
+        "required": [
+          "to",
+          "subject",
+          "text"
+        ]
+      },
+      "CreateCountryDto": {
+        "type": "object",
+        "properties": {
+          "country_name": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Egypt"
+          },
+          "country_code": {
+            "type": "string",
+            "description": "ISO country code",
+            "example": "EG"
+          }
+        },
+        "required": [
+          "country_name"
+        ]
+      },
+      "CountryResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Country ID",
+            "example": "60d21b4967d0d8992e610c85"
+          },
+          "country_name": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Egypt"
+          },
+          "country_code": {
+            "type": "string",
+            "description": "ISO country code",
+            "example": "EG"
+          }
+        },
+        "required": [
+          "_id",
+          "country_name",
+          "country_code"
+        ]
+      },
+      "UpdateCountryDto": {
+        "type": "object",
+        "properties": {
+          "country_name": {
+            "type": "string",
+            "description": "Country name",
+            "example": "Egypt"
+          },
+          "country_code": {
+            "type": "string",
+            "description": "ISO country code",
+            "example": "EG"
+          }
+        }
+      },
+      "CreateCityDto": {
+        "type": "object",
+        "properties": {
+          "city_name": {
+            "type": "string",
+            "description": "City name",
+            "example": "Cairo"
+          },
+          "country_id": {
+            "type": "string",
+            "description": "Country MongoDB ID",
+            "example": "60d21b4967d0d8992e610c85"
+          }
+        },
+        "required": [
+          "city_name",
+          "country_id"
+        ]
+      },
+      "CityResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "City ID",
+            "example": "60d21b4967d0d8992e610c85"
+          },
+          "country_id": {
+            "type": "string",
+            "description": "Country ID",
+            "example": "60d21b4967d0d8992e610c85"
+          },
+          "city_name": {
+            "type": "string",
+            "description": "City name",
+            "example": "Cairo"
+          }
+        },
+        "required": [
+          "_id",
+          "country_id",
+          "city_name"
+        ]
+      },
+      "UpdateCityDto": {
+        "type": "object",
+        "properties": {
+          "city_name": {
+            "type": "string",
+            "description": "City name",
+            "example": "Cairo"
+          },
+          "country_id": {
+            "type": "string",
+            "description": "Country MongoDB ID",
+            "example": "60d21b4967d0d8992e610c85"
+          }
+        }
+      },
+      "CreateCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "currency_name": {
+            "type": "string",
+            "description": "Currency name",
+            "example": "Egyptian Pound"
+          },
+          "currency_code": {
+            "type": "string",
+            "description": "ISO currency code",
+            "example": "EGP"
+          }
+        },
+        "required": [
+          "currency_name"
+        ]
+      },
+      "CurrencyResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Currency ID",
+            "example": "60d21b4967d0d8992e610c85"
+          },
+          "currency_name": {
+            "type": "string",
+            "description": "Currency name",
+            "example": "Egyptian Pound"
+          },
+          "currency_code": {
+            "type": "string",
+            "description": "ISO currency code",
+            "example": "EGP"
+          }
+        },
+        "required": [
+          "_id",
+          "currency_name",
+          "currency_code"
+        ]
+      },
+      "UpdateCurrencyDto": {
+        "type": "object",
+        "properties": {
+          "currency_name": {
+            "type": "string",
+            "description": "Currency name",
+            "example": "Egyptian Pound"
+          },
+          "currency_code": {
+            "type": "string",
+            "description": "ISO currency code",
+            "example": "EGP"
+          }
+        }
+      },
+      "CreateUnitCategoryDto": {
+        "type": "object",
+        "properties": {
+          "unit_categories_name": {
+            "type": "string",
+            "description": "Unit category name",
+            "example": "Apartment"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon identifier or URL",
+            "example": "fa-building"
+          }
+        },
+        "required": [
+          "unit_categories_name",
+          "icon"
+        ]
+      },
+      "UnitCategoryResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unit category ID",
+            "example": "60d21b4967d0d8992e610c85"
+          },
+          "unit_categories_name": {
+            "type": "string",
+            "description": "Unit category name",
+            "example": "Apartment"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon identifier or URL",
+            "example": "fa-building"
+          }
+        },
+        "required": [
+          "_id",
+          "unit_categories_name",
+          "icon"
+        ]
+      },
+      "UpdateUnitCategoryDto": {
+        "type": "object",
+        "properties": {
+          "unit_categories_name": {
+            "type": "string",
+            "description": "Unit category name",
+            "example": "Apartment"
+          },
+          "icon": {
+            "type": "string",
+            "description": "Icon identifier or URL",
+            "example": "fa-building"
+          }
+        }
+      },
+      "UpsertAppSettingsDto": {
+        "type": "object",
+        "properties": {
+          "vat_rate": {
+            "type": "number",
+            "description": "VAT rate percentage (0-25)",
+            "example": 14,
+            "minimum": 0,
+            "maximum": 25
+          },
+          "min_price": {
+            "type": "number",
+            "description": "Minimum listing price",
+            "example": 100,
+            "minimum": 0
+          }
+        }
+      },
+      "AppSettingsResponseDto": {
+        "type": "object",
+        "properties": {
+          "vat_rate": {
+            "type": "number",
+            "description": "VAT rate percentage (0-25)",
+            "example": 14
+          },
+          "min_price": {
+            "type": "number",
+            "description": "Minimum listing price",
+            "example": 100
+          }
+        },
+        "required": [
+          "vat_rate",
+          "min_price"
+        ]
+      },
+      "UnitResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Unit ID",
+            "example": "65a1b2c3d4e5f67890123456"
+          },
+          "unit_title": {
+            "type": "string",
+            "description": "Unit title",
+            "example": "Cozy apartment in downtown"
+          },
+          "unit_description": {
+            "type": "string",
+            "description": "Unit description",
+            "example": "A bright apartment close to restaurants and public transport."
+          },
+          "unit_address": {
+            "type": "string",
+            "description": "Unit address",
+            "example": "12 Main Street, Cairo"
+          },
+          "unit_photos": {
+            "description": "Unit photo URLs",
+            "example": [
+              "https://example.com/unit-1.jpg"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unit_cost_per_night": {
+            "type": "number",
+            "description": "Cost per night",
+            "example": 125
+          },
+          "unit_country_id": {
+            "type": "string",
+            "description": "Country ID",
+            "example": "65a1b2c3d4e5f67890123456"
+          },
+          "unit_city_id": {
+            "type": "string",
+            "description": "City ID",
+            "example": "65a1b2c3d4e5f67890123457"
+          },
+          "unit_category_id": {
+            "type": "string",
+            "description": "Unit category ID",
+            "example": "65a1b2c3d4e5f67890123458"
+          },
+          "unit_owner_id": {
+            "type": "string",
+            "description": "Unit owner ID",
+            "example": "65a1b2c3d4e5f67890123459"
+          },
+          "unit_avg_rate": {
+            "type": "number",
+            "description": "Average unit rating",
+            "example": 4.8
+          },
+          "unit_reviews_count": {
+            "type": "number",
+            "description": "Number of unit reviews",
+            "example": 24
+          },
+          "unit_rooms_count": {
+            "type": "number",
+            "description": "Number of rooms",
+            "example": 3
+          },
+          "unit_adults_count": {
+            "type": "number",
+            "description": "Maximum number of adults",
+            "example": 4
+          },
+          "unit_kids_count": {
+            "type": "number",
+            "description": "Maximum number of kids",
+            "example": 2
+          },
+          "has_internet_service": {
+            "type": "boolean",
+            "description": "Whether the unit has internet service",
+            "example": true
+          },
+          "has_kitchen": {
+            "type": "boolean",
+            "description": "Whether the unit has a kitchen",
+            "example": true
+          },
+          "has_private_garage": {
+            "type": "boolean",
+            "description": "Whether the unit has a private garage",
+            "example": false
+          },
+          "isDeleted": {
+            "type": "boolean",
+            "description": "Whether the unit is deleted",
+            "example": false
+          },
+          "isActive": {
+            "type": "boolean",
+            "description": "Whether the unit is active",
+            "example": true
+          }
+        },
+        "required": [
+          "_id",
+          "unit_title",
+          "unit_description",
+          "unit_address",
+          "unit_photos",
+          "unit_cost_per_night",
+          "unit_country_id",
+          "unit_city_id",
+          "unit_category_id",
+          "unit_owner_id",
+          "unit_avg_rate",
+          "unit_reviews_count",
+          "unit_rooms_count",
+          "unit_adults_count",
+          "unit_kids_count",
+          "has_internet_service",
+          "has_kitchen",
+          "has_private_garage",
+          "isDeleted",
+          "isActive"
+        ]
+      },
+      "UpdateUnitDto": {
+        "type": "object",
+        "properties": {
+          "unit_title": {
+            "type": "string",
+            "description": "Unit title",
+            "example": "Cozy apartment in downtown"
+          },
+          "unit_description": {
+            "type": "string",
+            "description": "Unit description",
+            "example": "A bright apartment close to restaurants and public transport."
+          },
+          "unit_address": {
+            "type": "string",
+            "description": "Unit address",
+            "example": "12 Main Street, Cairo"
+          },
+          "unit_photos": {
+            "description": "Unit photo URLs",
+            "example": [
+              "https://example.com/unit-1.jpg"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "unit_cost_per_night": {
+            "type": "number",
+            "description": "Cost per night",
+            "example": 125
+          },
+          "unit_country_id": {
+            "type": "string",
+            "description": "Country ID",
+            "example": "65a1b2c3d4e5f67890123456"
+          },
+          "unit_city_id": {
+            "type": "string",
+            "description": "City ID",
+            "example": "65a1b2c3d4e5f67890123457"
+          },
+          "unit_category_id": {
+            "type": "string",
+            "description": "Unit category ID",
+            "example": "65a1b2c3d4e5f67890123458"
+          },
+          "unit_rooms_count": {
+            "type": "number",
+            "description": "Number of rooms",
+            "example": 3
+          },
+          "unit_adults_count": {
+            "type": "number",
+            "description": "Maximum number of adults",
+            "example": 4
+          },
+          "unit_kids_count": {
+            "type": "number",
+            "description": "Maximum number of kids",
+            "example": 2
+          },
+          "has_internet_service": {
+            "type": "boolean",
+            "description": "Whether the unit has internet service",
+            "example": true
+          },
+          "has_kitchen": {
+            "type": "boolean",
+            "description": "Whether the unit has a kitchen",
+            "example": true
+          },
+          "has_private_garage": {
+            "type": "boolean",
+            "description": "Whether the unit has a private garage",
+            "example": false
+          }
+        }
+      },
+      "DeleteUnitPhotosDto": {
+        "type": "object",
+        "properties": {
+          "unit_photos": {
+            "description": "List of unit photo URLs to delete",
+            "example": [
+              "https://example.com/unit-1.jpg"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "unit_photos"
+        ]
+      },
+      "GuestReviewResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "Guest ID",
+            "example": "65a1b2c3d4e5f67890123456"
+          },
+          "name": {
+            "type": "string",
+            "description": "Guest name",
+            "example": "John Doe"
+          }
+        },
+        "required": [
+          "_id",
+          "name"
+        ]
+      },
+      "GetUnitReviewResponseDto": {
+        "type": "object",
+        "properties": {
+          "guest": {
+            "description": "Guest user details or ID",
+            "example": "60d21b4967d0d8992e610c85",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GuestReviewResponseDto"
+              }
+            ]
+          },
+          "rating": {
+            "type": "number",
+            "description": "Review rating",
+            "example": 5
+          },
+          "comment": {
+            "type": "string",
+            "description": "Review comment",
+            "example": "Great place to stay!"
+          },
+          "createdAt": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The date when the review was created",
+            "example": "2023-01-01T00:00:00.000Z"
+          }
+        },
+        "required": [
+          "guest",
+          "rating",
+          "comment",
+          "createdAt"
+        ]
+      },
+      "Object": {
+        "type": "object",
+        "properties": {}
+      },
+      "AvailabilityResponseDto": {
+        "type": "object",
+        "properties": {
+          "available": {
+            "type": "boolean",
+            "description": "Indicates whether the unit is available for the specified dates",
+            "example": true
+          },
+          "nights_count": {
+            "type": "number",
+            "description": "The number of nights the unit is available for",
+            "example": 5
+          },
+          "price_per_night": {
+            "type": "number",
+            "description": "The price per night",
+            "example": 100
+          },
+          "booking_amount": {
+            "type": "number",
+            "description": "The total booking amount",
+            "example": 500
+          },
+          "vat_amount": {
+            "type": "number",
+            "description": "The VAT amount",
+            "example": 50
+          },
+          "total_amount": {
+            "type": "number",
+            "description": "The total amount including VAT",
+            "example": 550
+          }
+        },
+        "required": [
+          "available",
+          "nights_count",
+          "price_per_night",
+          "booking_amount",
+          "vat_amount",
+          "total_amount"
+        ]
+      },
+      "BookingRequestDto": {
+        "type": "object",
+        "properties": {
+          "unit_id": {
+            "type": "string",
+            "description": "The ID of the unit to book",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "check_in": {
+            "type": "object",
+            "description": "The check-in date",
+            "example": 1638364800
+          },
+          "check_out": {
+            "type": "object",
+            "description": "The check-out date",
+            "example": 1638451200
+          },
+          "adults_count": {
+            "type": "number",
+            "description": "The number of adults",
+            "example": 2
+          },
+          "kids_count": {
+            "type": "number",
+            "description": "The number of children",
+            "example": 1
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes about the booking",
+            "example": "Arriving early"
+          }
+        },
+        "required": [
+          "unit_id",
+          "check_in",
+          "check_out",
+          "adults_count",
+          "kids_count"
+        ]
+      },
+      "GuestReview": {
+        "type": "object",
+        "properties": {}
+      },
+      "BookingResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The ID of the booking",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "unit_id": {
+            "type": "string",
+            "description": "The ID of the unit",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "host_id": {
+            "type": "string",
+            "description": "The ID of the host",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "guest_id": {
+            "type": "string",
+            "description": "The ID of the guest",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "cancellation_reason": {
+            "type": "string",
+            "description": "The reason for canceling the booking",
+            "example": "Change of plans"
+          },
+          "check_in": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The check-in date",
+            "example": 1638364800
+          },
+          "check_out": {
+            "format": "date-time",
+            "type": "string",
+            "description": "The check-out date",
+            "example": 1638451200
+          },
+          "adults_count": {
+            "type": "number",
+            "description": "The number of adults",
+            "example": 2
+          },
+          "kids_count": {
+            "type": "number",
+            "description": "The number of children",
+            "example": 1
+          },
+          "price_per_night": {
+            "type": "number",
+            "description": "The price per night for the booking",
+            "example": 100
+          },
+          "nights_count": {
+            "type": "number",
+            "description": "The number of nights in the booking",
+            "example": 5
+          },
+          "booking_amount": {
+            "type": "number",
+            "description": "The booking amount before VAT",
+            "example": 500
+          },
+          "vat": {
+            "type": "number",
+            "description": "The VAT rate applied to the booking",
+            "example": 10
+          },
+          "vat_amount": {
+            "type": "number",
+            "description": "The VAT amount for the booking",
+            "example": 50
+          },
+          "total_amount": {
+            "type": "number",
+            "description": "The total booking amount including VAT",
+            "example": 550
+          },
+          "status": {
+            "type": "string",
+            "description": "The current status of the booking",
+            "example": "confirmed"
+          },
+          "notes": {
+            "type": "string",
+            "description": "Additional notes for the booking",
+            "example": "Guest requested late check-in"
+          },
+          "guest_review": {
+            "description": "The guest review for the booking",
+            "allOf": [
+              {
+                "$ref": "#/components/schemas/GuestReview"
+              }
+            ]
+          }
+        },
+        "required": [
+          "_id",
+          "unit_id",
+          "host_id",
+          "guest_id",
+          "check_in",
+          "check_out",
+          "adults_count",
+          "kids_count",
+          "price_per_night",
+          "nights_count",
+          "booking_amount",
+          "vat",
+          "vat_amount",
+          "total_amount",
+          "status"
+        ]
+      },
+      "UpdateBookingRequestDto": {
+        "type": "object",
+        "properties": {
+          "check_in": {
+            "type": "object",
+            "description": "The check-in date",
+            "example": 1638364800
+          },
+          "check_out": {
+            "type": "object",
+            "description": "The check-out date",
+            "example": 1638451200
+          },
+          "adults_count": {
+            "type": "number",
+            "description": "The number of adults",
+            "example": 2
+          },
+          "kids_count": {
+            "type": "number",
+            "description": "The number of children",
+            "example": 1
+          },
+          "notes": {
+            "type": "string",
+            "description": "The notes for the booking",
+            "example": "Please arrive early."
+          }
+        }
+      },
+      "CancelBookingByGuestDto": {
+        "type": "object",
+        "properties": {
+          "cancellation_reason": {
+            "type": "string",
+            "description": "The reason for canceling the booking",
+            "example": "Change of plans"
+          }
+        }
+      },
+      "ChangeBookingStatusDto": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "description": "The new status of the booking",
+            "enum": [
+              "pending",
+              "confirmed",
+              "cancelled",
+              "declined",
+              "completed"
+            ],
+            "example": "confirmed"
+          },
+          "cancellation_reason": {
+            "type": "string",
+            "description": "The reason for canceling the booking",
+            "example": "Change of plans"
+          }
+        },
+        "required": [
+          "status"
+        ]
+      },
+      "GuestReviewDto": {
+        "type": "object",
+        "properties": {
+          "rating": {
+            "type": "number",
+            "description": "The rating given by the guest",
+            "example": 5
+          },
+          "comment": {
+            "type": "string",
+            "description": "The comment provided by the guest",
+            "example": "Great stay! Highly recommended."
+          }
+        },
+        "required": [
+          "rating"
+        ]
+      },
+      "UnitFavouritesResponseDto": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string",
+            "description": "The ID of the unit favourite",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "unit_title": {
+            "type": "string",
+            "description": "The title of the unit",
+            "example": "Cozy Studio Apartment"
+          },
+          "unit_id": {
+            "type": "string",
+            "description": "The ID of the unit",
+            "example": "507f1f77bcf86cd00892931b"
+          },
+          "unit_cost_per_night": {
+            "type": "number",
+            "description": "The cost per night of the unit",
+            "example": 100
+          },
+          "unit_photos": {
+            "description": "The photos of the unit",
+            "example": [
+              "photo1.jpg",
+              "photo2.jpg"
+            ],
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        "required": [
+          "_id",
+          "unit_title",
+          "unit_id",
+          "unit_cost_per_night",
+          "unit_photos"
+        ]
+      },
+      "SendForgetPasswordOtpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email of the user",
+            "example": "user@example.com"
+          }
+        },
+        "required": [
+          "email"
+        ]
+      },
+      "VerifyForgetPasswordOtpDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email of the user",
+            "example": "user@example.com"
+          },
+          "code": {
+            "type": "string",
+            "description": "The verification code",
+            "example": "123456"
+          }
+        },
+        "required": [
+          "email",
+          "code"
+        ]
+      },
+      "ResetPasswordDto": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "description": "The email of the user",
+            "example": "user@example.com"
+          },
+          "newPassword": {
+            "type": "string",
+            "description": "The new password for the user",
+            "example": "newPassword123"
+          }
+        },
+        "required": [
+          "email",
+          "newPassword"
+        ]
+      }
+    }
+  }
+}

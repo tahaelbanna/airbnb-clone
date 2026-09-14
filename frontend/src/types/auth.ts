@@ -39,7 +39,6 @@ export interface UserProfile {
 export interface LoginRequest {
   email: string;
   password: string;
-  role: Role;
 }
 
 /** Register request body — matches registerDto */
@@ -53,4 +52,27 @@ export interface RegisterRequest {
 /** Refresh token request body — matches refreshTokenDto */
 export interface RefreshTokenRequest {
   refreshToken: string;
+}
+
+export interface SendOtpRequest {
+  email: string;
+}
+
+export interface VerifyOtpRequest {
+  email: string;
+  code: string;
+}
+
+export interface SendForgetPasswordOtpRequest {
+  email: string;
+}
+
+export interface VerifyForgetPasswordOtpRequest {
+  email: string;
+  code: string;
+}
+
+export interface ResetPasswordRequest {
+  email: string;
+  newPassword: string;
 }

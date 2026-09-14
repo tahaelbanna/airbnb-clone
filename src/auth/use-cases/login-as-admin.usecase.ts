@@ -10,6 +10,7 @@ import { GenerateTokensUsecase } from './generate-token.usecase';
 import { AuthResponseDto } from '../dtos/auth-response.dto';
 import { plainToInstance } from 'class-transformer';
 import { SystemAdminService } from '../../system-admin/system-admin.service';
+import { Roles } from 'src/common/constants/roles.constans';
 @Injectable()
 export class LoginAsAdminUsecase {
     constructor(
@@ -38,7 +39,7 @@ export class LoginAsAdminUsecase {
         const { accessToken, refreshToken } =
             await this.generateTokensUsecase.execute({
                 id: (admin as any)._id.toString(),
-                role: body.role,
+                role: Roles.SYSTEM_ADMIN,
             });
         return plainToInstance(AuthResponseDto, { accessToken, refreshToken });
     }

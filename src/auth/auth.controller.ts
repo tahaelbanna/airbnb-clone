@@ -31,6 +31,13 @@ export class AuthController {
         return this.authService.login(body);
     }
 
+    @LoginSwagger()
+    @Post('admin/login')
+    @Public()
+    adminLogin(@Body() body: loginDto): Promise<AuthResponseDto> {
+        return this.authService.adminLogin(body);
+    }
+
     @RefreshTokenSwagger()
     @Post('refresh-token')
     @Public()

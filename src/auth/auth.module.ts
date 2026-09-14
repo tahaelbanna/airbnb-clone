@@ -9,7 +9,6 @@ import { RefreshTokenSchema } from './schemas/refresh-token.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { GenerateTokensUsecase } from './use-cases/generate-token.usecase';
 import { RegisterUsecase } from './use-cases/register.usecase';
-import { LoginUsecase } from './use-cases/login.usecase';
 import { RefreshTokenUsecase } from './use-cases/refresh-token.usecase';
 import { ModelNames } from '../common/data-access';
 import { RefreshTokenRepository } from './repositories/refresh-token.repository';
@@ -24,7 +23,6 @@ import { OtpModule } from 'src/otp/otp.module';
         AuthService,
         GenerateTokensUsecase,
         RegisterUsecase,
-        LoginUsecase,
         RefreshTokenUsecase,
         RefreshTokenRepository,
         LoginAsUserUsecase,

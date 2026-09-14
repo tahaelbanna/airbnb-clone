@@ -95,10 +95,6 @@ export default function AdminLayout({
           </nav>
 
           <div className="p-4 border-t border-zinc-200 space-y-2">
-            <Link href="/" className="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-zinc-600 hover:bg-zinc-100 transition-colors">
-              <Home className="h-5 w-5" />
-              Return to Site
-            </Link>
             <button 
               onClick={handleLogout}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"

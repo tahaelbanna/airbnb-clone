@@ -12,8 +12,8 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-export default function LoginPage() {
-  const { login } = useAuth();
+export default function AdminLoginPage() {
+  const { adminLogin } = useAuth();
   const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
   
@@ -28,9 +28,9 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginFormData) => {
     try {
       setServerError(null);
-      await login(data);
+      await adminLogin(data);
       
-      // useAuth redirect handles pushing to / for guest routes,
+      // useAuth redirect handles pushing to /admin for admin routes,
       // but if we were redirected here, we could go back to the redirect param.
       // For simplicity, GuestRoute will redirect to / immediately after login state updates.
     } catch (error) {
@@ -48,10 +48,10 @@ export default function LoginPage() {
     <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
       <div className="text-center">
         <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          Welcome back
+          Admin Login
         </h1>
         <p className="mt-2 text-sm text-muted">
-          Enter your details to access your account.
+          Enter your admin credentials to continue.
         </p>
       </div>
 
@@ -118,19 +118,9 @@ export default function LoginPage() {
         </div>
 
         <Button type="submit" className="w-full" isLoading={isSubmitting}>
-          Log in
+          Admin Login
         </Button>
       </form>
-
-      <p className="mt-6 text-center text-sm text-muted">
-        Don&apos;t have an account?{" "}
-        <Link
-          href="/register"
-          className="font-semibold text-primary hover:text-primary-hover"
-        >
-          Sign up
-        </Link>
-      </p>
     </div>
   );
 }

@@ -1,25 +1,27 @@
+import Link from "next/link";
+
 export function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-zinc-50 py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
           <div>
             <h3 className="text-sm font-semibold text-foreground">StayScape</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  About
-                </a>
+                <Link href="/" className="text-sm text-muted hover:text-primary">
+                  Explore stays
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Careers
-                </a>
+                <Link href="/trips" className="text-sm text-muted hover:text-primary">
+                  My Trips
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Investors
-                </a>
+                <Link href="/favourites" className="text-sm text-muted hover:text-primary">
+                  Wishlist
+                </Link>
               </li>
             </ul>
           </div>
@@ -27,39 +29,19 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground">Hosting</h3>
             <ul className="mt-4 space-y-3">
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
+                <Link href="/listings/new" className="text-sm text-muted hover:text-primary">
                   List your home
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Host resources
-                </a>
+                <Link href="/listings" className="text-sm text-muted hover:text-primary">
+                  Manage listings
+                </Link>
               </li>
               <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Community forum
-                </a>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className="text-sm font-semibold text-foreground">Support</h3>
-            <ul className="mt-4 space-y-3">
-              <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Help Center
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Safety information
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-sm text-muted hover:text-primary">
-                  Cancellation options
-                </a>
+                <Link href="/host/bookings" className="text-sm text-muted hover:text-primary">
+                  Reservations
+                </Link>
               </li>
             </ul>
           </div>
@@ -69,9 +51,9 @@ export function Footer() {
             &copy; {new Date().getFullYear()} StayScape, Inc. All rights reserved.
           </p>
           <div className="flex gap-4">
-            <a href="#" className="text-sm text-muted hover:text-primary">Terms</a>
-            <a href="#" className="text-sm text-muted hover:text-primary">Privacy</a>
-            <a href="#" className="text-sm text-muted hover:text-primary">Sitemap</a>
+            <span className="text-sm text-muted">Terms</span>
+            <span className="text-sm text-muted">Privacy</span>
+            <span className="text-sm text-muted">Sitemap</span>
           </div>
         </div>
       </div>
