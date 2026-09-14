@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { Eye, EyeOff } from "lucide-react";
 import { useForm } from "react-hook-form";
@@ -17,13 +17,22 @@ export default function RegisterPage() {
   const { register: authRegister } = useAuth();
   const [serverError, setServerError] = useState<string | null>(null);
   const [showPassword, setShowPassword] = useState(false);
-  
+
   // OTP Flow State
   const [otpMode, setOtpMode] = useState(false);
   const [registerData, setRegisterData] = useState<RegisterFormData | null>(null);
   const [otpCode, setOtpCode] = useState("");
   const [isVerifying, setIsVerifying] = useState(false);
-  
+  const [resendCountdown, setResendCountdown] = useState(0);
+
+  useEffect(() => {
+    if (resendCountdown <= 0) return;
+    const timer = setInterval(() => {
+      setResendCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [resendCountdown]);
+
   const {
     register,
     handleSubmit,
@@ -38,6 +47,7 @@ export default function RegisterPage() {
       await sendOtp({ email: data.email });
       setRegisterData(data);
       setOtpMode(true);
+      setResendCountdown(60);
     } catch (error) {
       if (error instanceof AxiosError) {
         const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
@@ -51,13 +61,13 @@ export default function RegisterPage() {
   const onVerifyOtp = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!registerData) return;
-    
+
     try {
       setIsVerifying(true);
       setServerError(null);
       // Verify OTP
       await verifyOtp({ email: registerData.email, code: otpCode });
-      
+
       // Proceed with actual registration
       await authRegister(registerData);
       // GuestRoute will redirect to / immediately after login state updates.
@@ -74,11 +84,11 @@ export default function RegisterPage() {
   };
 
   const onResendOtp = async () => {
-    if (!registerData) return;
+    if (!registerData || resendCountdown > 0) return;
     try {
       setServerError(null);
       await sendOtp({ email: registerData.email });
-      alert("Verification code resent.");
+      setResendCountdown(60);
     } catch (error) {
       if (error instanceof AxiosError) {
         const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
@@ -127,9 +137,13 @@ export default function RegisterPage() {
           <button
             type="button"
             onClick={onResendOtp}
-            className="font-semibold text-primary hover:text-primary-hover"
+            disabled={resendCountdown > 0}
+            className={`font-semibold ${resendCountdown > 0
+              ? "text-muted-foreground cursor-not-allowed opacity-70"
+              : "text-primary hover:text-primary-hover"
+              }`}
           >
-            Resend code
+            {resendCountdown > 0 ? `Resend code in ${resendCountdown}s` : "Resend code"}
           </button>
           <button
             type="button"

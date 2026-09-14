@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
@@ -21,6 +21,15 @@ export default function ForgetPasswordPage() {
   const [serverError, setServerError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+  const [resendCountdown, setResendCountdown] = useState(0);
+
+  useEffect(() => {
+    if (resendCountdown <= 0) return;
+    const timer = setInterval(() => {
+      setResendCountdown((prev) => prev - 1);
+    }, 1000);
+    return () => clearInterval(timer);
+  }, [resendCountdown]);
 
   const handleSendOtp = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +40,7 @@ export default function ForgetPasswordPage() {
       setServerError(null);
       await sendForgetPasswordOtp({ email });
       setStep("verify-otp");
+      setResendCountdown(60);
     } catch (error) {
       if (error instanceof AxiosError) {
         const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
@@ -40,6 +50,20 @@ export default function ForgetPasswordPage() {
       }
     } finally {
       setIsSubmitting(false);
+    }
+  };
+
+  const handleResendOtp = async () => {
+    if (!email || resendCountdown > 0) return;
+    try {
+      setServerError(null);
+      await sendForgetPasswordOtp({ email });
+      setResendCountdown(60);
+    } catch (error) {
+      if (error instanceof AxiosError) {
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
+        setServerError(Array.isArray(message) ? message[0] : message || "Failed to resend code.");
+      }
     }
   };
 
@@ -143,11 +167,26 @@ export default function ForgetPasswordPage() {
             <Button type="submit" className="w-full" isLoading={isSubmitting}>
               Verify Code
             </Button>
-            <div className="text-center mt-4">
+            <div className="mt-6 flex flex-col items-center gap-2 text-sm">
               <button
                 type="button"
-                onClick={() => setStep("send-otp")}
-                className="text-sm text-muted hover:text-foreground"
+                onClick={handleResendOtp}
+                disabled={resendCountdown > 0}
+                className={`font-semibold ${
+                  resendCountdown > 0
+                    ? "text-muted-foreground cursor-not-allowed opacity-70"
+                    : "text-primary hover:text-primary-hover"
+                }`}
+              >
+                {resendCountdown > 0 ? `Resend code in ${resendCountdown}s` : "Resend code"}
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setStep("send-otp");
+                  setServerError(null);
+                }}
+                className="text-muted hover:text-foreground"
               >
                 Change email address
               </button>
