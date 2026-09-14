@@ -25,11 +25,9 @@ export const defaultEnv = (): EnvironmentInterface => ({
         smtpPort: Number(process.env.smtpPort),
         smtpSecure: process.env.smtpSecure === 'true',
         auth:
-            process.env.smtpFromEmail &&
-            process.env.smtpPassword &&
-            process.env.smtpUser
+            process.env.smtpPassword && process.env.smtpUser
                 ? {
-                      user: process.env.smtpFromEmail,
+                      user: process.env.smtpUser,
                       pass: process.env.smtpPassword,
                   }
                 : undefined,

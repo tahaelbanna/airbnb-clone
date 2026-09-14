@@ -40,7 +40,7 @@ export default function RegisterPage() {
       setOtpMode(true);
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Failed to send verification code. Please try again.");
       } else {
         setServerError("An unexpected error occurred.");
@@ -63,7 +63,7 @@ export default function RegisterPage() {
       // GuestRoute will redirect to / immediately after login state updates.
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Verification or registration failed. Please try again.");
       } else {
         setServerError("An unexpected error occurred.");
@@ -81,7 +81,7 @@ export default function RegisterPage() {
       alert("Verification code resent.");
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Failed to resend code.");
       }
     }

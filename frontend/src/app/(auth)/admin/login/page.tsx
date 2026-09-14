@@ -36,7 +36,7 @@ export default function AdminLoginPage() {
     } catch (error) {
       if (error instanceof AxiosError) {
         // Backend returns error message in response.data.message
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Login failed. Please try again.");
       } else {
         setServerError("An unexpected error occurred.");

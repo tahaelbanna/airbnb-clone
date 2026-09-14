@@ -26,10 +26,11 @@ export class NodemailerEmailAdapter implements EmailAdapterInterface {
 
     async sendEmail(dto: SendEmailDto): Promise<void> {
         await this.transporter.sendMail({
-            from: '"Airbnb Support" <support@airbnb.com>',
+            from: '"Stay Scape" <elbannataha@gmail.com>',
             to: dto.to,
             subject: dto.subject,
             text: dto.text,
+            html: dto.html,
         });
     }
 }

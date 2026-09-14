@@ -4,6 +4,7 @@ import { UsersService } from '../../users/users.service';
 import { BadRequestException } from '../../common/error-handling/custom-exceptions/bad-request.exception';
 import { EmailService } from '../../email-service/email.service';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
+import { otpEmailTemplate } from '../../email-service/templates/otp-email.template';
 
 @Injectable()
 export class SendOtpUseCase {
@@ -26,11 +27,16 @@ export class SendOtpUseCase {
             { code, expiresAt, isVerified: false },
             { upsert: true },
         );
+        const { html, text } = otpEmailTemplate({
+            code,
+            expiresInMinutes: 10,
+        });
 
         await this.emailService.sendEmail({
             to: email,
-            subject: 'OTP Verification',
-            text: `Your OTP is ${code}`,
+            subject: 'Your Stay Scape verification code',
+            text,
+            html,
         });
     }
 

@@ -33,7 +33,7 @@ export default function ForgetPasswordPage() {
       setStep("verify-otp");
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Failed to send reset code.");
       } else {
         setServerError("An unexpected error occurred.");
@@ -54,7 +54,7 @@ export default function ForgetPasswordPage() {
       setStep("reset-password");
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Invalid verification code.");
       } else {
         setServerError("An unexpected error occurred.");
@@ -76,7 +76,7 @@ export default function ForgetPasswordPage() {
       router.push("/login");
     } catch (error) {
       if (error instanceof AxiosError) {
-        const message = error.response?.data?.message;
+        const message = error.response?.data?.errors?.[0]?.message || error.response?.data?.message;
         setServerError(Array.isArray(message) ? message[0] : message || "Failed to reset password.");
       } else {
         setServerError("An unexpected error occurred.");

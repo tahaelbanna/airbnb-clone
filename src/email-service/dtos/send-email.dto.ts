@@ -1,5 +1,6 @@
-import { IsEmail, IsString } from 'class-validator';
+import { IsEmail, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
+
 export class SendEmailDto {
     @ApiProperty({
         description: 'The email address of the recipient',
@@ -22,4 +23,13 @@ export class SendEmailDto {
     })
     @IsString()
     text: string;
+
+    @ApiProperty({
+        description: 'The HTML content of the email',
+        example: '<h1>Welcome</h1><p>Thank you for joining!</p>',
+        required: false,
+    })
+    @IsString()
+    @IsOptional()
+    html?: string;
 }

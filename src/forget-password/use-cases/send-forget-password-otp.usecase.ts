@@ -4,6 +4,8 @@ import { UsersService } from 'src/users/users.service';
 import { EmailService } from 'src/email-service/email.service';
 import { BadRequestException } from 'src/common/error-handling/custom-exceptions/bad-request.exception';
 import { I18nService } from 'nestjs-i18n/dist/services/i18n.service';
+import { otpEmailTemplate } from '../../email-service/templates/otp-email.template';
+
 
 @Injectable()
 export class SendForgetPasswordOtpUseCase {
@@ -31,10 +33,18 @@ export class SendForgetPasswordOtpUseCase {
             { upsert: true },
         );
 
+        const { html, text } = otpEmailTemplate({
+            code,
+            expiresInMinutes: 10,
+            subject: 'Reset your password - Stay Scape',
+            message: 'Use the verification code below to reset your password.',
+        });
+
         await this.emailService.sendEmail({
             to: email,
-            subject: 'Forget Password OTP',
-            text: `Your OTP is ${code}`,
+            subject: 'Reset your password - Stay Scape',
+            text,
+            html,
         });
     }
 
