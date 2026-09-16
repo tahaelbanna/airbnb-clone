@@ -1,6 +1,5 @@
 "use client";
 
-
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
@@ -31,6 +30,25 @@ type BookingFormValues = z.infer<typeof bookingSchema>;
 interface BookingWidgetProps {
   unitId: string;
   pricePerNight: number;
+}
+
+function getErrorMessage(error: any): string | null {
+  if (!error || !error.response || !error.response.data) return null;
+  const data = error.response.data;
+  
+  if (Array.isArray(data.errors) && data.errors.length > 0) {
+    return data.errors[0]?.message || null;
+  }
+  
+  if (typeof data.message === "string") {
+    return data.message;
+  }
+  
+  if (Array.isArray(data.message) && data.message.length > 0) {
+    return data.message[0];
+  }
+  
+  return null;
 }
 
 export function BookingWidget({ unitId, pricePerNight }: BookingWidgetProps) {
@@ -103,31 +121,31 @@ export function BookingWidget({ unitId, pricePerNight }: BookingWidgetProps) {
     : today;
 
   return (
-    <div className="rounded-2xl border border-border bg-background p-6 shadow-xl">
-      <div className="flex items-end gap-1 mb-6">
-        <span className="text-2xl font-bold text-foreground">
+    <div className="rounded-[2rem] border border-border/50 bg-surface p-8 shadow-2xl shadow-primary/5">
+      <div className="flex items-baseline gap-2 mb-8">
+        <span className="text-4xl font-serif tracking-tight text-foreground">
           ${pricePerNight}
         </span>
-        <span className="text-base text-muted mb-1">night</span>
+        <span className="text-lg text-muted font-light">night</span>
       </div>
 
       <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-        <div className="grid grid-cols-2 gap-2 rounded-xl border border-border overflow-hidden p-1">
-          <div className="flex flex-col p-2 bg-zinc-50 rounded-lg">
-            <Label className="text-xs font-bold uppercase text-foreground mb-1">Check-in</Label>
+        <div className="grid grid-cols-2 gap-px rounded-2xl border border-border bg-border overflow-hidden">
+          <div className="flex flex-col p-3 bg-background transition-colors focus-within:bg-surface">
+            <Label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5">Check-in</Label>
             <input
               type="date"
               min={today}
-              className="bg-transparent outline-none text-sm w-full"
+              className="bg-transparent outline-none text-base w-full text-foreground font-medium"
               {...form.register("check_in")}
             />
           </div>
-          <div className="flex flex-col p-2 bg-zinc-50 rounded-lg">
-            <Label className="text-xs font-bold uppercase text-foreground mb-1">Check-out</Label>
+          <div className="flex flex-col p-3 bg-background transition-colors focus-within:bg-surface">
+            <Label className="text-xs font-semibold uppercase tracking-wider text-muted mb-1.5">Check-out</Label>
             <input
               type="date"
               min={minCheckOut}
-              className="bg-transparent outline-none text-sm w-full"
+              className="bg-transparent outline-none text-base w-full text-foreground font-medium"
               {...form.register("check_out")}
             />
           </div>
@@ -173,11 +191,19 @@ export function BookingWidget({ unitId, pricePerNight }: BookingWidgetProps) {
           </div>
         )}
 
-        {!isChecking && checkError && (
-          <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive mt-4">
-            {(checkError as { response?: { data?: { message?: string } } })?.response?.data?.message || "Failed to check availability."}
-          </div>
-        )}
+        {!isChecking && checkError && (() => {
+          const errMsg = getErrorMessage(checkError);
+          const isConflict = errMsg && ["The unit is already booked for the selected dates.", "الوحدة محجوزة بالفعل للفترات المحددة.", "bookings.UNIT_ALREADY_BOOKED"].includes(errMsg);
+          const displayMsg = isConflict 
+            ? "Unit is not available for the selected dates. Please choose different dates."
+            : "We couldn't check availability right now. Please try again.";
+          
+          return (
+            <div className="rounded-xl border border-destructive/20 bg-destructive/10 p-3 text-sm text-destructive mt-4">
+              {displayMsg}
+            </div>
+          );
+        })()}
 
         {!isChecking && availability && (
           <div className="mt-6 space-y-4">
@@ -209,15 +235,23 @@ export function BookingWidget({ unitId, pricePerNight }: BookingWidgetProps) {
           </div>
         )}
 
-        {createBooking.error && (
-          <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive mt-4">
-            {(createBooking.error as { response?: { data?: { message?: string } } })?.response?.data?.message || "Failed to reserve. Please try again."}
-          </div>
-        )}
+        {createBooking.error && (() => {
+          const errMsg = getErrorMessage(createBooking.error);
+          const isConflict = errMsg && ["The unit is already booked for the selected dates.", "الوحدة محجوزة بالفعل للفترات المحددة.", "bookings.UNIT_ALREADY_BOOKED"].includes(errMsg);
+          const displayMsg = isConflict 
+            ? "Unit is not available for the selected dates. Please choose different dates."
+            : (errMsg || "Failed to reserve. Please try again.");
+            
+          return (
+            <div className="rounded-md bg-destructive/15 p-3 text-sm text-destructive mt-4">
+              {displayMsg}
+            </div>
+          );
+        })()}
 
         <Button
           type="submit"
-          className="w-full mt-6 h-12 text-lg font-semibold"
+          className="w-full mt-8 h-14 rounded-full text-lg shadow-md shadow-primary/20"
           disabled={!isFormValid || isChecking || (availability && !availability.available) || createBooking.isPending || isAdmin}
         >
           {createBooking.isPending ? (
@@ -234,3 +268,4 @@ export function BookingWidget({ unitId, pricePerNight }: BookingWidgetProps) {
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import { apiGetPaginated, apiPost, apiPatch, apiDelete } from "@/lib/api/client";
+import { apiGet, apiGetPaginated, apiPost, apiPatch, apiDelete } from "@/lib/api/client";
 import type { PaginatedResponse } from "@/types/api";
 import type { Category, CategoriesQuery } from "../types";
 
@@ -17,6 +17,10 @@ export async function getCategories(
   const url = `/unit-categories${queryString ? `?${queryString}` : ""}`;
   
   return apiGetPaginated<Category>(url);
+}
+
+export async function getCategoryById(id: string): Promise<Category> {
+  return apiGet<Category>(`/unit-categories/${id}`);
 }
 
 export async function createCategory(data: { unit_categories_name: string; icon: string }): Promise<Category> {

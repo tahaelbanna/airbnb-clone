@@ -79,11 +79,11 @@ export default function AdminCitiesPage() {
   const pagination = data?.meta;
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto">
-      <div className="flex justify-between items-center mb-8">
+    <div className="p-6 md:p-10 max-w-7xl mx-auto">
+      <div className="flex justify-between items-center mb-10">
         <div>
-          <h1 className="text-3xl font-bold text-zinc-900">Cities</h1>
-          <p className="text-zinc-500 mt-1">Manage cities available on the platform.</p>
+          <h1 className="text-4xl font-serif tracking-tight text-foreground">Cities</h1>
+          <p className="text-muted mt-2 font-light">Manage cities available on the platform.</p>
         </div>
         <Button onClick={openCreate} className="gap-2">
           <Plus className="h-4 w-4" />
@@ -92,8 +92,8 @@ export default function AdminCitiesPage() {
       </div>
 
       {isFormOpen && (
-        <div className="mb-8 p-6 bg-white border border-zinc-200 rounded-2xl shadow-sm">
-          <h2 className="text-xl font-semibold mb-4">{editingCity ? "Edit City" : "Add City"}</h2>
+        <div className="mb-10 p-8 bg-surface border border-border/40 rounded-[2rem] shadow-sm">
+          <h2 className="text-2xl font-serif mb-6">{editingCity ? "Edit City" : "Add City"}</h2>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-w-md">
             <div>
               <label className="block text-sm font-medium mb-1">City Name</label>
@@ -133,20 +133,20 @@ export default function AdminCitiesPage() {
       {isLoading ? (
         <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-surface border border-border/40 rounded-[2rem] overflow-hidden shadow-sm">
           <table className="w-full text-left text-sm">
-            <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-500">
+            <thead className="bg-background border-b border-border/40 text-muted font-light">
               <tr>
                 <th className="px-6 py-4 font-medium">City Name</th>
                 <th className="px-6 py-4 font-medium">Country ID</th>
                 <th className="px-6 py-4 font-medium text-right">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-200">
+            <tbody className="divide-y divide-border/40">
               {data?.data.map((city) => (
-                <tr key={city._id} className="hover:bg-zinc-50 transition-colors">
-                  <td className="px-6 py-4 font-medium text-zinc-900">{city.city_name}</td>
-                  <td className="px-6 py-4 text-zinc-500">
+                <tr key={city._id} className="hover:bg-background/50 transition-colors">
+                  <td className="px-6 py-4 font-medium text-foreground">{city.city_name}</td>
+                  <td className="px-6 py-4 text-muted">
                     {typeof city.country_id === 'object' ? (city.country_id as { country_name: string }).country_name : city.country_id}
                   </td>
                   <td className="px-6 py-4 text-right">
@@ -161,15 +161,15 @@ export default function AdminCitiesPage() {
               ))}
               {data?.data.length === 0 && (
                 <tr>
-                  <td colSpan={3} className="px-6 py-8 text-center text-zinc-500">No cities found.</td>
+                  <td colSpan={3} className="px-6 py-12 text-center text-muted font-light">No cities found.</td>
                 </tr>
               )}
             </tbody>
           </table>
           
           {pagination && pagination.pageCount > 1 && (
-            <div className="px-6 py-4 border-t border-zinc-200 flex items-center justify-between">
-              <span className="text-sm text-zinc-500">Page {page} of {pagination.pageCount}</span>
+            <div className="px-6 py-5 border-t border-border/40 flex items-center justify-between bg-background">
+              <span className="text-sm text-muted font-light">Page {page} of {pagination.pageCount}</span>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 

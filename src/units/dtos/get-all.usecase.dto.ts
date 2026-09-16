@@ -28,4 +28,13 @@ export class GetAllUnitsDto extends PaginationDto {
     @IsMongoId()
     @IsString()
     unit_city_id?: string;
+
+    @ApiProperty({
+        description: 'Category ID',
+        example: '65a1b2c3d4e5f67890123456',
+    })
+    @IsOptional()
+    @IsMongoId()
+    @IsString()
+    unit_category_id?: string;
 }

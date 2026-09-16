@@ -22,6 +22,7 @@ export async function getUnits(
   if (query?.unit_title) params.append("unit_title", query.unit_title);
   if (query?.unit_country_id) params.append("unit_country_id", query.unit_country_id);
   if (query?.unit_city_id) params.append("unit_city_id", query.unit_city_id);
+  if (query?.unit_category_id) params.append("unit_category_id", query.unit_category_id);
 
   const queryString = params.toString();
   const url = `/units${queryString ? `?${queryString}` : ""}`;

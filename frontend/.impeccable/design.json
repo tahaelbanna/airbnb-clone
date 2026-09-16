@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-09-16T17:58:00Z",
+  "title": "Design System: ESQOUN",
+  "extensions": {},
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Primary action button.",
+      "html": "<button class=\"ds-btn-primary\">CONTINUE</button>",
+      "css": ".ds-btn-primary { background: #6F856F; color: #FCFBF9; padding: 12px 24px; border-radius: 9999px; border: none; font-family: 'Outfit', sans-serif; font-weight: 500; transition: all 0.2s; } .ds-btn-primary:hover { background: #758A75; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "Modern Oasis",
+    "overview": "ESQOUN is an accommodation platform that serves as a bridge to a peaceful stay. Its personality is calm, refined, comfortable, sophisticated, breathable, welcoming, and modern.",
+    "keyCharacteristics": [
+      "Soft Modern Architecture",
+      "Generous Whitespace",
+      "Editorial Subtlety",
+      "Warmth over Coldness"
+    ],
+    "rules": [
+      {
+        "name": "The Soft Warmth Rule",
+        "body": "Avoid sterile pure whites or harsh pure blacks. Use Ivory and Deep Charcoal instead.",
+        "section": "colors"
+      }
+    ],
+    "dos": [
+      "Do use rounded corners and subtle arches for architectural framing.",
+      "Do rely on typography and whitespace for visual hierarchy."
+    ],
+    "donts": [
+      "Don't use heavy color blocking or stark geometry.",
+      "Don't rely on color alone to indicate errors or success."
+    ]
+  }
+}

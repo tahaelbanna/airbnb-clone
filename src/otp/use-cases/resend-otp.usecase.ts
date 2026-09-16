@@ -55,7 +55,7 @@ export class ResendOtpUseCase {
 
         await this.emailService.sendEmail({
             to: email,
-            subject: 'Your Stay Scape verification code',
+            subject: 'Your ESQOUN verification code',
             text,
             html,
         });

@@ -50,24 +50,24 @@ export default function AdminLayout({
 
   return (
     <ProtectedRoute requireAdmin>
-      <div className="flex h-screen bg-zinc-50 overflow-hidden">
+      <div className="flex h-screen bg-background overflow-hidden">
         {/* Mobile sidebar backdrop */}
         {sidebarOpen && (
           <div 
-            className="fixed inset-0 z-40 bg-zinc-900/50 lg:hidden"
+            className="fixed inset-0 z-40 bg-foreground/20 lg:hidden"
             onClick={() => setSidebarOpen(false)}
           />
         )}
 
         {/* Sidebar */}
         <div className={cn(
-          "fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-zinc-200 transform transition-transform duration-200 ease-in-out flex flex-col",
+          "fixed inset-y-0 left-0 z-50 w-64 bg-surface border-r border-border/40 transform transition-transform duration-200 ease-in-out flex flex-col",
           sidebarOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0",
           "lg:static lg:inset-0"
         )}>
-          <div className="h-16 flex items-center px-6 border-b border-zinc-200 justify-between">
-            <Link href="/admin" className="font-bold text-xl text-primary">Admin Panel</Link>
-            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-zinc-500 hover:text-zinc-700">
+          <div className="h-20 flex items-center px-6 border-b border-border/40 justify-between">
+            <Link href="/admin" className="font-serif text-[1.65rem] font-semibold tracking-tight text-primary">ESQOUN</Link>
+            <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-muted hover:text-foreground">
               <X className="h-5 w-5" />
             </button>
           </div>
@@ -80,10 +80,10 @@ export default function AdminLayout({
                   key={item.name}
                   href={item.href}
                   className={cn(
-                    "flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors",
+                    "flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors",
                     isActive 
                       ? "bg-primary/10 text-primary" 
-                      : "text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                      : "text-muted hover:bg-border/30 hover:text-foreground"
                   )}
                   onClick={() => setSidebarOpen(false)}
                 >
@@ -94,10 +94,10 @@ export default function AdminLayout({
             })}
           </nav>
 
-          <div className="p-4 border-t border-zinc-200 space-y-2">
+          <div className="p-4 border-t border-border/40 space-y-2">
             <button 
               onClick={handleLogout}
-              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium text-red-600 hover:bg-red-50 transition-colors"
+              className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-error hover:bg-error/10 transition-colors"
             >
               <LogOut className="h-5 w-5" />
               Sign Out
@@ -108,14 +108,14 @@ export default function AdminLayout({
         {/* Main content */}
         <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
           {/* Mobile header */}
-          <div className="lg:hidden h-16 bg-white border-b border-zinc-200 flex items-center px-4 justify-between shrink-0">
-            <Link href="/admin" className="font-bold text-lg text-primary">Admin Panel</Link>
-            <button onClick={() => setSidebarOpen(true)} className="p-2 -mr-2 text-zinc-500 hover:text-zinc-700">
+          <div className="lg:hidden h-20 bg-surface border-b border-border/40 flex items-center px-6 justify-between shrink-0">
+            <Link href="/admin" className="font-serif text-[1.65rem] font-semibold tracking-tight text-primary">ESQOUN</Link>
+            <button onClick={() => setSidebarOpen(true)} className="p-2 -mr-2 text-muted hover:text-foreground">
               <Menu className="h-6 w-6" />
             </button>
           </div>
 
-          <main className="flex-1 overflow-y-auto bg-zinc-50">
+          <main className="flex-1 overflow-y-auto bg-background">
             {children}
           </main>
         </div>

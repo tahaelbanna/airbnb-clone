@@ -26,7 +26,7 @@ export class NodemailerEmailAdapter implements EmailAdapterInterface {
 
     async sendEmail(dto: SendEmailDto): Promise<void> {
         await this.transporter.sendMail({
-            from: '"Stay Scape" <elbannataha@gmail.com>',
+            from: '"ESQOUN" <elbannataha@gmail.com>',
             to: dto.to,
             subject: dto.subject,
             text: dto.text,

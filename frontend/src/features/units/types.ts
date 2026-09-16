@@ -28,6 +28,7 @@ export interface UnitsQuery {
   unit_title?: string;
   unit_country_id?: string;
   unit_city_id?: string;
+  unit_category_id?: string;
 }
 
 export interface UnitReview {

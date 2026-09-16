@@ -36,13 +36,13 @@ export class SendForgetPasswordOtpUseCase {
         const { html, text } = otpEmailTemplate({
             code,
             expiresInMinutes: 10,
-            subject: 'Reset your password - Stay Scape',
+            subject: 'Reset your password - ESQOUN',
             message: 'Use the verification code below to reset your password.',
         });
 
         await this.emailService.sendEmail({
             to: email,
-            subject: 'Reset your password - Stay Scape',
+            subject: 'Reset your password - ESQOUN',
             text,
             html,
         });

@@ -44,21 +44,21 @@ export default function AdminSettingsPage() {
   };
 
   return (
-    <div className="p-6 md:p-8 max-w-4xl mx-auto">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-zinc-900">Platform Settings</h1>
-        <p className="text-zinc-500 mt-1">Configure global application settings and rules.</p>
+    <div className="p-6 md:p-10 max-w-4xl mx-auto">
+      <div className="mb-10">
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">Platform Settings</h1>
+        <p className="text-muted mt-2 font-light text-base">Configure global application settings and rules.</p>
       </div>
 
       {isLoading ? (
         <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl shadow-sm p-6 md:p-8">
+        <div className="bg-surface border border-border/40 rounded-[2rem] shadow-sm p-8 md:p-12">
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-zinc-900">VAT Rate (%)</label>
-                <p className="text-sm text-zinc-500">The value-added tax percentage applied to bookings (0-25%).</p>
+                <label className="block text-sm font-medium text-foreground">VAT Rate (%)</label>
+                <p className="text-sm text-muted font-light mb-3">The value-added tax percentage applied to bookings (0-25%).</p>
                 <Input 
                   type="number" 
                   step="0.1" 
@@ -71,8 +71,8 @@ export default function AdminSettingsPage() {
               </div>
 
               <div className="space-y-2">
-                <label className="block text-sm font-medium text-zinc-900">Minimum Listing Price</label>
-                <p className="text-sm text-zinc-500">The absolute minimum price per night a host can set.</p>
+                <label className="block text-sm font-medium text-foreground">Minimum Listing Price</label>
+                <p className="text-sm text-muted font-light mb-3">The absolute minimum price per night a host can set.</p>
                 <Input 
                   type="number" 
                   step="0.01" 
@@ -85,8 +85,8 @@ export default function AdminSettingsPage() {
               </div>
             </div>
 
-            <div className="pt-6 border-t border-zinc-100 flex justify-end">
-              <Button type="submit" disabled={update.isPending} className="gap-2">
+            <div className="pt-8 border-t border-border/40 flex justify-end">
+              <Button type="submit" disabled={update.isPending} className="gap-2 rounded-full h-12 px-6 shadow-md shadow-primary/20">
                 {update.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
                 Save Changes
               </Button>

@@ -99,13 +99,13 @@ export default function RegisterPage() {
 
   if (otpMode) {
     return (
-      <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
+      <div className="w-full max-w-lg rounded-[2rem] bg-surface p-8 shadow-sm border border-border/50 sm:p-12">
         <div className="text-center">
-          <h1 className="text-2xl font-bold tracking-tight text-foreground">
+          <h1 className="text-4xl font-serif tracking-tight text-foreground">
             Verify your email
           </h1>
-          <p className="mt-2 text-sm text-muted">
-            We sent a verification code to <span className="font-semibold text-foreground">{registerData?.email}</span>.
+          <p className="mt-3 text-base text-muted font-light">
+            We sent a verification code to <span className="font-medium text-foreground">{registerData?.email}</span>.
           </p>
         </div>
 
@@ -128,7 +128,7 @@ export default function RegisterPage() {
             />
           </div>
 
-          <Button type="submit" className="w-full" isLoading={isVerifying}>
+          <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isVerifying}>
             Verify and complete registration
           </Button>
         </form>
@@ -161,13 +161,13 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
+    <div className="w-full max-w-lg rounded-[2rem] bg-surface p-8 shadow-sm border border-border/50 sm:p-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">
           Create an account
         </h1>
-        <p className="mt-2 text-sm text-muted">
-          Join StayScape to book or host amazing places.
+        <p className="mt-3 text-base text-muted font-light">
+          Join ESQOUN to book or host amazing places.
         </p>
       </div>
 
@@ -253,7 +253,7 @@ export default function RegisterPage() {
           </div>
         </div>
 
-        <Button type="submit" className="w-full" isLoading={isSubmitting}>
+        <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isSubmitting}>
           Sign up
         </Button>
       </form>

@@ -28,6 +28,8 @@ export class GetAllUnitsUseCase {
 
         if (query?.unit_city_id) matchQuery.unit_city_id = query.unit_city_id;
 
+        if (query?.unit_category_id) matchQuery.unit_category_id = query.unit_category_id;
+
         const result = await this.unitsRepository.findPaginated(matchQuery, {
             page: query?.page,
             limit: query?.limit,

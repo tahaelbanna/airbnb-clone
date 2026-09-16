@@ -59,14 +59,14 @@ function ListingsPageContent() {
   const units = data?.data || [];
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 flex-1">
-      <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 flex-1 max-w-6xl">
+      <div className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">My Listings</h1>
-          <p className="text-muted mt-2">Manage your properties and visibility.</p>
+          <h1 className="text-4xl font-serif tracking-tight text-foreground">My Listings</h1>
+          <p className="text-muted mt-2 font-light text-base">Manage your properties and visibility.</p>
         </div>
-        <Button onClick={() => router.push("/listings/new")} className="flex items-center gap-2">
-          <Plus className="h-4 w-4" />
+        <Button onClick={() => router.push("/listings/new")} className="flex items-center gap-2 rounded-full h-12 px-6 shadow-md shadow-primary/20">
+          <Plus className="h-5 w-5" />
           Create New Listing
         </Button>
       </div>
@@ -100,8 +100,8 @@ function ListingsPageContent() {
             {units.map((unit) => {
               if (unit.isDeleted) return null; // Backend might not filter soft deleted?
               return (
-                <div key={unit._id} className="flex flex-col md:flex-row gap-6 p-4 rounded-2xl border border-border bg-background shadow-sm hover:shadow-md transition-shadow">
-                  <div className="w-full md:w-48 aspect-video relative rounded-xl overflow-hidden bg-zinc-100 flex-shrink-0">
+                <div key={unit._id} className="flex flex-col md:flex-row gap-8 p-6 rounded-[2rem] border border-border/40 bg-surface shadow-sm hover:shadow-md hover:border-primary/30 transition-all">
+                  <div className="w-full md:w-64 aspect-video relative rounded-2xl overflow-hidden bg-background flex-shrink-0">
                     {unit.unit_photos?.[0] ? (
                       <img 
                         src={unit.unit_photos[0]} 
@@ -119,10 +119,10 @@ function ListingsPageContent() {
                     <div>
                       <div className="flex justify-between items-start">
                         <div>
-                          <h3 className="text-lg font-semibold text-foreground">{unit.unit_title}</h3>
-                          <p className="text-sm text-muted mt-1">{unit.unit_address}</p>
+                          <h3 className="text-2xl font-serif text-foreground">{unit.unit_title}</h3>
+                          <p className="text-base text-muted font-light mt-1.5">{unit.unit_address}</p>
                         </div>
-                        <Badge variant={unit.isActive ? "default" : "secondary"} className={cn(unit.isActive ? "bg-emerald-100 text-emerald-800 hover:bg-emerald-100" : "")}>
+                        <Badge variant={unit.isActive ? "default" : "secondary"} className={cn("rounded-full px-3", unit.isActive ? "bg-primary/20 text-primary hover:bg-primary/20 border-primary/20" : "")}>
                           {unit.isActive ? "Active" : "Inactive"}
                         </Badge>
                       </div>
@@ -131,10 +131,11 @@ function ListingsPageContent() {
                       </div>
                     </div>
 
-                    <div className="mt-4 flex flex-wrap gap-2 justify-end pt-4 border-t border-border">
+                    <div className="mt-8 flex flex-wrap gap-3 justify-end pt-5 border-t border-border/40">
                       <Button 
                         variant="outline" 
                         size="sm" 
+                        className="rounded-full px-5 h-10 border-border/40 hover:bg-border/30 hover:text-foreground text-muted"
                         onClick={() => handleToggleActive(unit._id, unit.isActive)}
                         disabled={processingId === unit._id}
                       >
@@ -143,7 +144,7 @@ function ListingsPageContent() {
                       </Button>
                       
                       <Link href={`/listings/${unit._id}/edit`}>
-                        <Button variant="outline" size="sm">
+                        <Button variant="outline" size="sm" className="rounded-full px-5 h-10 border-border/40 hover:bg-border/30 hover:text-foreground text-muted">
                           <Edit className="h-4 w-4 mr-2" />
                           Edit
                         </Button>
@@ -152,7 +153,7 @@ function ListingsPageContent() {
                       <Button 
                         variant="outline" 
                         size="sm" 
-                        className="text-destructive hover:bg-destructive/10 border-destructive/20"
+                        className="rounded-full px-5 h-10 text-error hover:bg-error/10 border-error/30"
                         onClick={() => handleDelete(unit._id)}
                         disabled={processingId === unit._id}
                       >

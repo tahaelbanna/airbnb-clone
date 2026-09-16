@@ -44,25 +44,25 @@ export default function EditListingPage() {
 
   if (error || !unit) {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col items-center justify-center py-24 text-center border rounded-2xl bg-zinc-50">
-          <h3 className="text-xl font-semibold text-foreground">Listing not found</h3>
-          <p className="mt-2 text-muted">The listing you are trying to edit does not exist or you do not have permission.</p>
-          <Button onClick={() => router.push("/listings")} className="mt-6" variant="outline">Back to Listings</Button>
+      <div className="container mx-auto px-4 py-12 max-w-4xl">
+        <div className="flex flex-col items-center justify-center py-24 text-center border border-border/40 rounded-[2rem] bg-surface shadow-sm">
+          <h3 className="text-2xl font-serif tracking-tight text-foreground">Listing not found</h3>
+          <p className="mt-2 text-muted font-light max-w-sm">The listing you are trying to edit does not exist or you do not have permission.</p>
+          <Button onClick={() => router.push("/listings")} className="mt-8 rounded-full" variant="outline">Back to Listings</Button>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-4xl">
-      <div className="mb-6">
-        <Link href="/listings" className="inline-flex items-center text-sm font-medium text-muted hover:text-foreground mb-4">
+    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 max-w-4xl">
+      <div className="mb-8">
+        <Link href="/listings" className="inline-flex items-center text-sm font-medium text-muted hover:text-foreground mb-6 transition-colors">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Listings
         </Link>
-        <h1 className="text-3xl font-bold text-foreground">Edit Listing</h1>
-        <p className="text-muted mt-2">Update information for {unit.unit_title}</p>
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">Edit Listing</h1>
+        <p className="text-muted mt-2 font-light text-base">Update information for {unit.unit_title}</p>
       </div>
 
       <UnitForm 

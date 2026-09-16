@@ -11,9 +11,9 @@ interface UnitGridProps {
 export function UnitGrid({ units, isLoading, error, onClearFilters }: UnitGridProps) {
   if (error) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-center">
-        <h3 className="text-lg font-semibold text-foreground">Unable to load units</h3>
-        <p className="mt-2 text-sm text-muted max-w-md">
+      <div className="flex flex-col items-center justify-center py-32 text-center bg-surface rounded-[2.5rem] border border-border/40 my-8">
+        <h3 className="text-3xl font-serif text-foreground tracking-tight">Unable to load units</h3>
+        <p className="mt-4 text-muted text-lg font-light max-w-md">
           {error.message || "An unexpected error occurred. Please try again later."}
         </p>
       </div>
@@ -22,7 +22,7 @@ export function UnitGrid({ units, isLoading, error, onClearFilters }: UnitGridPr
 
   if (isLoading) {
     return (
-      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+      <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
         {Array.from({ length: 10 }).map((_, i) => (
           <UnitCardSkeleton key={i} />
         ))}
@@ -32,15 +32,15 @@ export function UnitGrid({ units, isLoading, error, onClearFilters }: UnitGridPr
 
   if (!units || units.length === 0) {
     return (
-      <div className="flex flex-col items-center justify-center py-24 text-center">
-        <h3 className="text-lg font-semibold text-foreground">No units found</h3>
-        <p className="mt-2 text-sm text-muted">
-          We couldn&apos;t find any units matching your search.
+      <div className="flex flex-col items-center justify-center py-32 text-center bg-surface rounded-[2.5rem] border border-border/40 my-8">
+        <h3 className="text-3xl font-serif text-foreground tracking-tight">No units found</h3>
+        <p className="mt-4 text-muted text-lg font-light max-w-sm">
+          We couldn&apos;t find any units matching your search. Try adjusting your filters.
         </p>
         {onClearFilters && (
           <button 
             onClick={onClearFilters}
-            className="mt-6 rounded-xl border border-border px-4 py-2 text-sm font-medium hover:bg-zinc-50"
+            className="mt-8 rounded-full border border-border bg-background px-8 py-3 text-sm font-medium hover:bg-zinc-50/50 shadow-sm transition-all"
           >
             Clear filters
           </button>
@@ -50,7 +50,7 @@ export function UnitGrid({ units, isLoading, error, onClearFilters }: UnitGridPr
   }
 
   return (
-    <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+    <div className="grid grid-cols-2 gap-3 sm:gap-6 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
       {units.map((unit) => (
         <UnitCard key={unit._id} unit={unit} />
       ))}

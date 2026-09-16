@@ -45,12 +45,12 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
+    <div className="w-full max-w-lg rounded-[2rem] bg-surface p-8 shadow-sm border border-border/50 sm:p-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">
           Admin Login
         </h1>
-        <p className="mt-2 text-sm text-muted">
+        <p className="mt-3 text-base text-muted font-light">
           Enter your admin credentials to continue.
         </p>
       </div>
@@ -117,7 +117,7 @@ export default function AdminLoginPage() {
 
         </div>
 
-        <Button type="submit" className="w-full" isLoading={isSubmitting}>
+        <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isSubmitting}>
           Admin Login
         </Button>
       </form>

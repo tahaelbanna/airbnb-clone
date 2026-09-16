@@ -5,7 +5,7 @@ export interface BaseEmailOptions {
 }
 
 export function baseEmailTemplate({ title, content, preheader }: BaseEmailOptions): string {
-    const brandColor = '#FF385C';
+    const brandColor = '#6F856F';
 
     return `
 <!DOCTYPE html>
@@ -15,7 +15,7 @@ export function baseEmailTemplate({ title, content, preheader }: BaseEmailOption
     <meta name="viewport" content="width=device-width">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="x-apple-disable-message-reformatting">
-    <title>${title || 'Stay Scape'}</title>
+    <title>${title || 'ESQOUN'}</title>
     
     <style>
         html, body {
@@ -23,8 +23,8 @@ export function baseEmailTemplate({ title, content, preheader }: BaseEmailOption
             padding: 0 !important;
             height: 100% !important;
             width: 100% !important;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f7f9fa;
+            font-family: Georgia, 'Times New Roman', Times, serif;
+            background-color: #F7F3ED;
         }
         * {
             -ms-text-size-adjust: 100%;
@@ -43,61 +43,66 @@ export function baseEmailTemplate({ title, content, preheader }: BaseEmailOption
         }
         .email-card {
             background-color: #ffffff;
-            border-radius: 12px;
+            border-radius: 16px;
             padding: 40px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
-            margin-top: 20px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            margin-top: 24px;
             margin-bottom: 20px;
+            border: 1px solid #E8E0D6;
         }
         .header {
             text-align: center;
             padding-bottom: 24px;
-            border-bottom: 1px solid #ebebeb;
+            border-bottom: 1px solid #E8E0D6;
             margin-bottom: 32px;
         }
         .logo {
-            font-size: 24px;
-            font-weight: 800;
+            font-size: 26px;
+            font-weight: 600;
             color: ${brandColor};
             text-decoration: none;
-            letter-spacing: -0.5px;
+            letter-spacing: 2px;
+            font-family: Georgia, 'Times New Roman', Times, serif;
         }
         .footer {
             text-align: center;
             padding: 20px 0;
-            color: #717171;
+            color: #8A8A8A;
             font-size: 12px;
             line-height: 1.5;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
         @media screen and (max-width: 600px) {
             .email-card {
                 padding: 24px !important;
                 border-radius: 0 !important;
                 margin: 0 !important;
+                border-left: none !important;
+                border-right: none !important;
             }
         }
     </style>
 </head>
-<body width="100%" style="margin: 0; padding: 0 !important; background-color: #f7f9fa;">
+<body width="100%" style="margin: 0; padding: 0 !important; background-color: #F7F3ED;">
     ${preheader ? `<div style="display: none; font-size: 1px; line-height: 1px; max-height: 0px; max-width: 0px; opacity: 0; overflow: hidden; mso-hide: all; font-family: sans-serif;">${preheader}</div>` : ''}
     
-    <center style="width: 100%; background-color: #f7f9fa;">
+    <center style="width: 100%; background-color: #F7F3ED;">
         <div class="email-container">
             <table role="presentation" cellspacing="0" cellpadding="0" border="0" align="center" width="100%" style="max-width: 600px;">
                 <tr>
                     <td>
                         <div class="email-card">
                             <div class="header">
-                                <a href="#" class="logo">Stay Scape</a>
+                                <a href="#" class="logo">ESQOUN</a>
                             </div>
                             
-                            <div class="content" style="color: #222222; font-size: 16px; line-height: 1.6;">
+                            <div class="content" style="color: #2D2D2D; font-size: 16px; line-height: 1.6; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
                                 ${content}
                             </div>
                         </div>
                         
                         <div class="footer">
-                            <p style="margin: 0;">&copy; ${new Date().getFullYear()} Stay Scape. All rights reserved.</p>
+                            <p style="margin: 0;">&copy; ${new Date().getFullYear()} ESQOUN. All rights reserved.</p>
                             <p style="margin: 8px 0 0 0;">This is an automated message, please do not reply to this email.</p>
                         </div>
                     </td>

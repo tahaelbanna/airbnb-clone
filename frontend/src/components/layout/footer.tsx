@@ -2,11 +2,11 @@ import Link from "next/link";
 
 export function Footer() {
   return (
-    <footer className="mt-auto border-t border-border bg-zinc-50 py-12">
+    <footer className="mt-auto border-t border-border bg-surface py-12">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 gap-8 sm:grid-cols-2">
           <div>
-            <h3 className="text-sm font-semibold text-foreground">StayScape</h3>
+            <h3 className="font-serif text-[1.65rem] font-semibold tracking-tight text-primary">ESQOUN</h3>
             <ul className="mt-4 space-y-3">
               <li>
                 <Link href="/" className="text-sm text-muted hover:text-primary">
@@ -48,7 +48,7 @@ export function Footer() {
         </div>
         <div className="mt-12 border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
           <p className="text-sm text-muted">
-            &copy; {new Date().getFullYear()} StayScape, Inc. All rights reserved.
+            &copy; {new Date().getFullYear()} ESQOUN, Inc. All rights reserved.
           </p>
           <div className="flex gap-4">
             <span className="text-sm text-muted">Terms</span>

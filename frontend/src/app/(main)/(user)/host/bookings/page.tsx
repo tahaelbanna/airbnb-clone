@@ -67,14 +67,14 @@ function HostBookingsPageContent() {
   const bookings = data?.data || [];
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 flex-1 max-w-5xl">
-      <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 flex-1 max-w-5xl">
+      <div className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Reservations</h1>
-          <p className="text-muted mt-2">Manage incoming guest bookings for your properties.</p>
+          <h1 className="text-4xl font-serif tracking-tight text-foreground">Reservations</h1>
+          <p className="text-muted mt-2 font-light text-base">Manage incoming guest bookings for your properties.</p>
         </div>
         <select 
-          className="h-10 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background"
+          className="h-12 rounded-xl border border-border/40 bg-surface px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-sm text-foreground font-medium"
           value={statusFilter}
           onChange={(e) => {
             const params = new URLSearchParams(searchParams);
@@ -126,11 +126,11 @@ function HostBookingsPageContent() {
               const isConfirmed = booking.status === "confirmed";
 
               return (
-                <div key={booking._id} className="flex flex-col md:flex-row gap-6 p-5 rounded-2xl border border-border bg-background shadow-sm">
+                <div key={booking._id} className="flex flex-col md:flex-row gap-6 p-8 rounded-[2rem] border border-border/40 bg-surface shadow-sm">
                   <div className="flex-1 flex flex-col justify-between">
                     <div>
-                      <div className="flex justify-between items-start mb-2">
-                        <h3 className="text-lg font-semibold text-foreground">
+                      <div className="flex justify-between items-start mb-4">
+                        <h3 className="text-xl font-serif text-foreground">
                           Unit: {booking.unit_id && typeof booking.unit_id === 'object' ? (booking.unit_id as any).unit_title || 'Unknown Unit' : String(booking.unit_id || 'Unknown')}
                         </h3>
                         <Badge 
@@ -148,24 +148,24 @@ function HostBookingsPageContent() {
                         </Badge>
                       </div>
                       
-                      <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4 text-sm text-muted-foreground">
+                      <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-6 text-sm text-muted-foreground">
                         <div>
-                          <p className="text-xs font-medium text-muted uppercase">Guest</p>
+                          <p className="text-xs font-medium text-muted/80 tracking-wider uppercase mb-1">Guest</p>
                           <p className="text-foreground">
                             {booking.guest_id && typeof booking.guest_id === 'object' ? (booking.guest_id as any).name || 'Unknown Guest' : String(booking.guest_id || 'Unknown')}
                           </p>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-muted uppercase">Check-in</p>
+                          <p className="text-xs font-medium text-muted/80 tracking-wider uppercase mb-1">Check-in</p>
                           <p className="text-foreground">{checkIn.toLocaleDateString()}</p>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-muted uppercase">Check-out</p>
+                          <p className="text-xs font-medium text-muted/80 tracking-wider uppercase mb-1">Check-out</p>
                           <p className="text-foreground">{checkOut.toLocaleDateString()}</p>
                         </div>
                         <div>
-                          <p className="text-xs font-medium text-muted uppercase">Amount</p>
-                          <p className="text-foreground font-semibold">${booking.total_amount}</p>
+                          <p className="text-xs font-medium text-muted/80 tracking-wider uppercase mb-1">Amount</p>
+                          <p className="text-foreground font-semibold text-lg">${booking.total_amount}</p>
                         </div>
                       </div>
                       
@@ -177,12 +177,12 @@ function HostBookingsPageContent() {
                     </div>
 
                     {isPending && (
-                      <div className="mt-6 flex flex-wrap gap-3 pt-4 border-t border-border">
+                      <div className="mt-8 flex flex-wrap gap-4 pt-6 border-t border-border/40">
                         <Button 
                           size="sm" 
                           onClick={() => handleStatusChange(booking._id, "confirmed")}
                           disabled={processingId === booking._id}
-                          className="bg-emerald-600 hover:bg-emerald-700 text-white"
+                          className="bg-primary hover:bg-primary/90 text-white border-0 shadow-md rounded-full px-6 h-10"
                         >
                           {processingId === booking._id ? (
                             <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -197,7 +197,7 @@ function HostBookingsPageContent() {
                           size="sm" 
                           onClick={() => handleStatusChange(booking._id, "declined")}
                           disabled={processingId === booking._id}
-                          className="text-red-600 hover:bg-red-50 hover:text-red-700 border-red-200"
+                          className="text-error hover:bg-error/10 border-error/30 rounded-full px-6 h-10"
                         >
                           {processingId === booking._id ? (
                             <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -210,12 +210,12 @@ function HostBookingsPageContent() {
                     )}
                     
                     {isConfirmed && (
-                      <div className="mt-6 flex flex-wrap gap-3 pt-4 border-t border-border">
+                      <div className="mt-8 flex flex-wrap gap-4 pt-6 border-t border-border/40">
                         <Button 
                           size="sm" 
                           onClick={() => handleStatusChange(booking._id, "completed")}
-                          disabled={processingId === booking._id}
-                          className="bg-blue-600 hover:bg-blue-700 text-white"
+                          disabled={processingId === booking._id || checkOut > new Date()}
+                          className="bg-primary hover:bg-primary/90 text-white border-0 shadow-md rounded-full px-6 h-10"
                         >
                           {processingId === booking._id ? (
                             <Loader2 className="h-4 w-4 animate-spin mr-2" />
@@ -230,7 +230,7 @@ function HostBookingsPageContent() {
                           size="sm" 
                           onClick={() => setCancelModalId(booking._id)}
                           disabled={processingId === booking._id}
-                          className="text-zinc-600 hover:bg-zinc-100 hover:text-zinc-900"
+                          className="text-muted hover:bg-border/30 hover:text-foreground rounded-full px-6 h-10 border-border/40"
                         >
                           <Ban className="h-4 w-4 mr-2" />
                           Cancel Reservation

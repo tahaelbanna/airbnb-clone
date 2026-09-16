@@ -31,14 +31,14 @@ export default function AdminBookingsPage() {
   const bookings = data?.data || [];
 
   return (
-    <div className="p-6 md:p-8 max-w-7xl mx-auto">
-      <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="p-6 md:p-10 max-w-7xl mx-auto">
+      <div className="mb-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
         <div>
-          <h1 className="text-3xl font-bold text-zinc-900">Platform Bookings</h1>
-          <p className="text-zinc-500 mt-2">View all bookings across the platform. Note: Admins can only view bookings, not modify them.</p>
+          <h1 className="text-4xl font-serif tracking-tight text-foreground">Platform Bookings</h1>
+          <p className="text-muted mt-2 font-light text-base max-w-2xl">View all bookings across the platform. Note: Admins can only view bookings, not modify them.</p>
         </div>
         <select 
-          className="h-10 rounded-md border border-zinc-200 bg-white px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+          className="h-12 rounded-xl border border-border/40 bg-surface px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary shadow-sm text-foreground font-medium"
           value={statusFilter}
           onChange={(e) => {
             const params = new URLSearchParams(searchParams);
@@ -70,9 +70,9 @@ export default function AdminBookingsPage() {
       ) : isLoading ? (
         <div className="flex justify-center py-12"><Loader2 className="h-8 w-8 animate-spin text-primary" /></div>
       ) : (
-        <div className="bg-white border border-zinc-200 rounded-2xl overflow-hidden shadow-sm">
+        <div className="bg-surface border border-border/40 rounded-[2rem] overflow-hidden shadow-sm">
           <table className="w-full text-left text-sm whitespace-nowrap">
-            <thead className="bg-zinc-50 border-b border-zinc-200 text-zinc-500">
+            <thead className="bg-background border-b border-border/40 text-muted font-light">
               <tr>
                 <th className="px-6 py-4 font-medium">Booking ID</th>
                 <th className="px-6 py-4 font-medium">Unit / Host</th>
@@ -82,33 +82,33 @@ export default function AdminBookingsPage() {
                 <th className="px-6 py-4 font-medium">Status</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-zinc-200">
+            <tbody className="divide-y divide-border/40">
               {bookings.map((booking) => {
                 const checkIn = new Date(booking.check_in);
                 const checkOut = new Date(booking.check_out);
 
                 return (
-                  <tr key={booking._id} className="hover:bg-zinc-50 transition-colors">
-                    <td className="px-6 py-4 text-zinc-500 text-xs font-mono">{booking._id.slice(-6)}</td>
+                  <tr key={booking._id} className="hover:bg-background/50 transition-colors">
+                    <td className="px-6 py-4 text-muted text-xs font-mono">{booking._id.slice(-6)}</td>
                     <td className="px-6 py-4">
-                      <div className="font-medium text-zinc-900">
+                      <div className="font-medium text-foreground">
                         {booking.unit_id && typeof booking.unit_id === 'object' ? (booking.unit_id as any).unit_title || 'Unknown Unit' : String(booking.unit_id || 'Unknown')}
                       </div>
-                      <div className="text-xs text-zinc-500">
+                      <div className="text-xs text-muted mt-0.5">
                         Host: {booking.host_id && typeof booking.host_id === 'object' ? (booking.host_id as any).name || 'Unknown Host' : String(booking.host_id || 'Unknown')}
                       </div>
                     </td>
-                    <td className="px-6 py-4 text-zinc-900">
+                    <td className="px-6 py-4 text-foreground font-medium">
                       {booking.guest_id && typeof booking.guest_id === 'object' ? (booking.guest_id as any).name || 'Unknown Guest' : String(booking.guest_id || 'Unknown')}
                     </td>
-                    <td className="px-6 py-4 text-zinc-500 text-xs">
+                    <td className="px-6 py-4 text-muted text-xs">
                       {checkIn.toLocaleDateString()} &rarr; {checkOut.toLocaleDateString()}
                     </td>
-                    <td className="px-6 py-4 font-medium text-zinc-900">${booking.total_amount}</td>
+                    <td className="px-6 py-4 font-medium text-foreground">${booking.total_amount}</td>
                     <td className="px-6 py-4">
                       <Badge 
                         className={cn(
-                          "px-2.5 py-0.5 font-medium uppercase tracking-wider text-[10px]",
+                          "px-3 py-1 font-semibold uppercase tracking-wider text-[10px]",
                           booking.status === "pending" && "bg-amber-100 text-amber-800 hover:bg-amber-100",
                           booking.status === "confirmed" && "bg-blue-100 text-blue-800 hover:bg-blue-100",
                           booking.status === "completed" && "bg-emerald-100 text-emerald-800 hover:bg-emerald-100",
@@ -125,15 +125,15 @@ export default function AdminBookingsPage() {
               })}
               {bookings.length === 0 && (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-zinc-500">No bookings found.</td>
+                  <td colSpan={6} className="px-6 py-12 text-center text-muted font-light">No bookings found.</td>
                 </tr>
               )}
             </tbody>
           </table>
           
           {pagination && pagination.pageCount > 1 && (
-            <div className="px-6 py-4 border-t border-zinc-200 flex items-center justify-between">
-              <span className="text-sm text-zinc-500">Page {page} of {pagination.pageCount}</span>
+            <div className="px-6 py-5 border-t border-border/40 flex items-center justify-between bg-background">
+              <span className="text-sm text-muted font-light">Page {page} of {pagination.pageCount}</span>
               <div className="flex gap-2">
                 <Button 
                   variant="outline" 

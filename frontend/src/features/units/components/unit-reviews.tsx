@@ -30,47 +30,47 @@ export function UnitReviews({ unitId }: UnitReviewsProps) {
 
   if (reviews.length === 0) {
     return (
-      <div className="mt-12 pt-8 border-t border-border">
-        <h2 className="text-xl font-semibold text-foreground mb-6">Reviews</h2>
-        <div className="flex flex-col items-center justify-center p-8 text-center rounded-2xl bg-zinc-50 border border-zinc-100">
-          <MessageSquare className="h-10 w-10 text-zinc-300 mb-3" />
-          <h3 className="font-medium text-zinc-700">No reviews yet</h3>
-          <p className="text-sm text-zinc-500 mt-1">Be the first to review this place after your stay.</p>
+      <div className="mt-16 pt-12 border-t border-border/60">
+        <h2 className="text-3xl font-serif text-foreground tracking-tight mb-8">Reviews</h2>
+        <div className="flex flex-col items-center justify-center p-12 text-center rounded-[2rem] bg-surface border border-border/40">
+          <MessageSquare className="h-12 w-12 text-muted-foreground/30 mb-4" />
+          <h3 className="text-xl font-serif text-foreground">No reviews yet</h3>
+          <p className="text-lg font-light text-muted mt-2">Be the first to review this place after your stay.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="mt-12 pt-8 border-t border-border">
-      <h2 className="text-xl font-semibold text-foreground mb-6 flex items-center gap-2">
-        <Star className="h-5 w-5 fill-current text-primary" />
+    <div className="mt-16 pt-12 border-t border-border/60">
+      <h2 className="text-3xl font-serif text-foreground tracking-tight mb-10 flex items-center gap-3">
+        <Star className="h-6 w-6 fill-current text-primary" />
         Reviews ({data.meta.totalCount})
       </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
         {reviews.map((review, i) => (
-          <div key={i} className="flex flex-col space-y-3 pb-4">
+          <div key={i} className="flex flex-col space-y-4 pb-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="flex h-10 w-10 items-center justify-center rounded-full bg-zinc-200 text-sm font-semibold text-zinc-700">
+              <div className="flex items-center gap-4">
+                <div className="flex h-12 w-12 items-center justify-center rounded-full bg-surface border border-border/50 text-lg font-serif text-primary shadow-sm">
                   {review.guest?.name ? review.guest.name.charAt(0).toUpperCase() : "?"}
                 </div>
                 <div>
-                  <p className="font-medium text-foreground">{review.guest?.name || "Anonymous Guest"}</p>
-                  <p className="text-xs text-muted">
+                  <p className="font-medium text-foreground text-base">{review.guest?.name || "Anonymous Guest"}</p>
+                  <p className="text-sm text-muted font-light">
                     {new Date(review.createdAt).toLocaleDateString(undefined, {
                       year: 'numeric', month: 'long'
                     })}
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-1 bg-zinc-100 px-2 py-1 rounded-md">
-                <Star className="h-3 w-3 fill-current text-primary" />
-                <span className="text-xs font-semibold">{review.rating}</span>
+              <div className="flex items-center gap-1.5 bg-surface border border-border/50 px-3 py-1.5 rounded-full shadow-sm">
+                <Star className="h-3.5 w-3.5 fill-current text-primary" />
+                <span className="text-sm font-semibold">{review.rating}</span>
               </div>
             </div>
             {review.comment && (
-              <p className="text-sm text-zinc-700 mt-2 leading-relaxed">
+              <p className="text-base text-muted leading-relaxed font-light mt-2">
                 "{review.comment}"
               </p>
             )}

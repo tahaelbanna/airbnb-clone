@@ -111,14 +111,14 @@ export default function ForgetPasswordPage() {
   };
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-background p-8 shadow-xl ring-1 ring-border sm:p-10">
+    <div className="w-full max-w-lg rounded-[2rem] bg-surface p-8 shadow-sm border border-border/50 sm:p-12">
       <div className="text-center">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">
           {step === "send-otp" && "Forgot Password?"}
           {step === "verify-otp" && "Verify Your Email"}
           {step === "reset-password" && "Create New Password"}
         </h1>
-        <p className="mt-2 text-sm text-muted">
+        <p className="mt-3 text-base text-muted font-light">
           {step === "send-otp" && "Enter your email address to receive a verification code."}
           {step === "verify-otp" && `We sent a verification code to ${email}.`}
           {step === "reset-password" && "Enter a new secure password for your account."}
@@ -145,7 +145,7 @@ export default function ForgetPasswordPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" isLoading={isSubmitting}>
+            <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isSubmitting}>
               Send verification code
             </Button>
           </form>
@@ -164,7 +164,7 @@ export default function ForgetPasswordPage() {
                 required
               />
             </div>
-            <Button type="submit" className="w-full" isLoading={isSubmitting}>
+            <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isSubmitting}>
               Verify Code
             </Button>
             <div className="mt-6 flex flex-col items-center gap-2 text-sm">
@@ -221,7 +221,7 @@ export default function ForgetPasswordPage() {
                 </button>
               </div>
             </div>
-            <Button type="submit" className="w-full" isLoading={isSubmitting}>
+            <Button type="submit" className="w-full h-12 text-lg rounded-full shadow-md shadow-primary/20" isLoading={isSubmitting}>
               Reset Password
             </Button>
           </form>

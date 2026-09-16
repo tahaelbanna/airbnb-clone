@@ -42,14 +42,14 @@ export default function CreateListingPage() {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 sm:px-6 lg:px-8 max-w-4xl">
-      <div className="mb-6">
+    <div className="container mx-auto px-4 py-12 sm:px-6 lg:px-8 max-w-4xl">
+      <div className="mb-8">
         <Link href="/listings" className="inline-flex items-center text-sm font-medium text-muted hover:text-foreground mb-4">
           <ArrowLeft className="mr-2 h-4 w-4" />
           Back to Listings
         </Link>
-        <h1 className="text-3xl font-bold text-foreground">Create New Listing</h1>
-        <p className="text-muted mt-2">Fill in the details to publish your new property.</p>
+        <h1 className="text-4xl font-serif tracking-tight text-foreground">Create New Listing</h1>
+        <p className="text-muted mt-2 font-light text-base">Fill in the details to publish your new property.</p>
       </div>
 
       <UnitForm onSubmit={handleSubmit} isSubmitting={isSubmitting} />

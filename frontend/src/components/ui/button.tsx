@@ -15,14 +15,14 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     ref,
   ) => {
     const baseStyles =
-      "inline-flex items-center justify-center rounded-xl font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50";
+      "inline-flex items-center justify-center rounded-full font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary disabled:pointer-events-none disabled:opacity-50";
 
     const variants = {
       primary: "bg-primary text-white hover:bg-primary-hover shadow-sm",
-      secondary: "bg-zinc-100 text-zinc-900 hover:bg-zinc-200",
+      secondary: "bg-secondary text-foreground hover:opacity-80 shadow-sm",
       outline:
-        "border border-border bg-transparent hover:bg-zinc-50 text-foreground",
-      ghost: "hover:bg-zinc-100 text-foreground hover:text-foreground",
+        "border border-border bg-transparent hover:bg-surface text-foreground",
+      ghost: "hover:bg-surface text-foreground hover:text-foreground",
     };
 
     const sizes = {

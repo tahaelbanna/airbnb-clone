@@ -1,11 +1,20 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { getCategories, createCategory, updateCategory, deleteCategory } from "../api/queries";
+import { getCategories, getCategoryById, createCategory, updateCategory, deleteCategory } from "../api/queries";
 import type { CategoriesQuery } from "../types";
 
 export function useCategories(query?: CategoriesQuery) {
   return useQuery({
     queryKey: ["categories", query],
     queryFn: () => getCategories(query),
+    staleTime: 1000 * 60 * 60, // 1 hour
+  });
+}
+
+export function useCategory(id: string) {
+  return useQuery({
+    queryKey: ["categories", id],
+    queryFn: () => getCategoryById(id),
+    enabled: !!id,
     staleTime: 1000 * 60 * 60, // 1 hour
   });
 }

@@ -38,6 +38,14 @@ export class ChangeBookingStatusByHostUseCase {
                 ),
             );
 
+        if (body.status === BookingStatus.COMPLETED) {
+            if (new Date(booking.check_out) > new Date()) {
+                throw new BadRequestException(
+                    this.i18nService.translate('bookings.BOOKING_NOT_YET_FINISHED') || 'Cannot complete a booking before its check-out date',
+                );
+            }
+        }
+
         if (body.status === BookingStatus.CANCELLED) {
             return await this.BookingCancellation(id, body, booking.status);
         }

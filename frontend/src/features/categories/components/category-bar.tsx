@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useCategories } from "../hooks/use-categories";
 import { Palmtree, Mountain, Tent, Castle, Building } from "lucide-react";
 
@@ -35,8 +36,8 @@ export function CategoryBar() {
   if (categories.length === 0) return null;
 
   return (
-    <div className="relative flex items-center bg-background py-4">
-      <div className="no-scrollbar flex w-full gap-8 overflow-x-auto px-4 pb-2 sm:px-6 lg:px-8">
+    <div className="relative flex items-center py-4">
+      <div className="no-scrollbar flex w-full gap-4 overflow-x-auto px-4 pb-4 sm:px-6 lg:px-8">
         {categories.map((category) => {
           const name = category.unit_categories_name.toLowerCase();
           const Icon = Object.keys(iconMap).find(k => name.includes(k)) 
@@ -44,14 +45,16 @@ export function CategoryBar() {
             : iconMap.default;
 
           return (
-            <div 
+            <Link 
               key={category._id}
-              className="flex min-w-fit cursor-default flex-col items-center gap-2 text-muted transition-colors hover:text-foreground"
-              title="Category filtering is coming soon"
+              href={`/categories/${category._id}`}
+              className="group flex min-w-fit cursor-pointer items-center gap-2.5 text-muted transition-all hover:text-primary bg-surface border border-border/60 hover:border-primary/30 rounded-full px-5 py-2.5 shadow-sm hover:shadow-md"
             >
-              {Icon}
-              <span className="text-xs font-medium">{category.unit_categories_name}</span>
-            </div>
+              <div className="text-muted transition-colors group-hover:text-primary scale-90">
+                {Icon}
+              </div>
+              <span className="text-sm font-medium">{category.unit_categories_name}</span>
+            </Link>
           );
         })}
       </div>

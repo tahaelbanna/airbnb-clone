@@ -29,10 +29,9 @@ export function Navbar() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container mx-auto flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-2">
-          <Compass className="h-6 w-6 text-primary" />
-          <span className="text-xl font-bold tracking-tight text-primary">
-            StayScape
+        <Link href="/" className="flex items-center">
+          <span className="font-serif text-[1.65rem] font-semibold tracking-tight text-primary">
+            ESQOUN
           </span>
         </Link>
 
@@ -40,7 +39,7 @@ export function Navbar() {
           {!isAuthenticated ? (
             <>
               <Link href="/login">
-                <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+                <Button variant="ghost" size="sm">
                   Log in
                 </Button>
               </Link>
@@ -69,23 +68,23 @@ export function Navbar() {
                 </Button>
                 
                 {isMenuOpen && (
-                  <div className="absolute right-0 top-full mt-2 flex w-48 flex-col rounded-xl border border-border bg-background p-2 shadow-lg">
+                  <div className="absolute right-0 top-full mt-2 flex w-56 flex-col rounded-2xl border border-border bg-background p-2 shadow-md">
                     <div className="px-3 py-2">
                       <p className="text-sm font-medium text-foreground">{user?.name}</p>
                       <p className="text-xs text-muted truncate">{user?.email}</p>
                     </div>
                     <hr className="my-1 border-border" />
-                    <Link href="/trips" className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-zinc-100" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/trips" className="block rounded-xl px-3 py-2 text-sm text-foreground hover:bg-surface" onClick={() => setIsMenuOpen(false)}>
                       My Trips
                     </Link>
-                    <Link href="/favourites" className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-zinc-100" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/favourites" className="block rounded-xl px-3 py-2 text-sm text-foreground hover:bg-surface" onClick={() => setIsMenuOpen(false)}>
                       Wishlist
                     </Link>
                     <hr className="my-1 border-border" />
-                    <Link href="/listings" className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-zinc-100" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/listings" className="block rounded-xl px-3 py-2 text-sm text-foreground hover:bg-surface" onClick={() => setIsMenuOpen(false)}>
                       Manage Listings
                     </Link>
-                    <Link href="/host/bookings" className="block rounded-md px-3 py-2 text-sm text-foreground hover:bg-zinc-100" onClick={() => setIsMenuOpen(false)}>
+                    <Link href="/host/bookings" className="block rounded-xl px-3 py-2 text-sm text-foreground hover:bg-surface" onClick={() => setIsMenuOpen(false)}>
                       Reservations
                     </Link>
                     <hr className="my-1 border-border" />
@@ -94,7 +93,7 @@ export function Navbar() {
                         setIsMenuOpen(false);
                         logout();
                       }}
-                      className="block w-full rounded-md px-3 py-2 text-left text-sm text-foreground hover:bg-zinc-100"
+                      className="block w-full rounded-xl px-3 py-2 text-left text-sm text-foreground hover:bg-surface"
                     >
                       Log out
                     </button>

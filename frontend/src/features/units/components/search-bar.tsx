@@ -34,20 +34,20 @@ export function SearchBar() {
   }, [debouncedSearchTerm, pathname, router, searchParams]);
 
   return (
-    <div className="relative mx-auto w-full max-w-2xl">
-      <div className="flex h-14 w-full items-center overflow-hidden rounded-full border border-border bg-background px-4 shadow-sm focus-within:border-primary focus-within:ring-1 focus-within:ring-primary">
-        <Search className="h-5 w-5 text-muted-foreground" />
+    <div className="relative mx-auto w-full max-w-3xl">
+      <div className="flex h-16 w-full items-center overflow-hidden rounded-full border border-border bg-surface px-6 shadow-md transition-shadow hover:shadow-lg focus-within:border-primary focus-within:ring-1 focus-within:ring-primary focus-within:shadow-lg">
+        <Search className="h-6 w-6 text-muted" />
         <input
           type="text"
-          placeholder="Search by title..."
-          className="h-full w-full bg-transparent px-4 text-sm outline-none placeholder:text-muted-foreground"
+          placeholder="Where to? Search by destination or title..."
+          className="h-full w-full bg-transparent px-4 text-base outline-none placeholder:text-muted-foreground font-medium text-foreground"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         {searchTerm && (
           <button
             onClick={() => setSearchTerm("")}
-            className="rounded-full p-1 text-muted-foreground hover:bg-zinc-100 hover:text-foreground"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-border text-muted-foreground transition-colors hover:bg-muted hover:text-surface"
           >
             <span className="sr-only">Clear</span>
             &times;
