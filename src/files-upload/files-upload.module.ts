@@ -4,6 +4,7 @@ import { S3FileStorageService } from './storage/s3-file-storage.service';
 import { UploadMultipleFilesUseCase } from './use-cases/upload-multiple-files.usecase';
 import { UploadSingleFileUseCase } from './use-cases/upload-single-file.usecase';
 import { DeleteFileByUrlUseCase } from './use-cases/delete-file-by-url.usecase';
+import { CloudinaryFileStorageService } from './storage/cloudinary.service';
 
 @Module({
     providers: [
@@ -12,7 +13,8 @@ import { DeleteFileByUrlUseCase } from './use-cases/delete-file-by-url.usecase';
         DeleteFileByUrlUseCase,
         UploadSingleFileUseCase,
         UploadMultipleFilesUseCase,
+        CloudinaryFileStorageService
     ],
     exports: [FilesUploadService],
 })
-export class FilesUploadModule {}
+export class FilesUploadModule { }

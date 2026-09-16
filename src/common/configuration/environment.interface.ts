@@ -8,6 +8,7 @@ export interface EnvironmentInterface {
     systemAdmin: ISystemAdmin;
     awsS3: IAWSConfig;
     smtp: ISMTPConfig;
+    cloudinary: ICloudinaryConfig;
 }
 
 export interface ISystemAdmin {
@@ -32,4 +33,10 @@ export interface ISMTPConfig {
         user: string;
         pass: string;
     };
+}
+
+export interface ICloudinaryConfig {
+    cloudinaryCloudName: string;
+    cloudinaryApiKey: string;
+    cloudinaryApiSecret: string;
 }

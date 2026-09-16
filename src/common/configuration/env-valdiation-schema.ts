@@ -24,4 +24,7 @@ export const envSchema = Joi.object({
     smtpUser: Joi.string().optional().allow('').default(''),
     smtpPassword: Joi.string().optional().allow('').default(''),
     smtpFromEmail: Joi.string().optional().allow('').default(''),
+    cloudinaryCloudName: Joi.string().required().default(''),
+    cloudinaryApiKey: Joi.string().required().default(''),
+    cloudinaryApiSecret: Joi.string().required().default(''),
 });

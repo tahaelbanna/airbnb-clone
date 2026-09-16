@@ -27,9 +27,14 @@ export const defaultEnv = (): EnvironmentInterface => ({
         auth:
             process.env.smtpPassword && process.env.smtpUser
                 ? {
-                      user: process.env.smtpUser,
-                      pass: process.env.smtpPassword,
-                  }
+                    user: process.env.smtpUser,
+                    pass: process.env.smtpPassword,
+                }
                 : undefined,
+    },
+    cloudinary: {
+        cloudinaryCloudName: process.env.cloudinaryCloudName as string,
+        cloudinaryApiKey: process.env.cloudinaryApiKey as string,
+        cloudinaryApiSecret: process.env.cloudinaryApiSecret as string,
     },
 });
