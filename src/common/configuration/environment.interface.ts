@@ -6,7 +6,7 @@ export interface EnvironmentInterface {
     accessTokenExpireIn: string;
     refreshTokenExpireIn: string;
     systemAdmin: ISystemAdmin;
-    awsS3: IAWSConfig;
+    // awsS3: IAWSConfig;
     smtp: ISMTPConfig;
     cloudinary: ICloudinaryConfig;
 }
@@ -17,13 +17,13 @@ export interface ISystemAdmin {
     password: string;
 }
 
-export interface IAWSConfig {
-    awsS3Region: string;
-    awsS3AccessKeyId: string;
-    awsS3SecretAccessKey: string;
-    awsS3BucketName: string;
-    minioEndpoint: string;
-}
+// export interface IAWSConfig {
+//     awsS3Region: string;
+//     awsS3AccessKeyId: string;
+//     awsS3SecretAccessKey: string;
+//     awsS3BucketName: string;
+//     minioEndpoint: string;
+// }
 
 export interface ISMTPConfig {
     smtpHost: string;

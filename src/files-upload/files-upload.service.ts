@@ -3,6 +3,7 @@ import { UploadSingleFileUseCase } from './use-cases/upload-single-file.usecase'
 import { UploadMultipleFilesUseCase } from './use-cases/upload-multiple-files.usecase';
 import { DeleteFileByUrlUseCase } from './use-cases/delete-file-by-url.usecase';
 import { MulterFile } from '../files-upload/types/file-type.types';
+
 @Injectable()
 export class FilesUploadService {
     constructor(
