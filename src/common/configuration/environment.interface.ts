@@ -7,8 +7,9 @@ export interface EnvironmentInterface {
     refreshTokenExpireIn: string;
     systemAdmin: ISystemAdmin;
     // awsS3: IAWSConfig;
-    smtp: ISMTPConfig;
+    // smtp: ISMTPConfig;
     cloudinary: ICloudinaryConfig;
+    brevo: IBrevoConfig;
 }
 
 export interface ISystemAdmin {
@@ -21,18 +22,24 @@ export interface ISystemAdmin {
 //     awsS3Region: string;
 //     awsS3AccessKeyId: string;
 //     awsS3SecretAccessKey: string;
-//     awsS3BucketName: string;
+//     awsS3BucketName: string;ذ
 //     minioEndpoint: string;
 // }
 
-export interface ISMTPConfig {
-    smtpHost: string;
-    smtpPort: number;
-    smtpSecure: boolean;
-    auth: {
-        user: string;
-        pass: string;
-    };
+// export interface ISMTPConfig {
+//     smtpHost: string;
+//     smtpPort: number;
+//     smtpSecure: boolean;
+//     auth: {
+//         user: string;
+//         pass: string;
+//     };
+// }
+
+export interface IBrevoConfig {
+    brevoApiKey: string;
+    brevoSenderEmail: string;
+    brevoSenderName: string;
 }
 
 export interface ICloudinaryConfig {

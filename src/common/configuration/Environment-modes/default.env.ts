@@ -20,21 +20,26 @@ export const defaultEnv = (): EnvironmentInterface => ({
     //     awsS3BucketName: process.env.awsS3BucketName as string,
     //     minioEndpoint: process.env.minioEndpoint as string,
     // },
-    smtp: {
-        smtpHost: process.env.smtpHost as string,
-        smtpPort: Number(process.env.smtpPort),
-        smtpSecure: process.env.smtpSecure === 'true',
-        auth:
-            process.env.smtpPassword && process.env.smtpUser
-                ? {
-                    user: process.env.smtpUser,
-                    pass: process.env.smtpPassword,
-                }
-                : undefined,
-    },
+    // smtp: {
+    //     smtpHost: process.env.smtpHost as string,
+    //     smtpPort: Number(process.env.smtpPort),
+    //     smtpSecure: process.env.smtpSecure === 'true',
+    //     auth:
+    //         process.env.smtpPassword && process.env.smtpUser
+    //             ? {
+    //                 user: process.env.smtpUser,
+    //                 pass: process.env.smtpPassword,
+    //             }
+    //             : undefined,
+    // },
     cloudinary: {
         cloudinaryCloudName: process.env.cloudinaryCloudName as string,
         cloudinaryApiKey: process.env.cloudinaryApiKey as string,
         cloudinaryApiSecret: process.env.cloudinaryApiSecret as string,
+    },
+    brevo: {
+        brevoApiKey: process.env.brevoApiKey as string,
+        brevoSenderEmail: process.env.brevoSenderEmail as string,
+        brevoSenderName: process.env.brevoSenderName as string,
     },
 });

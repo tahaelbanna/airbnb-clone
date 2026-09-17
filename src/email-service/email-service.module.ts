@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
 import { EmailServiceController } from './email-service.controller';
 import { EmailService } from './email.service';
-import { NodemailerEmailAdapter } from './adapters/nodemailer-email.adapter';
+// import { NodemailerEmailAdapter } from './adapters/nodemailer-email.adapter';
 import { EMAIL_ADAPTER } from './constants/mail.constant';
+import { BrevoEmailAdapter } from './adapters/brevoapi-email.adapter';
 
 @Module({
     controllers: [EmailServiceController],
@@ -10,7 +11,7 @@ import { EMAIL_ADAPTER } from './constants/mail.constant';
         EmailService,
         {
             provide: EMAIL_ADAPTER,
-            useClass: NodemailerEmailAdapter,
+            useClass: BrevoEmailAdapter,
         },
     ],
     exports: [EmailService],
