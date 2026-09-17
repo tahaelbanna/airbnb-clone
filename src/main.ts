@@ -34,7 +34,11 @@ async function bootstrap() {
     SwaggerSetup.setup(app);
 
     app.enableCors({
-        origin: ['http://localhost:3000', 'http://localhost:3001'],
+        origin: [
+            'http://localhost:3000',
+            'http://localhost:3001',
+            'https://esqoun.vercel.app',
+        ],
         credentials: true,
     });
 
