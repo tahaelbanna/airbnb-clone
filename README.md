@@ -2,445 +2,670 @@
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 </p>
 
-# Airbnb Clone API with NestJS, MongoDB, JWT, File Uploads, Bookings, OTP, and Clean Architecture
+# ESQOUN - اِسْكُنْ
 
-A production-style backend for an Airbnb-inspired rental and booking platform built with **NestJS, TypeScript, MongoDB, JWT, and Docker**.
+**A Full-Stack MVP Web App inspired by Airbnb, with its own visual identity.**
 
-This project implements a complete backend architecture for a rental marketplace, including authentication, users, system administration, listings, bookings, reviews, favorites, file uploads, OTP verification, email integration, validation, authorization, Swagger documentation, and local infrastructure.
+ESQOUN is a full-stack accommodation platform where users can discover and explore stays, browse listings by category, view detailed units, manage favorites, check availability, and make bookings.
 
-The project focuses not only on building CRUD APIs, but also on applying clean and maintainable backend architecture, separation of concerns, reusable components, business rules, and real-world API development practices.
+The platform also provides dedicated flows for hosts and system administrators to manage listings, bookings, and platform data.
+
+The project focuses not only on building functional features, but also on applying modular backend architecture, separation of concerns, reusable abstractions, and real-world engineering practices.
 
 ---
 
 ## Overview
 
-The application provides a backend for a rental marketplace where different types of users interact with the platform.
+ESQOUN is built around three main user roles:
 
 ### Guests
 
 Guests can:
 
-- Register and log in
-- Browse available rental units
-- View unit details
-- Check unit availability
-- Create booking requests
-- Update and cancel bookings
-- Submit reviews
-- Manage favorite units
+* Register and authenticate
+* Browse available accommodation units
+* Browse units by category
+* View detailed unit information
+* Check availability
+* Create and manage bookings
+* Cancel bookings
+* Manage favorite units
+* Submit reviews
 
 ### Hosts
 
 Hosts can:
 
-- Create and manage their rental units
-- Upload and manage unit photos
-- Activate and deactivate listings
-- Respond to booking requests
-- View reviews for their units
+* Create and manage accommodation units
+* Upload and manage unit photos
+* Activate and deactivate listings
+* Manage booking requests
+* View bookings for their units
+* View reviews for their listings
 
 ### System Admins
 
-System admins can manage platform-level reference data such as:
+System administrators can manage platform-level data such as:
 
-- Countries
-- Cities
-- Currencies
-- Unit categories
-- Application settings
-
-The application also includes JWT authentication, refresh tokens, role-based authorization, validation, file uploads, MongoDB persistence, email delivery, OTP verification, and Swagger API documentation.
-
----
-
-## Main Features
-
-- Authentication with register, login, refresh token, and current account endpoints
-- Role-based access control for users and system admins
-- System admin initialization from environment variables
-- User management with secure password hashing
-- Countries, cities, currencies, unit categories, and app settings modules
-- Unit/listing management with owner authorization
-- Unit photo upload, update, and delete flows
-- File validation by size, extension, and file signature
-- S3-compatible storage support with local MinIO
-- Public unit listing and unit details APIs
-- User-owned unit listing APIs
-- Unit activation, deactivation, and soft delete flows
-- Booking availability checks
-- Booking request creation and price calculation
-- Guest booking update and cancellation flows
-- Host booking status management
-- Booking review submission
-- Unit review aggregation and listing
-- Favorite units APIs
-- OTP generation, sending, storage, and verification
-- Mail module using an adapter pattern with Nodemailer
-- Forgot-password flow using OTP and email
-- MongoDB repositories with a reusable base repository
-- Use-case based application structure
-- DTO validation and response transformation
-- Global exception handling
-- Internationalized validation messages with `nestjs-i18n`
-- Swagger API documentation
-- Docker Compose infrastructure for MongoDB, MinIO, and Mailpit
-- API collection for testing the main application flows
+* Countries
+* Cities
+* Currencies
+* Unit categories
+* Application settings
+* Users and administrative resources
 
 ---
 
-## Architecture
-
-The project follows a modular NestJS architecture with clear separation of responsibilities.
-
-### Core Layers
-
-```text
-controller
-    ↓
-service
-    ↓
-usecases
-    ↓
-repository
-    ↓
-database
-```
-
-### Responsibilities
-
-- **Controller**: Receives HTTP requests and delegates operations.
-- **Service**: Coordinates application-level operations.
-- **Use Cases**: Contains focused business actions and application logic.
-- **Repository**: Handles persistence and database operations.
-- **Schema**: Defines MongoDB documents using Mongoose.
-- **DTO**: Validates incoming data and shapes request/response objects.
-- **Swagger**: Documents the API endpoints.
-
-This structure keeps controllers thin, separates business logic from persistence, and makes the codebase easier to extend and maintain.
-
----
-
-## Project Modules
-
-```text
-src
-├── app-settings
-├── auth
-├── bookings
-├── cities
-├── common
-├── countries
-├── currencies
-├── files-upload
-├── i18n
-├── mail
-├── otp
-├── system-admins
-├── unit-categories
-├── unit-favorites
-├── unit-reviews
-├── units
-└── users
-```
-
-### Important Modules
-
-- `auth`: Authentication, JWT, refresh tokens, guards, and decorators
-- `users`: User management and password handling
-- `units`: Rental unit creation, management, ownership, and lifecycle
-- `bookings`: Availability, booking requests, price calculation, and status management
-- `unit-favorites`: User favorite units
-- `unit-reviews`: Unit reviews and rating aggregation
-- `files-upload`: File upload abstraction and storage operations
-- `mail`: Email adapter abstraction and Nodemailer integration
-- `otp`: OTP generation, storage, sending, and verification
-- `system-admins`: System administrator management
-- `common`: Shared repositories, exceptions, interceptors, configuration, Swagger, files, and utilities
-
----
-
-## Business Relationships
-
-The main features of the application are connected through real business rules.
-
-### Authentication
-
-Authentication is connected to:
-
-- JWT access tokens
-- Refresh tokens
-- Guards
-- Roles
-- Current-user decorators
-- Protected routes
-
-### Units
-
-Units are connected to:
-
-- Owners
-- Unit categories
-- Currencies
-- Photos
-- Bookings
-- Reviews
-- Favorites
-
-### Bookings
-
-Bookings include:
-
-- Availability validation
-- Price calculation
-- Guest actions
-- Host actions
-- Booking status management
-- Review flows
-
-### OTP & Email
-
-The OTP and mail modules provide reusable infrastructure for account-related flows such as:
-
-- OTP verification
-- Email delivery
-- Forgot password
-
----
-
-## Tech Stack
-
-- **NestJS 11**
-- **TypeScript**
-- **MongoDB**
-- **Mongoose**
-- **JWT**
-- **bcryptjs**
-- **class-validator**
-- **class-transformer**
-- **Joi**
-- **Swagger / OpenAPI**
-- **nestjs-i18n**
-- **AWS SDK S3**
-- **MinIO**
-- **Nodemailer**
-- **Mailpit**
-- **Docker Compose**
-- **Jest**
-- **ESLint**
-- **Prettier**
-- **pnpm**
-
----
+# Features
 
 ## Authentication & Authorization
 
-The authentication system uses JWT-based authentication with access and refresh tokens.
+* User registration and login
+* JWT-based authentication
+* Access and refresh tokens
+* HTTPOnly cookies
+* Role-based access control (RBAC)
+* Authentication Guards
+* Ownership checks
+* Protected and public routes
+* Secure password hashing with `bcryptjs`
+* Current-user handling
+* OTP verification
+* Forgot-password flow
 
-The project also implements role-based authorization to protect endpoints according to the user's role.
+## Accommodation Units
 
-The authorization system includes:
-
-- JWT authentication
-- Access tokens
-- Refresh tokens
-- Guards
-- Role-based authorization
-- Public routes
-- Current-user decorators
-- Ownership checks
-
-Passwords are securely hashed using `bcryptjs`.
-
----
-
-## File Uploads
-
-The application includes a complete file-upload flow for rental unit photos.
-
-The upload system supports:
-
-- File size validation
-- File extension validation
-- File signature validation
-- S3-compatible storage
-- Local MinIO development environment
-- Upload
-- Update
-- Delete
-
-The storage layer is abstracted so that the application is not tightly coupled to a specific storage provider.
-
----
+* Create and manage rental units
+* Unit ownership
+* Unit categories
+* Unit activation and deactivation
+* Soft deletion
+* Unit details
+* Public unit discovery
+* Category-based browsing
+* Unit photo management
+* Availability checking
 
 ## Bookings
 
-The booking system contains business logic beyond basic CRUD operations.
+* Booking creation
+* Availability validation
+* Booking price calculation
+* Guest booking management
+* Guest cancellation
+* Host booking management
+* Booking status management
+* Booking-related review flows
 
-It supports:
+## Favorites
 
-- Availability checks
-- Booking requests
-- Booking price calculation
-- Guest booking updates
-- Guest cancellation
-- Host booking status management
-- Booking reviews
+* Add units to favorites
+* Remove units from favorites
+* Retrieve user favorites
 
-This allows the API to model the actual interaction between guests, hosts, and rental units.
+## Reviews
 
----
+* Submit reviews
+* Update reviews
+* Retrieve unit reviews
+* Rating aggregation
 
-## Reviews & Ratings
+## File Uploads
 
-Users can submit reviews for units after the appropriate booking flow.
+* Multipart file uploads using Multer
+* File size validation
+* File extension validation
+* File signature validation
+* Multiple file uploads
+* File deletion
+* Storage provider abstraction
+* Cloudinary integration
 
-The review system supports:
+## Email & OTP
 
-- Review creation
-- Review listing
-- Unit rating aggregation
-- Rating updates
+* OTP generation
+* OTP storage
+* OTP verification
+* Email delivery
+* Forgot-password emails
+* Provider abstraction for email services
+* Brevo HTTP API integration
 
----
+## API & Validation
 
-## OTP & Email
-
-The project contains reusable OTP and email modules.
-
-### OTP
-
-The OTP module handles:
-
-- OTP generation
-- OTP storage
-- OTP sending
-- OTP verification
-
-### Mail
-
-The mail module uses an adapter-based design with Nodemailer support.
-
-This makes the email functionality easier to extend or replace without changing the business logic that depends on it.
-
----
-
-## Validation & Error Handling
-
-The API uses DTO-based validation for:
-
-- Request bodies
-- Route parameters
-- Query parameters
-- Uploaded files
-
-The application also includes:
-
-- Global exception handling
-- Response transformation
-- Internationalized validation messages using `nestjs-i18n`
+* RESTful APIs
+* Swagger / OpenAPI documentation
+* DTO validation
+* Request transformation
+* Standardized API responses
+* Global exception handling
+* Internationalized validation messages
+* CORS configuration
+* Rate limiting
 
 ---
 
-## Swagger Documentation
+# Architecture
 
-The API is documented using **Swagger / OpenAPI**.
-
-After running the application, the Swagger documentation is available at:
+The backend follows a modular layered architecture where each layer has a focused responsibility.
 
 ```text
-http://localhost:3000/api/docs
+                           HTTP Request
+                                │
+                                ▼
+                         ┌─────────────┐
+                         │  Middleware │
+                         └──────┬──────┘
+                                │
+                                ▼
+                         ┌─────────────┐
+                         │    Guards   │
+                         └──────┬──────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   Interceptors │
+                       └────────┬────────┘
+                                │
+                                ▼
+                         ┌─────────────┐
+                         │    Pipes    │
+                         └──────┬──────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │   Controller   │
+                       └────────┬────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │     Service    │
+                       │  Orchestration │
+                       └────────┬────────┘
+                                │
+                                ▼
+                       ┌─────────────────┐
+                       │    Use Case    │
+                       │  Business Logic│
+                       └────────┬────────┘
+                                │
+                 ┌──────────────┴──────────────┐
+                 │                             │
+                 ▼                             ▼
+        ┌─────────────────┐           ┌─────────────────┐
+        │    Repository   │           │     Adapter     │
+        │   Data Access   │           │  Infrastructure │
+        └────────┬────────┘           └────────┬────────┘
+                 │                             │
+                 ▼                       ┌─────┴─────┐
+        ┌─────────────────┐              │           │
+        │ Mongoose / DB   │         ┌────▼────┐ ┌────▼──────┐
+        │    MongoDB      │         │  Brevo  │ │ Cloudinary│
+        └─────────────────┘         └─────────┘ └───────────┘
 ```
 
-Swagger provides an interactive interface for exploring and testing the available API endpoints.
+### Request Lifecycle
+
+The main request flow is:
+
+```text
+Middleware
+    ↓
+Guards
+    ↓
+Interceptors
+    ↓
+Pipes
+    ↓
+Controller
+    ↓
+Service
+    ↓
+Use Case
+    ↓
+Repository / Adapter
+    ↓
+Database / External Provider
+```
+
+Exception handling operates across the request lifecycle rather than being treated as a normal step in the request chain.
 
 ---
 
-## Docker Infrastructure
+# Architectural Responsibilities
 
-The project uses Docker Compose for local development infrastructure.
+### Middleware
 
-The local environment includes:
+Handles cross-cutting request-level concerns before requests reach the application layer.
 
-- MongoDB
-- MinIO
-- Mailpit
+### Guards
+
+Responsible for authentication, authorization, role checks, and protected route access.
+
+### Interceptors
+
+Handle cross-cutting concerns such as response transformation and request/response processing.
+
+### Pipes
+
+Validate and transform incoming request data before it reaches the controller.
+
+### Controllers
+
+Receive HTTP requests, validate the route-level contract, and delegate operations to the application layer.
+
+Controllers are intentionally kept thin.
 
 ### Services
 
+Coordinate application-level operations and act as the orchestration layer between controllers and use cases.
+
+### Use Cases
+
+Contain focused application and business operations.
+
+Each use case represents a specific action rather than placing large amounts of business logic inside controllers or repositories.
+
+### Repositories
+
+Abstract persistence and database access from the application logic.
+
+This allows business logic to work with repository contracts instead of depending directly on database implementation details.
+
+### Adapters
+
+Abstract external infrastructure and third-party providers.
+
+Examples include:
+
+* Email providers
+* File storage providers
+* Other external services
+
+This makes infrastructure easier to replace without changing the core business logic.
+
+---
+
+# Design Patterns & Principles
+
+The project applies several architectural patterns and principles:
+
+### Repository Pattern
+
+Separates data access from business logic and prevents use cases from depending directly on MongoDB implementation details.
+
 ```text
-MongoDB
-localhost:27017
+Use Case
+    ↓
+Repository Interface
+    ↓
+MongoDB Repository
+    ↓
+Mongoose
+```
 
-MinIO API
-localhost:9000
+### Use Case Pattern
 
-MinIO Console
-localhost:9001
+Business operations are organized into focused use cases.
 
-Mailpit SMTP
-localhost:1025
+```text
+Controller
+    ↓
+Service
+    ↓
+Use Case
+```
 
-Mailpit Inbox
-localhost:8025
+This keeps business operations explicit and easier to maintain.
+
+### Adapter Pattern
+
+External providers are abstracted behind application-defined interfaces.
+
+```text
+Application
+     ↓
+ Adapter Interface
+     ↓
+Concrete Adapter
+     ↓
+External Provider
+```
+
+For example, email delivery can be changed without modifying the business logic that sends emails.
+
+### Separation of Concerns
+
+The project separates:
+
+* HTTP concerns
+* Authentication and authorization
+* Application orchestration
+* Business logic
+* Data access
+* External infrastructure
+
+This keeps the system modular and easier to extend.
+
+---
+
+### Important Modules
+
+| Module           | Responsibility                                                                |
+| ---------------- | ----------------------------------------------------------------------------- |
+| `auth`           | Authentication, JWT, guards, roles, decorators                                |
+| `users`          | User management and password handling                                         |
+| `units`          | Accommodation creation, ownership, lifecycle, and discovery                   |
+| `bookings`       | Availability, booking creation, pricing, and status management                |
+| `unit-favorites` | Favorite unit management                                                      |
+| `unit-reviews`   | Reviews and rating aggregation                                                |
+| `files-upload`   | File upload and storage abstraction                                           |
+| `mail`           | Email provider abstraction and delivery                                       |
+| `otp`            | OTP generation, storage, sending, and verification                            |
+| `system-admins`  | System administrator functionality                                            |
+| `common`         | Shared infrastructure, exceptions, interceptors, configuration, and utilities |
+
+---
+
+# Backend
+
+The backend is built with NestJS and TypeScript and follows a modular architecture designed around separation of responsibilities.
+
+### Backend Stack
+
+* **NestJS 11**
+* **TypeScript**
+* **MongoDB**
+* **Mongoose**
+* **JWT**
+* **bcryptjs**
+* **class-validator**
+* **class-transformer**
+* **Joi**
+* **Swagger / OpenAPI**
+* **nestjs-i18n**
+* **Multer**
+* **Docker Compose**
+* **Jest**
+* **ESLint**
+* **Prettier**
+* **pnpm**
+
+---
+
+# Frontend
+
+The frontend is built with Next.js and TypeScript.
+
+### Frontend Stack
+
+* **Next.js**
+* **TypeScript**
+* **React Query**
+* **Zustand**
+* **Tailwind CSS**
+* **Axios**
+* Responsive UI
+* App Router
+* Protected and guest routes
+
+The frontend follows the **ESQOUN Modern Oasis** visual direction and provides responsive interfaces across desktop and mobile layouts.
+
+### Frontend Features
+
+* Authentication flows
+* Accommodation discovery
+* Category browsing
+* Search
+* Unit details
+* Availability
+* Favorites
+* Booking flows
+* Host listings
+* Host booking management
+* Admin dashboard
+* Responsive layouts
+* Loading and error states
+
+---
+
+# Authentication & Security
+
+Authentication uses JWT-based access and refresh tokens.
+
+The system includes:
+
+```text
+Authentication
+      │
+      ├── JWT Access Token
+      ├── Refresh Token
+      ├── HTTPOnly Cookies
+      ├── Authentication Guards
+      ├── Role-Based Access Control
+      └── Ownership Checks
+```
+
+Security-related features include:
+
+* Password hashing
+* JWT authentication
+* HTTPOnly cookies
+* Role-based authorization
+* Route protection
+* Ownership validation
+* DTO validation
+* Rate limiting
+* CORS configuration
+
+---
+
+# File Storage
+
+File storage is abstracted behind a storage provider layer.
+
+The application originally supported S3-compatible storage for local development, while the current production implementation uses Cloudinary.
+
+```text
+Files Upload Service
+        ↓
+Upload Use Case
+        ↓
+Storage Provider
+        ↓
+Cloudinary
+```
+
+This abstraction allows the storage provider to be replaced without changing the core business logic.
+
+---
+
+# Email Architecture
+
+Email delivery is also abstracted behind an adapter interface.
+
+```text
+Business Logic
+      ↓
+Email Adapter
+      ↓
+Brevo API
+```
+
+The project initially used a Nodemailer/SMTP-based implementation and later migrated to the Brevo HTTP API.
+
+The migration was possible without changing the business logic because email delivery is separated behind an adapter abstraction.
+
+---
+
+# OTP Flow
+
+OTP functionality is used for account-related flows such as verification and password recovery.
+
+```text
+User
+  ↓
+Request OTP
+  ↓
+OTP Generation
+  ↓
+OTP Storage
+  ↓
+Email Provider
+  ↓
+User Receives OTP
+  ↓
+OTP Verification
+  ↓
+Protected Operation
 ```
 
 ---
 
-## Local Development
+# Booking Flow
 
-### Requirements
-
-Make sure the following are installed:
-
-- Node.js
-- pnpm
-- Docker
-- Docker Compose
-
-### Installation
-
-```bash
-pnpm install
-```
-
-
-### Start Infrastructure
-
-```bash
-pnpm run docker:up
-```
-
-Initialize the local MongoDB replica set:
-
-```bash
-pnpm run docker:rs:init:local
-```
-
-### Start the API
-
-Development mode:
-
-```bash
-pnpm run start:dev
-```
-
-
-The API runs by default on:
+The booking system contains business rules beyond basic CRUD operations.
 
 ```text
-http://localhost:3000
+Guest
+  ↓
+Select Unit
+  ↓
+Check Availability
+  ↓
+Calculate Price
+  ↓
+Create Booking
+  ↓
+Host Reviews Request
+  ↓
+Booking Status
+  ↓
+Completed Stay
+  ↓
+Review
 ```
 
+The backend validates booking rules before allowing state changes.
 
-## Testing
+---
 
-The project uses **Jest** for testing.
+# Validation & Error Handling
 
-Available testing commands include:
+The API uses DTO-based validation for:
 
-```bash
-pnpm run test
-pnpm run test:e2e
-pnpm run test:cov
+* Request bodies
+* Route parameters
+* Query parameters
+* Uploaded files
+
+The application also provides:
+
+* Global exception handling
+* Standardized API responses
+* Response transformation
+* Internationalized validation messages
+* Consistent error handling
+
+This keeps API responses predictable across different modules.
+
+---
+
+# API Documentation
+
+The backend exposes its REST APIs through Swagger / OpenAPI documentation.
+
+For local development, Swagger is available through the configured API documentation route.
+
+Swagger provides an interactive interface for:
+
+* Exploring endpoints
+* Inspecting request schemas
+* Inspecting response schemas
+* Testing API operations
+* Understanding authentication requirements
+
+---
+
+# Docker
+
+Docker Compose is used to simplify local infrastructure setup.
+
+The development environment can provide supporting services such as:
+
+* MongoDB
+* Local storage infrastructure
+* Local email testing infrastructure
+
+The exact services depend on the current Docker Compose configuration.
+
+
+# Deployment
+
+The production architecture uses separate services for different responsibilities.
+
+```text
+                         ESQOUN
+                           │
+              ┌────────────┴────────────┐
+              │                         │
+              ▼                         ▼
+        Next.js Frontend          NestJS Backend
+             Vercel                  Railway
+                                        │
+                         ┌──────────────┼──────────────┐
+                         │              │              │
+                         ▼              ▼              ▼
+                    MongoDB Atlas   Cloudinary      Brevo
+                      Database       Storage         Email
 ```
 
+### Production Infrastructure
+
+* **Frontend:** Next.js deployed on Vercel
+* **Backend:** NestJS deployed on Railway
+* **Database:** MongoDB Atlas
+* **File Storage:** Cloudinary
+* **Email Delivery:** Brevo
+
+---
+
+# Engineering Focus
+
+The main goal of ESQOUN was not simply to build an Airbnb-inspired application.
+
+The project was also an opportunity to practice building a backend that can evolve without tightly coupling business logic to infrastructure.
+
+The architecture separates:
+
+```text
+HTTP Layer
+    ↓
+Application Layer
+    ↓
+Business Logic
+    ↓
+Data Access
+    ↓
+Infrastructure
+```
+
+External services such as email and file storage are hidden behind abstractions, while database access is separated through repositories.
+
+This makes the application easier to maintain, test, and extend.
+
+---
+
+# Project Links
+
+* **GitHub:** [[GITHUB_URL]](https://github.com/tahaelbanna/esqoun-app)
+* **Live Demo:** [[LIVE_URL]](https://esqoun.vercel.app)
+* **API Documentation:** [[SWAGGER_URL]](https://esqoun.up.railway.app/api/docs#)
+
+---
+
+# Project Status
+
+ESQOUN is an MVP project built as a full-stack accommodation platform with a production-oriented backend architecture and a responsive frontend experience.
+
+The project is continuously refined as part of my backend and full-stack engineering journey.
